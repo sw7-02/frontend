@@ -3,4 +3,4 @@
 	import NavigationBar from '$lib/components/NavigationBar.svelte';
 </script>
 
-<body class="bg-neutral-700"><NavigationBar /><slot /></body>
+<body class="bg-neutral-600"><NavigationBar /><slot /></body>
