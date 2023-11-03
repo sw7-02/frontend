@@ -1,10 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import Square from '$lib/components/Square.svelte';
+</script>
 
-<h1 class="text-3xl font-bold underline">Hello world!</h1>
-
-<style lang="postcss">
-	:global(html) {
-		background-color: theme(colors.gray.100);
-	}
-</style>
+<title>IMPRoved</title>
+<div class="flex justify-center">
+	<div class="grid grid-cols-3 justify-items-center">
+		<Square text="IMPR" href="/course/IMPR" />
+		<Square text="OOP" href="/course/OOP" />
+		<Square text="PP" href="/course/PP" />
+	</div>
+</div>
