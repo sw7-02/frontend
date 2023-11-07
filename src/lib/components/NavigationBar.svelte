@@ -20,7 +20,6 @@
 			routes.push(route);
 			navigation.push({ path, route });
 		}
-		console.log(navigation);
 	}
 </script>
 
