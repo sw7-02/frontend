@@ -3,14 +3,13 @@
 
 	let squares = [{ title: 'IMPR' }, { title: 'OOP' }, { title: 'PP' }];
 
-	// TODO: Need to somehow update list of courses when deleting it 
-		  // (possibly use the "deleted" variable in the component Square)
-	
+	// TODO: Need to somehow update list of courses when deleting it
+	// (possibly use the "deleted" variable in the component Square)
+
 	function addSquare() {
 		// TODO: Put the new course in the database and fetch all courses
 		squares = [...squares, { title: 'new' }];
 	}
-
 </script>
 
 <title>IMPRoved</title>

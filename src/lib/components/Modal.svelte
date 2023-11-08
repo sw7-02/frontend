@@ -5,7 +5,7 @@
 
 	$: if (dialog && showModal) dialog.showModal();
 
-    export let submitCallback: () => void;
+	export let submitCallback: () => void;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
@@ -25,9 +25,8 @@
 			>
 			<button
 				class="text-neutral-300 m-2 p-2 border-neutral-900 border-2 rounded-md bg-neutral-700 w-[150px]"
-                on:click={submitCallback}
-				on:click={() => dialog.close()}
-				>Submit</button
+				on:click={submitCallback}
+				on:click={() => dialog.close()}>Submit</button
 			>
 		</div>
 	</div>

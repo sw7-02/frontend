@@ -33,8 +33,8 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
-				on:click={() => showModal = true}
-				on:click={() => newRowType = "session"}
+				on:click={() => (showModal = true)}
+				on:click={() => (newRowType = 'session')}
 				class="bg-neutral-600 border-neutral-700 border-2 mt-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
 				style="cursor: pointer;"
 			>
@@ -49,8 +49,8 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
-				on:click={() => showModal = true}
-				on:click={() => newRowType = "assignment"}
+				on:click={() => (showModal = true)}
+				on:click={() => (newRowType = 'assignment')}
 				class="bg-neutral-600 border-neutral-700 border-2 mt-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
 				style="cursor: pointer;"
 			>
