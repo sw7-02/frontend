@@ -37,8 +37,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@codemirror/lang-javascript": "^6.2.1",
-		"@fortawesome/fontawesome-free": "^6.4.2",
-		"svelte-codemirror-editor": "^1.1.0"
+		"@fortawesome/fontawesome-free": "^6.4.2"
 	}
 }
