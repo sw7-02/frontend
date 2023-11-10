@@ -7,8 +7,8 @@
 	let newRowTitle: string = '';
 	let newRowType: string = '';
 
-	let sessions: string[] = ['Session 1', 'Session 2'];
-	let assignments: string[] = ['Assignment 1', 'Assignment 2'];
+	let sessions: string[] = ['session1', 'session2'];
+	let assignments: string[] = ['assignment1', 'assignment2'];
 
 	function onSubmit() {
 		// TODO: Put the new session/assignment in the database and fetch all sessions/assignments
@@ -28,7 +28,7 @@
 		<div class="grid grid-cols-1 justify-items-center">
 			<p class="text-neutral-300 text-2xl mt-4 underline">Sessions</p>
 			{#each sessions as session}
-				<Row title={session} href={'course/' + $page.params.course + session} />
+				<Row title={session} href={$page.params.course + '/' + session} />
 			{/each}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -44,7 +44,7 @@
 		<div class="grid grid-cols-1 justify-items-center">
 			<p class="text-neutral-300 text-2xl mt-4 underline">Assignments</p>
 			{#each assignments as assignment}
-				<Row title={assignment} href={'course/' + $page.params.course + assignment} />
+				<Row title={assignment} href={$page.params.course + '/' + assignment} />
 			{/each}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->

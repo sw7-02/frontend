@@ -13,13 +13,15 @@
 
 		paths = paths.filter((path) => path !== '' && path !== 'course');
 
+		let route = '/course';
 		for (let i = 0; i < paths.length; i++) {
 			let path = paths[i];
-			let route = '/course/' + path;
+			route = route + '/' + paths[i];
 
 			routes.push(route);
 			navigation.push({ path, route });
 		}
+		console.log(navigation);
 	}
 </script>
 
@@ -31,5 +33,5 @@
 			<NavigationButton text={nav.path} href={nav.route} />
 		{/each}
 	</div>
-	<NavigationButton text={'Log out'} href={'/test'} />
+	<NavigationButton text={'Log out'} href={'/logout'} />
 </nav>
