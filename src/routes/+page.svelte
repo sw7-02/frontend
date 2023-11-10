@@ -2,7 +2,17 @@
 	import Square from '$lib/components/Square.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 
-	let squares = [{ title: 'IMPR' }, { title: 'OOP' }, { title: 'PP' }];
+	let squares = [
+		{ title: 'IMPR' },
+		{ title: 'OOP' },
+		{ title: 'PP' },
+		{ title: 'IMPR' },
+		{ title: 'OOP' },
+		{ title: 'PP' },
+		{ title: 'IMPR' },
+		{ title: 'OOP' },
+		{ title: 'PP' }
+	];
 
 	let showModal: boolean = false;
 	let newSquareTitle: string = '';
@@ -18,7 +28,7 @@
 </script>
 
 <title>IMPRoved</title>
-<div class="flex justify-center">
+<div class="flex justify-center overflow-y-auto">
 	<div class="grid grid-cols-3 justify-items-center">
 		{#each squares as square}
 			<Square title={square.title} href={'course/' + square.title} />
