@@ -1,47 +1,46 @@
 <script lang="ts">
-	import Square from '$lib/components/Square.svelte';
+	import Course from '$lib/components/Course.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 
-	let squares = [
-		{ title: 'IMPR' },
-		{ title: 'OOP' },
-		{ title: 'PP' },
-		{ title: 'IMPR' },
-		{ title: 'OOP' },
-		{ title: 'PP' },
-		{ title: 'IMPR' },
-		{ title: 'OOP' },
-		{ title: 'PP' }
+	let courses: { title: string; href: string }[] = [
+		{ title: 'Imperative Programming', href: 'IMPR' },
+		{ title: 'Object-Oriented Programming', href: 'OOP' },
+		{ title: 'Programming Paradigms', href: 'PP' }
 	];
 
 	let showModal: boolean = false;
-	let newSquareTitle: string = '';
+	let newCourseTitle: string = '';
 
 	// TODO: Need to somehow update list of courses when deleting it
 	// (possibly use the "deleted" variable in the component Square)
 
 	function onSubmit() {
 		// TODO: Put the new course in the database and fetch all courses
-		squares = [...squares, { title: newSquareTitle }];
-		newSquareTitle = '';
+		courses = [...courses, { title: newCourseTitle, href: newCourseTitle }];
+		newCourseTitle = '';
 	}
 </script>
 
 <title>IMPRoved</title>
+<p class="flex justify-center text-neutral-100 text-md m-2 underline font-mono cursor-default">
+	Courses
+</p>
 <div class="flex justify-center">
 	<div class="grid grid-cols-3 justify-items-center">
-		{#each squares as square}
-			<Square title={square.title} href={'course/' + square.title} />
+		{#each courses as course}
+			<Course title={course.title} href={'course/' + course.href} />
 		{/each}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
 			on:click={() => (showModal = true)}
-			class="bg-neutral-600 border-neutral-700 border-2 m-6 justify-center items-center flex
-			shadow-xl rounded-md text-neutral-300 w-60 h-60"
+			class="bg-neutral-700 justify-center items-center flex m-1 bg-opacity-50
+			shadow-xl rounded-sm text-neutral-950 w-[470px] h-[264px] font-mono
+			text-xl
+			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
 			style="cursor: pointer;"
 		>
-			<i class="fa-regular fa-plus text-7xl text-neutral-700" />
+			<p>Add new course</p>
 		</div>
 	</div>
 </div>
@@ -49,10 +48,10 @@
 <Modal bind:showModal submitCallback={onSubmit}>
 	<div class="flex flex-col grid-cols-1 justify-items-center">
 		<input
-			class="bg-neutral-500 m-2 w-[316] text-neutral-300"
+			class="bg-neutral-700 m-2 w-[316] h-[40px] text-neutral-100 outline-none"
 			type="text"
 			placeholder="Title"
-			bind:value={newSquareTitle}
+			bind:value={newCourseTitle}
 		/>
 	</div>
 </Modal>

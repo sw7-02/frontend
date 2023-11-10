@@ -10,7 +10,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-	class="bg-neutral-600 rounded-md p-4"
+	class="bg-neutral-800 rounded-md p-8"
 	bind:this={dialog}
 	on:close={() => (showModal = false)}
 	on:click|self={() => dialog.close()}
@@ -20,11 +20,13 @@
 		<div><slot /></div>
 		<div class="flex justify-between">
 			<button
-				class="text-neutral-300 m-2 p-2 border-neutral-900 border-2 rounded-md bg-neutral-700 w-[150px]"
+				class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-900 w-[150px]
+				transition duration-200 ease-in-out hover:bg-red-900"
 				on:click={() => dialog.close()}>Cancel</button
 			>
 			<button
-				class="text-neutral-300 m-2 p-2 border-neutral-900 border-2 rounded-md bg-neutral-700 w-[150px]"
+				class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-900 w-[150px]
+				transition duration-200 ease-in-out hover:bg-green-900"
 				on:click={submitCallback}
 				on:click={() => dialog.close()}>Submit</button
 			>

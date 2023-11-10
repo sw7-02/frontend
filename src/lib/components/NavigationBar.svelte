@@ -25,11 +25,11 @@
 	}
 </script>
 
-<nav class="flex justify-between bg-neutral-800 h-14 shadow-xl">
-	<div class="flex">
+<nav class="flex justify-between items-center bg-neutral-900 h-16 pl-2 pr-2 shadow-md">
+	<div class="flex items-center">
 		<NavigationButton text={'Courses'} href={'/'} />
 		{#each navigation as nav}
-			<p class="text-neutral-300 text-xl pt-4 pb-4">/</p>
+			<p class="text-neutral-300 text-xl p-2">/</p>
 			<NavigationButton text={nav.path} href={nav.route} />
 		{/each}
 	</div>
