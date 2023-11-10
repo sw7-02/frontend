@@ -6,7 +6,20 @@
 	let showModal: boolean = false;
 	let newRowTitle: string = '';
 
-	let exercises: string[] = ['exercise1', 'exercise2'];
+	let exercises: string[] = [
+		'exercise1',
+		'exercise2',
+		'exercise1',
+		'exercise2',
+		'exercise1',
+		'exercise2',
+		'exercise1',
+		'exercise2',
+		'exercise1',
+		'exercise2',
+		'exercise1',
+		'exercise2'
+	];
 
 	function onSubmit() {
 		// TODO: Put the new session/assignment in the database and fetch all sessions/assignments
@@ -26,7 +39,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
 			on:click={() => (showModal = true)}
-			class="bg-neutral-600 border-neutral-700 border-2 mt-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
+			class="bg-neutral-600 border-neutral-700 border-2 mt-4 mb-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
 			style="cursor: pointer;"
 		>
 			<i class="fa-regular fa-plus text-2xl text-neutral-700" />

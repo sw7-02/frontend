@@ -28,7 +28,7 @@
 </script>
 
 <title>IMPRoved</title>
-<div class="flex justify-center overflow-y-auto">
+<div class="flex justify-center">
 	<div class="grid grid-cols-3 justify-items-center">
 		{#each squares as square}
 			<Square title={square.title} href={'course/' + square.title} />

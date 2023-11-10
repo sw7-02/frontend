@@ -7,7 +7,22 @@
 	let newRowTitle: string = '';
 	let newRowType: string = '';
 
-	let sessions: string[] = ['session1', 'session2'];
+	let sessions: string[] = [
+		'session1',
+		'session2',
+		'session1',
+		'session2',
+		'session1',
+		'session2',
+		'session1',
+		'session2',
+		'session1',
+		'session2',
+		'session1',
+		'session2',
+		'session1',
+		'session2'
+	];
 	let assignments: string[] = ['assignment1', 'assignment2'];
 
 	function onSubmit() {
@@ -35,7 +50,7 @@
 			<div
 				on:click={() => (showModal = true)}
 				on:click={() => (newRowType = 'session')}
-				class="bg-neutral-600 border-neutral-700 border-2 mt-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
+				class="bg-neutral-600 border-neutral-700 border-2 mt-4 mb-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
 				style="cursor: pointer;"
 			>
 				<i class="fa-regular fa-plus text-2xl text-neutral-700" />
@@ -51,7 +66,7 @@
 			<div
 				on:click={() => (showModal = true)}
 				on:click={() => (newRowType = 'assignment')}
-				class="bg-neutral-600 border-neutral-700 border-2 mt-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
+				class="bg-neutral-600 border-neutral-700 border-2 mt-4 mb-4 ml-2 mr-2 justify-center items-center flex shadow-xl rounded-md text-neutral-300 w-[700px] h-20"
 				style="cursor: pointer;"
 			>
 				<i class="fa-regular fa-plus text-2xl text-neutral-700" />
