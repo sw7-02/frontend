@@ -25,7 +25,7 @@
 	<p
 		id="title"
 		class={`text-xl flex justify-center items-center font-mono ${
-			isHovered ? 'text-green-700' : ''
+			isHovered ? 'text-green-700 transition duration-200 ease-in-out' : ''
 		}`}
 	>
 		{title}
