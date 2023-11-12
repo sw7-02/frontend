@@ -26,17 +26,16 @@
 	class="grid grid-cols-1 justify-items-center overflow-hidden"
 	style="height: calc(100vh - 64px);"
 >
-	<div class="flex">
+	<div class="flex overflow-hidden">
 		<div class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px]">
 			<div class="flex justify-between">
 				<p class="pt-4 pl-4 pr-4 text-neutral-100 text-md font-mono underline cursor-default">
 					{exercise.name}
 				</p>
-				<p class="pt-4 pl-4 pr-4 text-green-700 text-lg font-mono cursor-default">
+				<p class="pt-4 pl-4 pr-4 text-green-700 text-md font-mono cursor-default">
 					Points: {exercise.points}
 				</p>
 			</div>
-
 			<p class="p-4 text-neutral-100 text-md cursor-default">
 				{exercise.description}
 			</p>

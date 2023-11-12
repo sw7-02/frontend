@@ -29,7 +29,7 @@
 		<NavigationButton text={'Courses'} href={'/'} />
 		{#each navigation as nav}
 			<p class="text-neutral-300 text-xl p-2">/</p>
-			<NavigationButton text={nav.path} href={nav.route} />
+			<NavigationButton text={decodeURIComponent(nav.path)} href={decodeURIComponent(nav.route)} />
 		{/each}
 	</div>
 	<NavigationButton text={'Log out'} href={'/logout'} />
