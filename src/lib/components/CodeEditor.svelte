@@ -1,7 +1,8 @@
 <script lang="ts">
-    import CodeMirror from "svelte-codemirror-editor";
+	import CodeMirror from 'svelte-codemirror-editor';
+	import { oneDark } from '@codemirror/theme-one-dark';
 
-    let value = "";
+	let value = '';
 </script>
 
-<CodeMirror class="text-neutral-100" bind:value />
+<CodeMirror class="text-neutral-100" bind:value tabSize={4} theme={oneDark} />
