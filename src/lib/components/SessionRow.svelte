@@ -18,10 +18,9 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	on:click={() => (showExercises = !showExercises)}
-	class="bg-neutral-900 grid grid-cols-1 items-center mt-1
+	class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-default
 			shadow-xl text-neutral-100 text-md font-mono w-[700px] h-16
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
-	style="cursor: pointer;"
 >
 	<div class="ml-6">{title}</div>
 </div>
