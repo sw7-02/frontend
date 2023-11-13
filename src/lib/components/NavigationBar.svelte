@@ -32,5 +32,5 @@
 			<NavigationButton text={decodeURIComponent(nav.path)} href={decodeURIComponent(nav.route)} />
 		{/each}
 	</div>
-	<NavigationButton text={'Log out'} href={'/logout'} />
+	<NavigationButton text={'Log out'} href={'/'} />
 </nav>
