@@ -16,6 +16,8 @@ RUN npm run build
 # Set the env to "production"
 ENV NODE_ENV production
 # Expose the port on which the app will be running (3000 is the default that `serve` uses)
-EXPOSE 3000
+ARG PORT=3000
+ENV PORT $PORT
+EXPOSE $PORT
 # Start the app
 CMD [ "npx", "vite", "dev", "--host" ] #TODO: Would be nice if we could run with npx serve
