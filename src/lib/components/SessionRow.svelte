@@ -6,7 +6,7 @@
 	export let title: string;
 
 	let exercises: { title: string; href: string }[] = [
-		{ title: 'Do someting', href: '/Do someting' },
+		{ title: 'Do something', href: '/Do something' },
 		{ title: 'Learn something', href: '/Learn something' },
 		{ title: 'Remember something', href: '/Remember something' }
 	];

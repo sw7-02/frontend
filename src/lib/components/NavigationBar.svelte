@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import NavigationButton from './NavigationButton.svelte';
+	import LogoutButton from './LogoutButton.svelte';
 
 	let paths: string[] = [];
 	let routes: string[] = [];
@@ -32,5 +33,5 @@
 			<NavigationButton text={decodeURIComponent(nav.path)} href={decodeURIComponent(nav.route)} />
 		{/each}
 	</div>
-	<NavigationButton text={'Log out'} href={'/logout'} />
+	<LogoutButton />
 </nav>

@@ -48,7 +48,7 @@
 <Modal bind:showModal submitCallback={onSubmit}>
 	<div class="flex flex-col grid-cols-1 justify-items-center">
 		<input
-			class="bg-neutral-700 m-2 w-[316] h-[40px] text-neutral-100 outline-none"
+			class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
 			type="text"
 			placeholder="Title"
 			bind:value={newCourseTitle}
