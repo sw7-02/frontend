@@ -5,7 +5,6 @@
     let showModal: boolean = false;
     let isHovered: boolean = false;
     export let title: string = "title";
-    export let href: string = "/";
 
     function onDelete() {
         // TODO: Delete the course from the database and fetch all courses
@@ -21,7 +20,7 @@
     on:mouseout={() => (isHovered = false)}
     class="grid grid-cols-1 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[470px] h-[264px] shadow-xl
 		hover:bg-neutral-800 transition duration-200 ease-in-out"
-    {href}
+    href={'course/' + title}
 >
     <p
         id="title"
@@ -34,7 +33,7 @@
         {title}
     </p>
     <div class="flex justify-evenly items-center">
-        <LeaderboardButton course={href} />
+        <LeaderboardButton course={title} />
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
