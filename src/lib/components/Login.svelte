@@ -20,7 +20,7 @@
 <div
 	class="grid grid-cols-1 justify-items-center p-4 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[600px] h-[338px] shadow-xl"
 >
-	<p class="text-neutral-100 underline font-mono">Sign in</p>
+	<p class="text-neutral-100 underline font-mono">Log in to IMPRoved</p>
 	<input
 		class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4 font-mono"
 		type="text"
