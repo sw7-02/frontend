@@ -9,6 +9,6 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	},
     server: {
-        port: process.env["PORT"] || "5173",
+        port: +(process.env["PORT"] || 5173),
     },
 });
