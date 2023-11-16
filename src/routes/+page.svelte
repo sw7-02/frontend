@@ -2,6 +2,9 @@
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
+    // export let data;
+    // console.log(data);
+
     let course_titles: string[] = [
         "Imperative Programming",
         "Object-Oriented Programming",
@@ -22,13 +25,8 @@
 </script>
 
 <title>IMPRoved</title>
-<p
-    class="flex justify-center text-neutral-100 text-md m-2 underline font-mono cursor-default"
->
-    Courses
-</p>
 <div class="flex justify-center">
-    <div class="grid grid-cols-3 justify-items-center">
+    <div class="grid grid-cols-3 justify-items-center p-3">
         {#each course_titles as title}
             <Course {title} />
         {/each}

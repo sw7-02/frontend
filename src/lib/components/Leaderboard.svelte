@@ -20,7 +20,7 @@
 
 <div class="bg-neutral-900 mt-4 mb-4 mr-4 p-4 w-[900px]">
     <table class="w-full">
-        <thead class="text-neutral-100 text-center font-mono">
+        <thead class="text-neutral-100 text-center font-mono text-md">
             <td>Rank</td>
             <td>Points</td>
             <td>User</td>
