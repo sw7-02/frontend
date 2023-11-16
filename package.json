@@ -4,6 +4,8 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"launch": "vite dev --host",
+		"build-docker": "docker build -t ${npm_package_name}:${npm_package_version} -t ${npm_package_name}:dev .",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -36,7 +38,9 @@
 	},
 	"dependencies": {
 		"@codemirror/theme-one-dark": "^6.1.2",
+		"@esbuild/linux-x64": "^0.19.5",
 		"@fortawesome/fontawesome-free": "^6.4.2",
+		"dotenv": "^16.3.1",
 		"svelte-codemirror-editor": "^1.1.0"
 	},
 	"type": "module",
