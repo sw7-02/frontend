@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store';
 
+// use context instead of store
+
 type User = {
 	username: string;
 	password: string;

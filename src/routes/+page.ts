@@ -1,5 +1,5 @@
-// export const ssr = false;
+export const ssr = false;
 
-// export async function load({ params }) {
-//     return await fetch("/api/");
-// }
+export async function load({ params }) {
+    return await fetch("/api/");
+}
