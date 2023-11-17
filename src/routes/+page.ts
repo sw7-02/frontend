@@ -1,5 +1,7 @@
 export const ssr = false;
 
 export async function load({ params }) {
-    return await fetch("/api/");
+    const response = await fetch("/api/");
+    const data = await response.json();
+    return data;
 }
