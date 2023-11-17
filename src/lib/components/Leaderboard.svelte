@@ -1,5 +1,5 @@
 <script lang="ts">
-    let table_data: { rank: number; user: string; points: number }[] = [
+    let data: { rank: number; user: string; points: number }[] = [
         { rank: 1, user: "Ihlen", points: 401 },
         { rank: 2, user: "Mikkel Dolmer", points: 400 },
         { rank: 3, user: "Anonymous_user_3232", points: 300 },
@@ -17,7 +17,7 @@
             <td class="p-2" style="width: 400px;">Points</td>
         </thead>
         <tbody>
-            {#each table_data as { rank, user, points }}
+            {#each data as { rank, user, points }}
                 <tr
                     class="{rank === 1
                         ? 'text-yellow-400'
@@ -41,7 +41,7 @@
                                 <div
                                     class="bg-green-700 h-full"
                                     style="width: {(points /
-                                        table_data[0].points) *
+                                        data[0].points) *
                                         100}%"
                                 />
                             </div>

@@ -44,9 +44,9 @@
 </script>
 
 <title>{$page.params.course}</title>
-<div class="flex justify-center p-3">
+<div class="flex justify-center mt-3">
     <div class="grid grid-cols-2 justify-items-center items-start">
-        <div class="grid grid-cols-1 justify-items-center mb-2 ml-2 mr-2">
+        <div class="grid grid-cols-1 justify-items-center mr-2">
             {#each sessions as session, i}
                 <SessionRow title={"Session " + i + ": " + session} />
             {/each}
@@ -62,7 +62,7 @@
                 <p>Add new session</p>
             </div>
         </div>
-        <div class="grid grid-cols-1 justify-items-center mb-2 ml-2 mr-2">
+        <div class="grid grid-cols-1 justify-items-center ml-2">
             {#each assignments as assignment, i}
                 <AssignmentRow
                     title={"Assignment " + i + ": " + assignment}

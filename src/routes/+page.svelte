@@ -21,7 +21,7 @@
 
 <title>IMPRoved</title>
 <div class="flex justify-center">
-    <div class="grid grid-cols-3 justify-items-center p-3">
+    <div class="grid grid-cols-3 justify-items-center">
         {#each data as course}
             <Course title={course.title} />
         {/each}
@@ -29,7 +29,7 @@
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
             on:click={() => (showModal = true)}
-            class="bg-neutral-700 justify-center items-center flex m-1 bg-opacity-50
+            class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50
 			shadow-xl rounded-sm text-neutral-950 w-[470px] h-[264px] font-mono
 			text-xl
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"

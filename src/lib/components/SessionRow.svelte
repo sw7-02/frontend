@@ -18,7 +18,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
     on:click={() => (showExercises = !showExercises)}
-    class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-default
+    class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-pointer
 			shadow-xl text-neutral-100 text-md font-mono w-[700px] h-16
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
 >
@@ -28,6 +28,7 @@
     <div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
         {#each exercises as exercise, i}
             <ExerciseRow
+                {i}
                 title={"> Exercise " + i + ": " + exercise.title}
                 href={$page.url + exercise.href}
             />
