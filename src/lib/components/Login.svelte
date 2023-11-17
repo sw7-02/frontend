@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { authentication } from '$lib/stores/authentication';
-	import { get } from 'svelte/store';
 
 	// TODO: obviously this is not secure, but it's just a demo
 	let inputUsername: string;

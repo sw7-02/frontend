@@ -2,24 +2,19 @@
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    export let data;
-    console.log(data);
-
-    let course_titles: string[] = [
-        "Imperative Programming",
-        "Object-Oriented Programming",
-        "Programming Paradigms",
+    let data: { title: string }[] = [
+        { title: "Imperative Programming" },
+        { title: "Object-Oriented Programming" },
+        { title: "Programming Paradigms" },
     ];
 
     let showModal: boolean = false;
     let newCourseTitle: string = "";
 
-    // TODO: Need to somehow update list of courses when deleting it
-    // (possibly use the "deleted" variable in the component Square)
-
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
-        course_titles = [...course_titles, newCourseTitle];
+        const newCourse = { title: newCourseTitle };
+        data = [...data, newCourse];
         newCourseTitle = "";
     }
 </script>
@@ -27,8 +22,8 @@
 <title>IMPRoved</title>
 <div class="flex justify-center">
     <div class="grid grid-cols-3 justify-items-center p-3">
-        {#each course_titles as title}
-            <Course {title} />
+        {#each data as course}
+            <Course title={course.title} />
         {/each}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->

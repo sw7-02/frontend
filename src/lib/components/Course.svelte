@@ -4,6 +4,7 @@
 
     let showModal: boolean = false;
     let isHovered: boolean = false;
+    
     export let title: string = "title";
 
     function onDelete() {
@@ -20,7 +21,7 @@
     on:mouseout={() => (isHovered = false)}
     class="grid grid-cols-1 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[470px] h-[264px] shadow-xl
 		hover:bg-neutral-800 transition duration-200 ease-in-out"
-    href={'course/' + title}
+    href={"course/" + title}
 >
     <p
         id="title"
@@ -37,20 +38,20 @@
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-            on:click|preventDefault={onDelete}
-            class="flex items-center text-neutral-100 font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-red-800"
+            on:click|preventDefault={() => (showModal = true)}
+            class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-white"
         >
-            <i class="fa-solid fa-trash-can fa-md pr-1" />
-            Delete
+            <i class="fa-solid fa-pencil fa-md pr-1" />
+            Edit
         </div>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div
-            on:click|preventDefault={() => (showModal = true)}
-            class="flex items-center text-neutral-100 font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-white"
+            on:click|preventDefault={onDelete}
+            class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-red-800"
         >
-            <i class="fa-solid fa-pencil fa-md pr-1" />
-            Edit
+            <i class="fa-solid fa-trash-can fa-md pr-1" />
+            Delete
         </div>
     </div>
 </a>
@@ -58,7 +59,7 @@
 <Modal bind:showModal submitCallback={onSubmit}>
     <div class="flex flex-col grid-cols-1 justify-items-center">
         <input
-            class="bg-neutral-700 m-2 w-[316] h-[40px] text-neutral-100 outline-none"
+            class="bg-neutral-700 m-2 p-4 w-[316] h-[40px] text-neutral-100 outline-none"
             type="text"
             placeholder="Title"
             bind:value={title}
