@@ -2,7 +2,10 @@
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    let data: { title: string }[] = [
+    export let data;
+    console.log(data);
+
+    let test_data: { title: string }[] = [
         { title: "Imperative Programming" },
         { title: "Object-Oriented Programming" },
         { title: "Programming Paradigms" },
@@ -14,7 +17,7 @@
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
         const newCourse = { title: newCourseTitle };
-        data = [...data, newCourse];
+        test_data = [...test_data, newCourse];
         newCourseTitle = "";
     }
 </script>
@@ -22,7 +25,7 @@
 <title>IMPRoved</title>
 <div class="flex justify-center">
     <div class="grid grid-cols-3 justify-items-center">
-        {#each data as course}
+        {#each test_data as course}
             <Course title={course.title} />
         {/each}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
