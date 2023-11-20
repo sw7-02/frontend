@@ -1,6 +1,7 @@
 <script lang="ts">
     import Modal from "./Modal.svelte";
     import LeaderboardButton from "./LeaderboardButton.svelte";
+    import { authentication } from "$lib/stores/authentication";
 
     let showModal: boolean = false;
     let isHovered: boolean = false;
@@ -37,6 +38,7 @@
         <LeaderboardButton course={title} />
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
+        {#if $authentication.isAuthenticated && $authentication.user.role === 0}
         <div
             on:click|preventDefault={() => (showModal = true)}
             class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-white"
@@ -53,6 +55,7 @@
             <i class="fa-solid fa-trash-can fa-md pr-1" />
             Delete
         </div>
+        {/if}
     </div>
 </a>
 

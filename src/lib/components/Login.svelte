@@ -5,15 +5,32 @@
     // TODO: obviously this is not secure, but it's just a demo
     let inputUsername: string;
     let inputPassword: string;
+    let wrongInput: boolean = false;
 
     function loginHandler() {
-        authentication.set({
-            isAuthenticated: true,
-            user: {
-                username: inputUsername,
-                password: inputPassword,
-            },
-        });
+        if (inputUsername === "teacher") {
+            authentication.set({
+                isAuthenticated: true,
+                user: {
+                    username: inputUsername,
+                    password: inputPassword,
+                    role: 0,
+                },
+            });
+        }
+        if (inputUsername === "student") {
+            authentication.set({
+                isAuthenticated: true,
+                user: {
+                    username: inputUsername,
+                    password: inputPassword,
+                    role: 2,
+                },
+            });
+        }
+        else{
+            wrongInput = true;
+        }
     }
 </script>
 
@@ -21,15 +38,30 @@
     class="grid grid-cols-1 justify-items-center p-4 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[600px] h-[338px] shadow-xl"
 >
     <p class="text-neutral-100 text-lg font-mono pt-4">IMPRoved</p>
+    {#if wrongInput}
+    <p class="text-red-700 text-sm font-mono">
+        Incorrect username or password!
+    </p>
+    {/if}
     <input
+        on:keypress={(event) => {
+            if (event.key === "Enter") {
+                loginHandler();
+            }
+        }}
         class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4 font-mono"
         type="text"
         placeholder="Enter username"
         bind:value={inputUsername}
     />
     <input
+        on:keypress={(event) => {
+            if (event.key === "Enter") {
+                loginHandler();
+            }
+        }}
         class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4 font-mono"
-        type="text"
+        type="password"
         placeholder="Enter password"
         bind:value={inputPassword}
     />

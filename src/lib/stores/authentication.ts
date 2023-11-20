@@ -5,7 +5,8 @@ import { writable } from "svelte/store";
 type User = {
     username: string;
     password: string;
-} | null;
+    role: 0 | 1 | 2;
+};
 
 type Authentication = {
     isAuthenticated: boolean;
@@ -14,5 +15,5 @@ type Authentication = {
 
 export const authentication = writable<Authentication>({
     isAuthenticated: false,
-    user: null,
+    user: { username: "", password: "", role: 2 },
 });
