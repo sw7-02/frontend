@@ -30,12 +30,5 @@
 </script>
 
 <div>
-    <div class="container" bind:this={editorContainer} />
+    <div class="w-full h-full" bind:this={editorContainer} />
 </div>
-
-<style>
-    .container {
-        width: 100%;
-        height: 600px;
-    }
-</style>

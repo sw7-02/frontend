@@ -23,12 +23,12 @@
         <div><slot /></div>
         <div class="flex justify-between">
             <button
-                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-900 w-[150px]
+                class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]
 				transition duration-200 ease-in-out hover:bg-red-900"
                 on:click={() => dialog.close()}>Cancel</button
             >
             <button
-                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-900 w-[150px]
+                class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]
 				transition duration-200 ease-in-out hover:bg-green-900"
                 on:click={submitCallback}
                 on:click={() => dialog.close()}>Submit</button
