@@ -13,13 +13,13 @@
     ];
 
     let showModal: boolean = false;
-    let newCourseTitle: string = "";
+    let newTitle: string = "";
 
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
-        const newCourse = { title: newCourseTitle };
+        const newCourse = { title: newTitle };
         test_data = [...test_data, newCourse];
-        newCourseTitle = "";
+        newTitle = "";
     }
 </script>
 
@@ -46,13 +46,4 @@
     </div>
 </div>
 
-<Modal bind:showModal submitCallback={onSubmit}>
-    <div class="flex flex-col grid-cols-1 justify-items-center">
-        <input
-            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
-            type="text"
-            placeholder="Title"
-            bind:value={newCourseTitle}
-        />
-    </div>
-</Modal>
+<Modal bind:showModal bind:newTitle submitCallback={onSubmit} />

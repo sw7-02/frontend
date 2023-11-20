@@ -7,12 +7,12 @@
 
     export let title: string;
     let showModal: boolean = false;
-    let newExerciseTitle: string;
+    let newTitle: string;
 
-    let exercises: { title: string; href: string }[] = [
-        { title: "Do something", href: "/Do something" },
-        { title: "Learn something", href: "/Learn something" },
-        { title: "Remember something", href: "/Remember something" },
+    let exercises: string[] = [
+        "Do something",
+        "Learn something",
+        "Remember something",
     ];
 
     let showExercises = false;
@@ -21,12 +21,9 @@
         showModal = false;
         showExercises = true;
         // TODO: Put the new course in the database and fetch all courses
-        const newExercise = { title: newExerciseTitle };
-        exercises = [
-            ...exercises,
-            { title: newExerciseTitle, href: "/" + newExerciseTitle },
-        ];
-        newExerciseTitle = "";
+        const newExercise = { title: newTitle };
+        exercises = [...exercises, newTitle];
+        newTitle = "";
     }
 </script>
 
@@ -57,25 +54,11 @@
         {#each exercises as exercise, i}
             <ExerciseRow
                 {i}
-                title={"> Exercise " + i + ": " + exercise.title}
-                href={$page.url + "> Exercise " + i + ": " + exercise.href}
+                title={"> Exercise " + i + ": " + exercise}
+                href={$page.url + "/" + "Exercise " + i + ": " + exercise}
             />
         {/each}
     </div>
 {/if}
 
-<Modal bind:showModal submitCallback={onSubmit}>
-    <div class="flex flex-col grid-cols-1 justify-items-center">
-        <input
-            on:keypress={(event) => {
-                if (event.key === "Enter") {
-                    onSubmit();
-                }
-            }}
-            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
-            type="text"
-            placeholder="Title"
-            bind:value={newExerciseTitle}
-        />
-    </div>
-</Modal>
+<Modal bind:showModal bind:newTitle submitCallback={onSubmit} />

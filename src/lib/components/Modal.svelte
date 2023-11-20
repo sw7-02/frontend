@@ -1,9 +1,11 @@
 <script lang="ts">
     export let showModal: boolean;
+    export let newTitle: string;
 
     let dialog: any;
 
     $: if (dialog && showModal) dialog.showModal();
+    $: if (!showModal) newTitle = "";
 
     export let submitCallback: () => void;
 </script>
@@ -20,12 +22,24 @@
         }
     }}
 >
+    <div class="flex flex-col grid-cols-1 justify-items-center">
+        <input
+            on:keypress={(event) => {
+                if (event.key === "Enter") {
+                    submitCallback();
+                }
+            }}
+            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
+            type="text"
+            placeholder="Title"
+            bind:value={newTitle}
+        />
+    </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
         class="flex flex-col grid-cols-1 justify-items-center"
         on:click|stopPropagation
     >
-        <div><slot /></div>
         <div class="flex justify-between">
             <button
                 class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]

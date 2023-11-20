@@ -54,15 +54,15 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#if $authentication.isAuthenticated && $authentication.user.role === 0}
-            <div
-                on:click={() => (showModal = true)}
-                on:click={() => (newRowType = "session")}
-                class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
+                <div
+                    on:click={() => (showModal = true)}
+                    on:click={() => (newRowType = "session")}
+                    class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
 				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
-                style="cursor: pointer;"
-            >
-                <p>Add session</p>
-            </div>
+                    style="cursor: pointer;"
+                >
+                    <p>Add session</p>
+                </div>
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
@@ -75,27 +75,18 @@
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#if $authentication.isAuthenticated && $authentication.user.role === 0}
-            <div
-                on:click={() => (showModal = true)}
-                on:click={() => (newRowType = "assignment")}
-                class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
+                <div
+                    on:click={() => (showModal = true)}
+                    on:click={() => (newRowType = "assignment")}
+                    class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
 				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
-                style="cursor: pointer;"
-            >
-                <p>Add assignment</p>
-            </div>
+                    style="cursor: pointer;"
+                >
+                    <p>Add assignment</p>
+                </div>
             {/if}
         </div>
     </div>
 </div>
 
-<Modal bind:showModal submitCallback={onSubmit}>
-    <div class="flex flex-col grid-cols-1 justify-items-center">
-        <input
-            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
-            type="text"
-            placeholder="Title"
-            bind:value={newRowTitle}
-        />
-    </div>
-</Modal>
+<Modal bind:showModal bind:newTitle={newRowTitle} submitCallback={onSubmit} />
