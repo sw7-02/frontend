@@ -1,7 +1,7 @@
 <script lang="ts">
+    import { authentication } from "$lib/stores/authentication";
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
-    import { authentication } from "$lib/stores/authentication";
 
     // export let data;
     // console.log(data);

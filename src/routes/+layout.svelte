@@ -1,8 +1,8 @@
 <script>
     import "../app.css";
+    import { authentication } from "$lib/stores/authentication";
     import Login from "$lib/components/Login.svelte";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
-    import { authentication } from "$lib/stores/authentication";
 </script>
 
 <body

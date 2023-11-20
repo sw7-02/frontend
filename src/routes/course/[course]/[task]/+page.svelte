@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { authentication } from "$lib/stores/authentication";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import * as marked from "marked";
 
@@ -12,7 +13,8 @@
         hints: string[];
     } = {
         name: "Exercise 1: Hello World",
-        description: "Description <br> Description of the exercise  <br> Examples (Input -> Output) <br> ```Hello World```",
+        description:
+            "Description <br> Description of the exercise  <br> Examples (Input -> Output) <br> ```Hello World```",
         language: "C",
         points: 3,
         hints: ["Hint 1", "Hint 2", "Hint 3"],
@@ -26,17 +28,41 @@
 >
     <div class="flex overflow-hidden">
         <div class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px]">
-            <div class="flex justify-between">
-                <p
-                    class="pt-4 pl-4 pr-4 text-neutral-100 font-mono text-lg cursor-default"
-                >
-                    {exercise.name}
-                </p>
-                <p
-                    class="pt-4 pl-4 pr-4 text-green-700 text-md font-mono cursor-default"
-                >
-                    Points: {exercise.points}
-                </p>
+            <div class="flex justify-between items-center">
+                {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    <input
+                        class="mt-4 ml-4 mr-1 text-neutral-100 font-mono text-lg bg-neutral-900 w-full border border-neutral-800"
+                        type="text"
+                        value={exercise.name}
+                    />
+                    <div class="flex justify-end">
+                        <p
+                            class="mt-4 mr-1 text-green-700 text-md font-mono cursor-default"
+                        >
+                            Points:
+                        </p>
+                        <select
+                            class="mt-4 mr-4 text-neutral-100 font-mono text-md bg-neutral-900 border border-neutral-800"
+                            value={exercise.points}
+                        >
+                            {#each Array.from({ length: 11 }, (_, i) => i) as option}
+                                <option value={option}>{option}</option>
+                            {/each}
+                        </select>
+                    </div>
+                {/if}
+                {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+                    <p
+                        class="pt-4 pl-4 pr-4 text-neutral-100 font-mono text-lg cursor-default"
+                    >
+                        {exercise.name}
+                    </p>
+                    <p
+                        class="mt-4 ml-4 mr-4 text-green-700 text-md font-mono cursor-default"
+                    >
+                        Points: {exercise.points}
+                    </p>
+                {/if}
             </div>
             <p class="p-4 text-neutral-100 cursor-default">
                 {@html marked.parse(exercise.description)}

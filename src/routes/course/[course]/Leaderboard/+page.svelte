@@ -1,8 +1,8 @@
 <script>
     import { page } from "$app/stores";
+    import { authentication } from "$lib/stores/authentication";
     import Leaderboard from "$lib/components/Leaderboard.svelte";
     import Statistics from "$lib/components/Statistics.svelte";
-    import { authentication } from "$lib/stores/authentication";
 </script>
 
 <title>Leaderboard - {$page.params.course}</title>

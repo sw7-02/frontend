@@ -1,9 +1,9 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { authentication } from "$lib/stores/authentication";
     import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import Modal from "$lib/components/Modal.svelte";
-    import { authentication } from "$lib/stores/authentication";
 
     let showModal: boolean = false;
     let newRowTitle: string;
