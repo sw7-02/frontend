@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-// use context instead of store
+// TODO: Replace/implement JWT authentication
 
 type User = {
     username: string;
