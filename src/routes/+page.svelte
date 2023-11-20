@@ -1,6 +1,7 @@
 <script lang="ts">
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { authentication } from "$lib/stores/authentication";
 
     // export let data;
     // console.log(data);
@@ -30,16 +31,18 @@
         {/each}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div
-            on:click={() => (showModal = true)}
-            class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50
+        {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+            <div
+                on:click={() => (showModal = true)}
+                class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50
 			shadow-xl rounded-sm text-neutral-950 w-[470px] h-[264px] font-mono
 			text-xl
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
-            style="cursor: pointer;"
-        >
-            <p>Add new course</p>
-        </div>
+                style="cursor: pointer;"
+            >
+                <p>Add course</p>
+            </div>
+        {/if}
     </div>
 </div>
 

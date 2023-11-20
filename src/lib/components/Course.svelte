@@ -5,7 +5,7 @@
 
     let showModal: boolean = false;
     let isHovered: boolean = false;
-    
+
     export let title: string = "title";
 
     function onDelete() {
@@ -39,22 +39,24 @@
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         {#if $authentication.isAuthenticated && $authentication.user.role === 0}
-        <div
-            on:click|preventDefault={() => (showModal = true)}
-            class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-white"
-        >
-            <i class="fa-solid fa-pencil fa-md pr-1" />
-            Edit
-        </div>
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div
-            on:click|preventDefault={onDelete}
-            class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-600 hover:text-red-800"
-        >
-            <i class="fa-solid fa-trash-can fa-md pr-1" />
-            Delete
-        </div>
+            <div
+                on:click|preventDefault={() => (showModal = true)}
+                class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-700 hover:text-white
+                    border border-neutral-700"
+            >
+                <i class="fa-solid fa-pencil fa-md pr-1" />
+                Edit
+            </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div
+                on:click|preventDefault={onDelete}
+                class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-700 hover:text-white
+                       border border-neutral-700"
+            >
+                <i class="fa-solid fa-trash-can fa-md pr-1" />
+                Delete
+            </div>
         {/if}
     </div>
 </a>

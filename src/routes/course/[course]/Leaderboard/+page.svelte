@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
     import Leaderboard from "$lib/components/Leaderboard.svelte";
     import Statistics from "$lib/components/Statistics.svelte";
+    import { authentication } from "$lib/stores/authentication";
 </script>
 
 <title>Leaderboard - {$page.params.course}</title>
@@ -11,6 +12,8 @@
 >
     <div class="flex overflow-hidden">
         <Leaderboard />
-        <Statistics />
+        {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+            <Statistics />
+        {/if}
     </div>
 </div>

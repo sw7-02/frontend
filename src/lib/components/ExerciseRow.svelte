@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { authentication } from "$lib/stores/authentication";
     export let title: string;
     export let href: string;
     export let i: number;

@@ -14,6 +14,11 @@
     bind:this={dialog}
     on:close={() => (showModal = false)}
     on:click|self={() => dialog.close()}
+    on:keypress={(event) => {
+        if (event.key === "Enter") {
+            dialog.close();
+        }
+    }}
 >
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div

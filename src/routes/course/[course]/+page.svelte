@@ -3,6 +3,7 @@
     import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { authentication } from "$lib/stores/authentication";
 
     let showModal: boolean = false;
     let newRowTitle: string;
@@ -52,6 +53,7 @@
             {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
+            {#if $authentication.isAuthenticated && $authentication.user.role === 0}
             <div
                 on:click={() => (showModal = true)}
                 on:click={() => (newRowType = "session")}
@@ -59,8 +61,9 @@
 				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
                 style="cursor: pointer;"
             >
-                <p>Add new session</p>
+                <p>Add session</p>
             </div>
+            {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
             {#each assignments as assignment, i}
@@ -71,6 +74,7 @@
             {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
+            {#if $authentication.isAuthenticated && $authentication.user.role === 0}
             <div
                 on:click={() => (showModal = true)}
                 on:click={() => (newRowType = "assignment")}
@@ -78,8 +82,9 @@
 				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
                 style="cursor: pointer;"
             >
-                <p>Add new assignment</p>
+                <p>Add assignment</p>
             </div>
+            {/if}
         </div>
     </div>
 </div>
