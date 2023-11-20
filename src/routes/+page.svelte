@@ -2,8 +2,8 @@
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    export let data;
-    console.log(data);
+    // export let data;
+    // console.log(data);
 
     let test_data: { title: string }[] = [
         { title: "Imperative Programming" },

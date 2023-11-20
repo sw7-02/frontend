@@ -1,8 +1,41 @@
 <script lang="ts">
-    import CodeMirror from "svelte-codemirror-editor";
-    import { oneDark } from "@codemirror/theme-one-dark";
+    import { onDestroy, onMount } from "svelte";
+    import type * as Monaco from "monaco-editor/esm/vs/editor/editor.api";
 
-    let value = "";
+    let editor: Monaco.editor.IStandaloneCodeEditor;
+    let monaco: typeof Monaco;
+    let editorContainer: HTMLElement;
+
+    onMount(async () => {
+        // Import our 'monaco.ts' file here
+        // (onMount() will only be executed in the browser, which is what we want)
+        monaco = (await import("../monaco")).default;
+
+        // Your monaco instance is ready, let's display some code!
+        const editor = monaco.editor.create(editorContainer, {
+            theme: "vs-dark",
+            automaticLayout: true,
+        });
+        const model = monaco.editor.createModel(
+            "console.log('Hello from Monaco! (the editor, not the city...)')",
+            "c"
+        );
+        editor.setModel(model);
+    });
+
+    onDestroy(() => {
+        monaco?.editor.getModels().forEach((model) => model.dispose());
+        editor?.dispose();
+    });
 </script>
 
-<CodeMirror class="text-neutral-100" bind:value tabSize={4} theme={oneDark} />
+<div>
+    <div class="container" bind:this={editorContainer} />
+</div>
+
+<style>
+    .container {
+        width: 100%;
+        height: 600px;
+    }
+</style>
