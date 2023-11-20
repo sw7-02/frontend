@@ -20,7 +20,7 @@
     on:mouseout={() => (isHovered = false)}
     class="grid grid-cols-1 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[470px] h-[264px] shadow-xl
 		hover:bg-neutral-800 transition duration-200 ease-in-out"
-    href={'course/' + title}
+    href={"course/" + title}
 >
     <p
         id="title"

@@ -1,7 +1,4 @@
 <script>
-
 </script>
 
-<div>
-    Exercise solutions overview
-</div>
+<div>Exercise solutions overview</div>

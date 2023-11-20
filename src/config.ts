@@ -6,5 +6,4 @@ export default {
         /// Prefix for all the api-calls (handled by proxy)
         prefix: process.env["API_PREFIX"] || "/api/v1",
     },
-
-}
+};
