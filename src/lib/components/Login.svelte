@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { authentication } from "$lib/stores/authentication";
 
     // TODO: obviously this is not secure, but it's just a demo
@@ -8,6 +9,7 @@
 
     function loginHandler() {
         if (inputUsername === "teacher") {
+            goto("/");
             authentication.set({
                 isAuthenticated: true,
                 user: {
@@ -18,6 +20,7 @@
             });
         }
         if (inputUsername === "student") {
+            goto("/");
             authentication.set({
                 isAuthenticated: true,
                 user: {
@@ -37,9 +40,7 @@
 >
     <p class="text-neutral-100 text-lg pt-4">IMPRoved</p>
     {#if wrongInput}
-        <p class="text-red-700 text-sm">
-            Incorrect username or password!
-        </p>
+        <p class="text-red-700 text-sm">Incorrect username or password!</p>
     {/if}
     <input
         on:keypress={(event) => {
