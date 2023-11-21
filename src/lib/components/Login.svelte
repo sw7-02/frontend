@@ -1,6 +1,5 @@
 <script lang="ts">
     import { authentication } from "$lib/stores/authentication";
-    import { get } from "svelte/store";
 
     // TODO: obviously this is not secure, but it's just a demo
     let inputUsername: string;
@@ -27,8 +26,7 @@
                     role: 2,
                 },
             });
-        }
-        else{
+        } else {
             wrongInput = true;
         }
     }
@@ -37,11 +35,11 @@
 <div
     class="grid grid-cols-1 justify-items-center p-4 bg-neutral-900 m-1 rounded-sm text-neutral-100 w-[600px] h-[338px] shadow-xl"
 >
-    <p class="text-neutral-100 text-lg font-mono pt-4">IMPRoved</p>
+    <p class="text-neutral-100 text-lg pt-4">IMPRoved</p>
     {#if wrongInput}
-    <p class="text-red-700 text-sm font-mono">
-        Incorrect username or password!
-    </p>
+        <p class="text-red-700 text-sm">
+            Incorrect username or password!
+        </p>
     {/if}
     <input
         on:keypress={(event) => {
@@ -49,7 +47,7 @@
                 loginHandler();
             }
         }}
-        class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4 font-mono"
+        class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4"
         type="text"
         placeholder="Enter username"
         bind:value={inputUsername}
@@ -60,7 +58,7 @@
                 loginHandler();
             }
         }}
-        class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4 font-mono"
+        class="bg-neutral-700 w-[300px] h-[40px] text-neutral-100 outline-none p-4"
         type="password"
         placeholder="Enter password"
         bind:value={inputPassword}

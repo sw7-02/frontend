@@ -49,7 +49,7 @@
     <div class="grid grid-cols-2 justify-items-center items-start">
         <div class="grid grid-cols-1 justify-items-center mr-2">
             {#each sessions as session, i}
-                <SessionRow title={"Session " + i + ": " + session} />
+                <SessionRow title={"Session " + (i + 1) + ": " + session} />
             {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -68,7 +68,7 @@
         <div class="grid grid-cols-1 justify-items-center ml-2">
             {#each assignments as assignment, i}
                 <AssignmentRow
-                    title={"Assignment " + i + ": " + assignment}
+                    title={"Assignment " + (i + 1) + ": " + assignment}
                     href={$page.params.course + "/" + assignment}
                 />
             {/each}
@@ -89,4 +89,11 @@
     </div>
 </div>
 
-<Modal bind:showModal bind:newTitle={newRowTitle} submitCallback={onSubmit} />
+<Modal
+    bind:showModal
+    bind:newTitle={newRowTitle}
+    {onSubmit}
+    onCancel={() => {
+        newRowTitle = "";
+    }}
+/>

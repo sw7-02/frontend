@@ -31,18 +31,18 @@
             <div class="flex justify-between items-center">
                 {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
                     <input
-                        class="mt-4 ml-4 mr-1 text-neutral-100 font-mono text-lg bg-neutral-900 w-full border border-neutral-800"
+                        class="mt-4 ml-4 mr-1 text-neutral-100 text-lg bg-neutral-900 w-full border border-neutral-800"
                         type="text"
                         value={exercise.name}
                     />
                     <div class="flex justify-end">
                         <p
-                            class="mt-4 mr-1 text-green-700 text-md font-mono cursor-default"
+                            class="mt-4 mr-1 text-green-700 text-md cursor-default"
                         >
                             Points:
                         </p>
                         <select
-                            class="mt-4 mr-4 text-neutral-100 font-mono text-md bg-neutral-900 border border-neutral-800"
+                            class="mt-4 mr-4 text-neutral-100 text-md bg-neutral-900 border border-neutral-800"
                             value={exercise.points}
                         >
                             {#each Array.from({ length: 11 }, (_, i) => i) as option}
@@ -53,12 +53,12 @@
                 {/if}
                 {#if $authentication.isAuthenticated && $authentication.user.role === 2}
                     <p
-                        class="pt-4 pl-4 pr-4 text-neutral-100 font-mono text-lg cursor-default"
+                        class="pt-4 pl-4 pr-4 text-neutral-100 text-lg cursor-default"
                     >
                         {exercise.name}
                     </p>
                     <p
-                        class="mt-4 ml-4 mr-4 text-green-700 text-md font-mono cursor-default"
+                        class="mt-4 ml-4 mr-4 text-green-700 text-md cursor-default"
                     >
                         Points: {exercise.points}
                     </p>
