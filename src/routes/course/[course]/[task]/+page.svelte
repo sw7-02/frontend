@@ -19,6 +19,14 @@
         points: 3,
         hints: ["Hint 1", "Hint 2", "Hint 3"],
     };
+
+    let revealedHintIndex = -1;
+
+    function revealHint() {
+        if (revealedHintIndex < exercise.hints.length - 1) {
+            revealedHintIndex++;
+        }
+    }
 </script>
 
 <title>{$page.params.task}</title>
@@ -67,17 +75,29 @@
             <p class="p-4 text-neutral-100 cursor-default">
                 {@html marked.parse(exercise.description)}
             </p>
+            {#each exercise.hints as hint, i}
+                {#if revealedHintIndex >= i}
+                    <p class="p-4 text-neutral-100">{hint}</p>
+                {/if}
+            {/each}
+            
         </div>
         <div class="bg-neutral-900 mt-4 mb-2 w-[1100px] overflow-auto">
             <CodeEditor />
         </div>
     </div>
 </div>
-<div class="border border-black-500 rounded w-[1820px] ml-12 overflow-auto">
-    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Hint</button>
-    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Test</button>
-    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Submit</button>
-</div> 
+{#if $authentication.isAuthenticated && $authentication.user.role === 2}
+<div class="w-[1817px] ml-11 overflow-auto flex">
+    <div class="">
+        <button on:click={revealHint} class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Hint</button>
+    </div>
+    <div class="flex-grow flex items-center">
+        <button class="ml-auto rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Test</button>
+        <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 font-mono border border-neutral-700 bg-opacity-50">Submit</button>
+    </div>
+</div>
+{/if}
