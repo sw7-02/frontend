@@ -27,7 +27,7 @@
     style="height: calc(100vh - 64px);"
 >
     <div class="flex overflow-hidden">
-        <div class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px]">
+        <div class="bg-neutral-900 mt-4 mb-2 mr-4 w-[700px]">
             <div class="flex justify-between items-center">
                 {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
                     <input
@@ -68,8 +68,16 @@
                 {@html marked.parse(exercise.description)}
             </p>
         </div>
-        <div class="bg-neutral-900 mt-4 mb-4 w-[1100px] overflow-auto">
+        <div class="bg-neutral-900 mt-4 mb-2 w-[1100px] overflow-auto">
             <CodeEditor />
         </div>
     </div>
 </div>
+<div class="border border-black-500 rounded w-[1820px] ml-12 overflow-auto">
+    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Hint</button>
+    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Test</button>
+    <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+    hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Submit</button>
+</div> 

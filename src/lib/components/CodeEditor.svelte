@@ -13,7 +13,6 @@
     tabSize={4}
     theme={oneDark}
     lang={cpp()}
-
     on:change={() => {
         console.log(marked.parse(value));
     }}

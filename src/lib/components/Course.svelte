@@ -13,7 +13,6 @@
     }
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
-
     }
 </script>
 
