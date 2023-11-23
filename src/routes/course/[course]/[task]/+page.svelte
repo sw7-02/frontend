@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as marked from "marked";
     import { cpp } from "@codemirror/lang-cpp";
     import { page } from "$app/stores";
     import { authentication } from "$lib/stores/authentication";
@@ -7,6 +6,16 @@
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
 
+    let examples: { input: string; output: string }[] = [
+        { input: "[1,2,3]", output: "[6]" },
+        { input: "Hello World", output: "[H,e,l,l,o,,w,o,r,l,d]" },
+    ];
+
+    function addExample() {
+        const newExample = { input: "", output: "" };
+        examples = [...examples, newExample];
+        console.log(examples);
+    }
     //  TODO: Replace this with a fetch request to the API
     let exercise: {
         name: string;
@@ -29,10 +38,6 @@
         if (revealedHintIndex < exercise.hints.length - 1) {
             revealedHintIndex++;
         }
-    }
-
-    function addExample() {
-        console.log("add example");
     }
 </script>
 
@@ -79,37 +84,45 @@
                         </p>
                     {/if}
                 </div>
-                {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
-                    <p class="pt-2 pl-2 pr-2 text-neutral-100 cursor-default">
-                        Description
-                    </p>
-                    <form class="pt-2 pl-2 pr-2">
-                        <textarea
-                            class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
-                            rows="10"
-                        />
-                    </form>
-                    <p class="p-2 text-neutral-100 cursor-default items-center">
-                        Examples (Input <i class="fa-solid fa-arrow-right" /> Output)
-                    </p>
-                    <InputOutputExample />
-                    <button
-                        on:click={addExample}
-                        class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] m-2"
-                        >Add example</button
-                    >
-                    <p class="p-2 text-neutral-100 cursor-default">Hints</p>
-                {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
-                    <p class="p-2 text-neutral-100 cursor-default">
-                        {exercise.description}
-                    </p>
-                {/if}
-                {#each exercise.hints as hint, i}
-                    {#if revealedHintIndex >= i}
-                        <p class="p-2 text-neutral-100">{hint}</p>
+                <div class="ml-2 mr-2">
+                    {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Description
+                        </p>
+                        <form class="mt-2">
+                            <textarea
+                                class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
+                                rows="10"
+                            />
+                        </form>
+                        <p
+                            class="mt-2 text-neutral-100 cursor-default items-center"
+                        >
+                            Examples (Input <i
+                                class="fa-solid fa-arrow-right"
+                            /> Output)
+                        </p>
+                        {#each examples as example, i}
+                            <InputOutputExample bind:example={examples[i]} />
+                        {/each}
+                        <button
+                            on:click={addExample}
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2"
+                            >Add example</button
+                        >
+                        <p class="p-2 text-neutral-100 cursor-default">Hints</p>
+                    {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
+                        <p class="p-2 text-neutral-100 cursor-default">
+                            {exercise.description}
+                        </p>
                     {/if}
-                {/each}
+                    {#each exercise.hints as hint, i}
+                        {#if revealedHintIndex >= i}
+                            <p class="p-2 text-neutral-100">{hint}</p>
+                        {/if}
+                    {/each}
+                </div>
             </div>
             <div
                 class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"

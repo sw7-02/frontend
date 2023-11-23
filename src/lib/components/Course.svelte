@@ -61,4 +61,4 @@
     </div>
 </a>
 
-<Modal bind:showModal bind:newTitle={title} submitCallback={onSubmit} />
+<Modal bind:showModal bind:newTitle={title} {onSubmit} onCancel={() => {}} />
