@@ -5,17 +5,25 @@
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
+    import Hint from "$lib/components/Hint.svelte";
 
     let examples: { input: string; output: string }[] = [
         { input: "[1,2,3]", output: "[6]" },
         { input: "Hello World", output: "[H,e,l,l,o,,w,o,r,l,d]" },
     ];
 
+    let hints: string[] = [""];
+
     function addExample() {
         const newExample = { input: "", output: "" };
         examples = [...examples, newExample];
-        console.log(examples);
     }
+
+    function addHint() {
+        const newHint = "";
+        hints = [...hints, newHint];
+    }
+
     //  TODO: Replace this with a fetch request to the API
     let exercise: {
         name: string;
@@ -26,7 +34,7 @@
     } = {
         name: "Exercise 1: Hello World",
         description:
-            "Description <br> Description of the exercise  <br> Examples (Input -> Output) <br> ```Hello World```",
+            "Description of the exercise. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         language: "C",
         points: 3,
         hints: ["Hint 1", "Hint 2", "Hint 3"],
@@ -84,7 +92,7 @@
                         </p>
                     {/if}
                 </div>
-                <div class="ml-2 mr-2">
+                <div class="ml-2 pr-2 overflow-auto h-[737px]">
                     {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
                         <p class="mt-2 text-neutral-100 cursor-default">
                             Description
@@ -111,17 +119,50 @@
                     text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2"
                             >Add example</button
                         >
-                        <p class="p-2 text-neutral-100 cursor-default">Hints</p>
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Hints
+                        </p>
+                        {#each hints as hint, i}
+                            <Hint bind:hint={hints[i]} />
+                        {/each}
+                        <button
+                            on:click={addHint}
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2 mb-2"
+                            >Add hint</button
+                        >
                     {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
-                        <p class="p-2 text-neutral-100 cursor-default">
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Description
+                        </p>
+                        <p class="mt-2 text-neutral-100 cursor-default">
                             {exercise.description}
                         </p>
+                        <p
+                            class="mt-2 text-neutral-100 cursor-default items-center"
+                        >
+                            Examples (Input <i
+                                class="fa-solid fa-arrow-right"
+                            /> Output)
+                        </p>
+                        {#each examples as example}
+                            <div
+                                class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
+                            >
+                                <p>{example.input}</p>
+                                <i class="fa-solid fa-arrow-right" />
+                                <p>{example.output}</p>
+                            </div>
+                        {/each}
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Hints
+                        </p>
+                        {#each exercise.hints as hint, i}
+                            {#if revealedHintIndex >= i}
+                                <p class="mt-2 text-neutral-100">{hint}</p>
+                            {/if}
+                        {/each}
                     {/if}
-                    {#each exercise.hints as hint, i}
-                        {#if revealedHintIndex >= i}
-                            <p class="p-2 text-neutral-100">{hint}</p>
-                        {/if}
-                    {/each}
                 </div>
             </div>
             <div
