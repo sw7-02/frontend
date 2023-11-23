@@ -4,6 +4,7 @@
     import { authentication } from "$lib/stores/authentication";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
+    import TestCaseEditor from "$lib/components/TestCaseEditor.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
     import Hint from "$lib/components/Hint.svelte";
 
@@ -185,7 +186,11 @@
                 <p
                     class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700"
                 >
-                    Solution
+                    {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+                        Solution
+                    {:else if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                        Code Template
+                    {/if}
                 </p>
                 <CodeEditor lang={cpp()} />
             </div>
@@ -212,6 +217,8 @@
                         >Submit</button
                     >
                 </div>
+            {:else if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                <TestCaseEditor lang={cpp()} />
             {/if}
         </div>
     </div>
