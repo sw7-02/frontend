@@ -1,8 +1,11 @@
 <script lang="ts">
+    import * as marked from "marked";
+    import { cpp } from "@codemirror/lang-cpp";
     import { page } from "$app/stores";
     import { authentication } from "$lib/stores/authentication";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
-    import * as marked from "marked";
+    import OutputConsole from "$lib/components/OutputConsole.svelte";
+    import InputOutputExample from "$lib/components/InputOutputExample.svelte";
 
     //  TODO: Replace this with a fetch request to the API
     let exercise: {
@@ -27,6 +30,10 @@
             revealedHintIndex++;
         }
     }
+
+    function addExample() {
+        console.log("add example");
+    }
 </script>
 
 <title>{$page.params.task}</title>
@@ -35,69 +42,123 @@
     style="height: calc(100vh - 64px);"
 >
     <div class="flex overflow-hidden">
-        <div class="bg-neutral-900 mt-4 mb-2 mr-4 w-[700px]">
-            <div class="flex justify-between items-center">
-                {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
-                    <input
-                        class="mt-4 ml-4 mr-1 text-neutral-100 text-lg bg-neutral-900 w-full border border-neutral-800"
-                        type="text"
-                        value={exercise.name}
-                    />
-                    <div class="flex justify-end">
-                        <p
-                            class="mt-4 mr-1 text-green-700 text-md cursor-default"
-                        >
-                            Points:
+        <div
+            class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between"
+        >
+            <div>
+                <div
+                    class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
+                >
+                    {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                        <input
+                            class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800"
+                            type="text"
+                            value={exercise.name}
+                        />
+                        <div class="flex justify-end">
+                            <p
+                                class="ml-2 mr-2 text-green-700 text-md cursor-default"
+                            >
+                                Points:
+                            </p>
+                            <select
+                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
+                                value={exercise.points}
+                            >
+                                {#each Array.from({ length: 11 }, (_, i) => i) as option}
+                                    <option value={option}>{option}</option>
+                                {/each}
+                            </select>
+                        </div>
+                    {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
+                        <p class="text-neutral-100 text-md cursor-default">
+                            {exercise.name}
                         </p>
-                        <select
-                            class="mt-4 mr-4 text-neutral-100 text-md bg-neutral-900 border border-neutral-800"
-                            value={exercise.points}
-                        >
-                            {#each Array.from({ length: 11 }, (_, i) => i) as option}
-                                <option value={option}>{option}</option>
-                            {/each}
-                        </select>
-                    </div>
+                        <p class="text-green-700 text-md cursor-default">
+                            Points: {exercise.points}
+                        </p>
+                    {/if}
+                </div>
+                {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    <p class="pt-2 pl-2 pr-2 text-neutral-100 cursor-default">
+                        Description
+                    </p>
+                    <form class="pt-2 pl-2 pr-2">
+                        <textarea
+                            class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
+                            rows="10"
+                        />
+                    </form>
+                    <p class="p-2 text-neutral-100 cursor-default items-center">
+                        Examples (Input <i class="fa-solid fa-arrow-right" /> Output)
+                    </p>
+                    <InputOutputExample />
+                    <button
+                        on:click={addExample}
+                        class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] m-2"
+                        >Add example</button
+                    >
+                    <p class="p-2 text-neutral-100 cursor-default">Hints</p>
+                {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
+                    <p class="p-2 text-neutral-100 cursor-default">
+                        {exercise.description}
+                    </p>
                 {/if}
+                {#each exercise.hints as hint, i}
+                    {#if revealedHintIndex >= i}
+                        <p class="p-2 text-neutral-100">{hint}</p>
+                    {/if}
+                {/each}
+            </div>
+            <div
+                class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+            >
                 {#if $authentication.isAuthenticated && $authentication.user.role === 2}
-                    <p
-                        class="pt-4 pl-4 pr-4 text-neutral-100 text-lg cursor-default"
+                    <button
+                        on:click={revealHint}
+                        class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                        >Hint</button
                     >
-                        {exercise.name}
-                    </p>
-                    <p
-                        class="mt-4 ml-4 mr-4 text-green-700 text-md cursor-default"
-                    >
-                        Points: {exercise.points}
-                    </p>
                 {/if}
             </div>
-            <p class="p-4 text-neutral-100 cursor-default">
-                {@html marked.parse(exercise.description)}
-            </p>
-            {#each exercise.hints as hint, i}
-                {#if revealedHintIndex >= i}
-                    <p class="p-4 text-neutral-100">{hint}</p>
-                {/if}
-            {/each}
-            
         </div>
-        <div class="bg-neutral-900 mt-4 mb-2 w-[1100px] overflow-auto">
-            <CodeEditor />
+        <div
+            class="bg-neutral-900 mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col"
+        >
+            <div>
+                <p
+                    class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700"
+                >
+                    Solution
+                </p>
+                <CodeEditor lang={cpp()} />
+            </div>
+            {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+                <div>
+                    <p
+                        class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-t-[2px] border-neutral-700"
+                    >
+                        Output
+                    </p>
+                    <OutputConsole />
+                </div>
+                <div
+                    class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                >
+                    <button
+                        class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm mr-4 font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                        >Test</button
+                    >
+                    <button
+                        class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+             text-sm pl-3 pr-3 font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                        >Submit</button
+                    >
+                </div>
+            {/if}
         </div>
     </div>
 </div>
-{#if $authentication.isAuthenticated && $authentication.user.role === 2}
-<div class="w-[1817px] ml-11 overflow-auto flex">
-    <div class="">
-        <button on:click={revealHint} class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Hint</button>
-    </div>
-    <div class="flex-grow flex items-center">
-        <button class="ml-auto rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50">Test</button>
-        <button class="rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
-            hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 font-mono border border-neutral-700 bg-opacity-50">Submit</button>
-    </div>
-</div>
-{/if}
