@@ -1,8 +1,8 @@
-import { jwtAuth } from "$lib/stores/authentication";
+import { jwtAuth, userRole } from "$lib/stores/authentication";
 import { get } from "svelte/store";
 
-export async function load() {
-    await fetch("http://localhost:8080/courses", {
+export async function load({ params }) {
+    await fetch(`http://localhost:8080/course/${params.course}`, {
         method: "GET",
         headers: { auth: get(jwtAuth).jwt_token },
     }).then((response) => {

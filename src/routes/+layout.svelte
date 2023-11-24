@@ -1,6 +1,6 @@
 <script>
     import "../app.css";
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth } from "$lib/stores/authentication";
     import Login from "$lib/components/Login.svelte";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
     import Background from "$lib/components/Background.svelte";
@@ -8,7 +8,7 @@
 
 <body class="overflow-hidden">
     <Background />
-    {#if $authentication.isAuthenticated}
+    {#if $jwtAuth.jwt_token}
         <NavigationBar />
         <div class="overflow-auto" style="height: calc(100vh - 64px);">
             <slot />

@@ -1,37 +1,38 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
 
-    // TODO: obviously this is not secure, but it's just a demo
     let inputUsername: string;
     let inputPassword: string;
     let wrongInput: boolean = false;
 
-    function loginHandler() {
-        if (inputUsername === "teacher") {
-            goto("/");
-            authentication.set({
-                isAuthenticated: true,
-                user: {
-                    username: inputUsername,
-                    password: inputPassword,
-                    role: 0,
-                },
-            });
-        }
-        if (inputUsername === "student") {
-            goto("/");
-            authentication.set({
-                isAuthenticated: true,
-                user: {
-                    username: inputUsername,
-                    password: inputPassword,
-                    role: 2,
-                },
-            });
-        } else {
-            wrongInput = true;
-        }
+    async function loginHandler() {
+        await fetch("http://localhost:8080/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: inputUsername,
+                password: inputPassword,
+            }),
+        }).then((response) => {
+            if (response.status === 200) {
+                response.json().then((data) => {
+                    console.log(data);
+                    jwtAuth.set({
+                        jwt_token: data.jwt_token,
+                    });
+                    teacherAuth.set({
+                        is_teacher: data.is_teacher,
+                    });
+                    goto("/");
+                });
+            } else {
+                wrongInput = true;
+                response.text().then((data) => console.log(data));
+            }
+        });
     }
 </script>
 

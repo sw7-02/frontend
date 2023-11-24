@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
 
     function handleLogout() {
-        authentication.set({
-            isAuthenticated: false,
-            user: { username: "", password: "", role: 2 },
+        jwtAuth.set({
+            jwt_token: "",
+        });
+        teacherAuth.set({
+            is_teacher: false,
         });
     }
 </script>

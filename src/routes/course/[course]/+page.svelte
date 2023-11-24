@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
     import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import Modal from "$lib/components/Modal.svelte";
@@ -53,7 +53,7 @@
             {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+            {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
                 <div
                     on:click={() => (showModal = true)}
                     on:click={() => (newRowType = "session")}
@@ -74,7 +74,7 @@
             {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+            {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
                 <div
                     on:click={() => (showModal = true)}
                     on:click={() => (newRowType = "assignment")}

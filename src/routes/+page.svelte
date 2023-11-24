@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    // export let data;
-    // console.log(data);
+    export let data;
+    console.log(data);
 
     let test_data: { title: string }[] = [
         { title: "Imperative Programming" },
@@ -31,7 +31,7 @@
         {/each}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+        {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
             <div
                 on:click={() => (showModal = true)}
                 class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50

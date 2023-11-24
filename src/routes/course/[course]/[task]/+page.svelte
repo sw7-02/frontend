@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cpp } from "@codemirror/lang-cpp";
     import { page } from "$app/stores";
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import TestCaseEditor from "$lib/components/TestCaseEditor.svelte";
@@ -63,7 +63,7 @@
                 <div
                     class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
                 >
-                    {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    {#if ($jwtAuth.jwt_token && $authentication.user.role === 0) || $authentication.user.role === 1}
                         <input
                             class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800"
                             type="text"

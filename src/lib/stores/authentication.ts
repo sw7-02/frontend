@@ -1,9 +1,25 @@
 import { writable } from "svelte/store";
 
-type Authentication = {
-    jwtToken: string;
+type Jwt_auth = {
+    jwt_token: string;
 };
 
-export const authentication = writable<Authentication>({
-    jwtToken: "",
+type Is_teacher_auth = {
+    is_teacher: boolean;
+};
+
+type User_role = {
+    user_role: number;
+};
+
+export const jwtAuth = writable<Jwt_auth>({
+    jwt_token: "",
+});
+
+export const teacherAuth = writable<Is_teacher_auth>({
+    is_teacher: false,
+});
+
+export const userRole = writable<User_role>({
+    user_role: 0,
 });
