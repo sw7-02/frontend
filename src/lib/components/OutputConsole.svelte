@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
     let logs: string[] = [
         "log message 1",
         "log message 2",
@@ -51,9 +53,19 @@
         "log message 49",
         "log message 50",
     ];
+
+    onMount(() => {
+        const outputConsole = document.querySelector(".console")!;
+        outputConsole.scrollTop = outputConsole.scrollHeight;
+        // scrollToBottom(outputConsole);
+    });
+
+    // function scrollToBottom(outputConsole: HTMLElement) {
+        
+    // }
 </script>
 
-<div class="bg-neutral-900 h-[295px] overflow-auto">
+<div class="console bg-neutral-900 h-[295px] overflow-auto">
     {#each logs as log}
         <p class="text-neutral-100 pl-2 pr-2">$ {log}</p>
     {/each}

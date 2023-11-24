@@ -133,14 +133,14 @@
                             >Add hint</button
                         >
                     {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
-                        <p class="mt-2 text-neutral-100 cursor-default">
+                        <p class="mt-2 text-neutral-100 cursor-default text-lg">
                             Description
                         </p>
                         <p class="mt-2 text-neutral-100 cursor-default">
                             {exercise.description}
                         </p>
                         <p
-                            class="mt-2 text-neutral-100 cursor-default items-center"
+                            class="mt-4 text-neutral-100 cursor-default items-center text-lg"
                         >
                             Examples (Input <i
                                 class="fa-solid fa-arrow-right"
@@ -155,7 +155,7 @@
                                 <p>{example.output}</p>
                             </div>
                         {/each}
-                        <p class="mt-2 text-neutral-100 cursor-default">
+                        <p class="mt-4 text-neutral-100 cursor-default text-lg">
                             Hints
                         </p>
                         {#each exercise.hints as hint, i}
