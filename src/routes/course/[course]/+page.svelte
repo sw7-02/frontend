@@ -45,7 +45,7 @@
 </script>
 
 <title>{$page.params.course}</title>
-<div class="flex justify-center mt-3">
+<div class="flex justify-center mt-3 mb-3">
     <div class="grid grid-cols-2 justify-items-center items-start">
         <div class="grid grid-cols-1 justify-items-center mr-2">
             {#each sessions as session, i}

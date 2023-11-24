@@ -4,7 +4,7 @@
     function handleLogout() {
         authentication.set({
             isAuthenticated: false,
-            user: null,
+            user: { username: "", password: "", role: 2 },
         });
     }
 </script>

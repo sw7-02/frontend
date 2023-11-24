@@ -7,8 +7,6 @@
         "Test Case 1",
         "Test Case 2",
         "Test Case 3",
-        "Test Case 4",
-        "Test Case 5",
     ];
 
     let currentTestCase: number = 0;
@@ -36,7 +34,7 @@
         {#each testCases as _, i}
             <button
                 on:click={() => changeTestCase(i)}
-                class="bg-neutral-800 text-neutral-100 text-sm border-t-[1px] border-l-[1px] border-neutral-500 pt-1 pb-1 pl-4 pr-4
+                class="text-neutral-100 text-sm border-t-[1px] border-l-[1px] border-neutral-500 pt-1 pb-1 pl-4 pr-4
                 hover:bg-neutral-700 transition duration-200 ease-in-out hover:text-white {i ===
                 currentTestCase
                     ? 'bg-neutral-600'

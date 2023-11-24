@@ -93,7 +93,7 @@
                         </p>
                     {/if}
                 </div>
-                <div class="ml-2 pr-2 overflow-auto h-[737px]">
+                <div class="pl-2 pr-2 overflow-auto h-[737px]">
                     {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
                         <p class="mt-2 text-neutral-100 cursor-default">
                             Description
