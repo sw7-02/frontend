@@ -1,34 +1,51 @@
 <script lang="ts">
+    import { get } from "svelte/store";
     import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
-    export let data;
-    console.log(data);
-
-    let test_data: { title: string }[] = [
-        { title: "Imperative Programming" },
-        { title: "Object-Oriented Programming" },
-        { title: "Programming Paradigms" },
-    ];
+    async function load() {
+        return fetch("http://localhost:8080/course/", {
+            method: "GET",
+            headers: {
+                auth: get(jwtAuth).jwt_token,
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            if (response.ok) {
+                response.headers.get("auth") &&
+                    jwtAuth.set({ jwt_token: response.headers.get("auth")! });
+                return response
+                    .json()
+                    .then((data) => {
+                        return data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return { error: "Failed to parse data" };
+                    });
+            } else {
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
 
     let showModal: boolean = false;
     let newTitle: string = "";
 
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
-        const newCourse = { title: newTitle };
-        test_data = [...test_data, newCourse];
-        newTitle = "";
     }
 </script>
 
 <title>IMPRoved</title>
 <div class="flex justify-center">
     <div class="grid grid-cols-3 justify-items-center">
-        {#each test_data as course}
-            <Course title={course.title} />
-        {/each}
+        {#await load() then data}
+            {#each data as course}
+                <Course title={course.title} />
+            {/each}
+        {/await}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}

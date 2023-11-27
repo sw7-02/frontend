@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { fade } from "svelte/transition";
-    import { authentication } from "$lib/stores/authentication";
+    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
 
@@ -37,7 +37,7 @@
 >
     <div class="flex justify-between">
         <div class="ml-6">{title}</div>
-        {#if $authentication.isAuthenticated && $authentication.user.role === 0}
+        {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
             <div
                 on:click={() => (showModal = true)}
                 on:click|stopPropagation

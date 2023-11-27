@@ -7,6 +7,7 @@
     let wrongInput: boolean = false;
 
     async function loginHandler() {
+        console.log(inputUsername, inputPassword);
         await fetch("http://localhost:8080/login", {
             method: "POST",
             headers: {
@@ -30,7 +31,6 @@
                 });
             } else {
                 wrongInput = true;
-                response.text().then((data) => console.log(data));
             }
         });
     }
