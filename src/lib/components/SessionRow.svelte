@@ -31,8 +31,16 @@
 			shadow-xl text-neutral-100 text-md w-[700px] h-16
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
 >
+    
     <div class="flex justify-between">
-        <div class="ml-6">{title}</div>
+        <div class="ml-6">
+            {#if !showExercises}
+                <i class="fa-solid fa-chevron-right w-5"></i>{title}
+            {:else}
+                <i class="fa-solid fa-chevron-down w-5"></i>{title}
+            {/if}
+            
+        </div>
         {#if $jwtStore !== "" && $isTeacherStore === true}
             <div
                 on:click={() => (showModal = true)}
@@ -50,7 +58,7 @@
         {#each exercises as exercise, i}
             <ExerciseRow
                 {i}
-                title={"> Exercise " + (i + 1) + ": " + exercise.title}
+                title={"Exercise " + (i + 1) + ": " + exercise.title}
                 href={$page.url +
                     "/" +
                     "Exercise " +
