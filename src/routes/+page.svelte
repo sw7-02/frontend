@@ -1,6 +1,6 @@
 <script lang="ts">
     import { get } from "svelte/store";
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
@@ -11,13 +11,13 @@
         return fetch("http://localhost:8080/course/", {
             method: "GET",
             headers: {
-                auth: get(jwtAuth).jwt_token,
+                auth: get(jwtStore),
                 "Content-Type": "application/json",
             },
         }).then(async (response) => {
             if (response.ok) {
                 response.headers.get("auth") &&
-                    jwtAuth.set({ jwt_token: response.headers.get("auth")! });
+                    jwtStore.set(response.headers.get("auth")!);
                 return response
                     .json()
                     .then((data) => {
@@ -60,12 +60,16 @@
     <div class="grid grid-cols-3 justify-items-center">
         {#await load() then data}
             {#each data as course}
-                <Course title={course.title} id={course.course_id} />
+                <Course
+                    title={course.title}
+                    id={course.course_id}
+                    userRole={course.user_role}
+                />
             {/each}
         {/await}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
+        {#if $jwtStore !== "" && $isTeacherStore === true}
             <div
                 on:click={() => (showModal = true)}
                 class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50

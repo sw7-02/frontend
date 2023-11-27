@@ -1,30 +1,26 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { get } from "svelte/store";
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
     async function load() {
-        const courseId = get(courseIdStore);
-        console.log(courseId);
-        console.log(`http://localhost:8080/course/${get(courseIdStore)}`);
         return fetch(`http://localhost:8080/course/${get(courseIdStore)}`, {
             method: "GET",
             headers: {
-                auth: get(jwtAuth).jwt_token,
+                auth: get(jwtStore),
                 "Content-Type": "application/json",
             },
         }).then(async (response) => {
             if (response.ok) {
                 response.headers.get("auth") &&
-                    jwtAuth.set({ jwt_token: response.headers.get("auth")! });
+                    jwtStore.set( response.headers.get("auth")! );
                 return response
                     .json()
                     .then((data) => {
-                        console.log(data);
                         return data;
                     })
                     .catch((error) => {
@@ -55,6 +51,7 @@
                 {#each data.sessions as session, i}
                     <SessionRow
                         title={"Session " + (i + 1) + ": " + session.title}
+                        sessionId={session.session_id}
                         exercises={session.exercises}
                     />
                 {/each}
@@ -62,7 +59,7 @@
 
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
+            {#if $jwtStore !== "" && $isTeacherStore === true}
                 <div
                     on:click={() => (showModal = true)}
                     on:click={() => (newRowType = "session")}
@@ -83,7 +80,7 @@
             {/each} -->
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
-            {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
+            {#if $jwtStore !== "" && $isTeacherStore === true}
                 <div
                     on:click={() => (showModal = true)}
                     on:click={() => (newRowType = "assignment")}

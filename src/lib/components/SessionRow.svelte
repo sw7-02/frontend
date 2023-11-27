@@ -1,16 +1,16 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { fade } from "svelte/transition";
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
 
     export let title: string;
+    export let sessionId: number;
+    export let exercises: { title: string; exercise_id: number }[];
+
     let showModal: boolean = false;
     let newTitle: string;
-
-    export let exercises: {title: string, id: number}[];
-
     let showExercises = false;
 
     function onSubmit() {
@@ -33,7 +33,7 @@
 >
     <div class="flex justify-between">
         <div class="ml-6">{title}</div>
-        {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
+        {#if $jwtStore !== "" && $isTeacherStore === true}
             <div
                 on:click={() => (showModal = true)}
                 on:click|stopPropagation
@@ -50,9 +50,15 @@
         {#each exercises as exercise, i}
             <ExerciseRow
                 {i}
-                title={"> Exercise " + (i+1) + ": " + exercise.title}
-                href={$page.url + "/" + "Exercise " + (i+1) + ": " + exercise.title}
-                id={exercise.id}
+                title={"> Exercise " + (i + 1) + ": " + exercise.title}
+                href={$page.url +
+                    "/" +
+                    "Exercise " +
+                    (i + 1) +
+                    ": " +
+                    exercise.title}
+                id={exercise.exercise_id}
+                {sessionId}
             />
         {/each}
     </div>

@@ -1,6 +1,6 @@
 <script>
     import { page } from "$app/stores";
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import Leaderboard from "$lib/components/Leaderboard.svelte";
     import Statistics from "$lib/components/Statistics.svelte";
 </script>
@@ -12,7 +12,7 @@
 >
     <div class="flex overflow-hidden">
         <Leaderboard />
-        {#if $jwtAuth.jwt_token && $teacherAuth.is_teacher === true}
+        {#if $jwtStore !== "" && $isTeacherStore === true}
             <Statistics />
         {/if}
     </div>

@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { taskStore } from "$lib/stores/ids";
+    import { sessionIdStore, taskIdStore } from "$lib/stores/ids";
 
     export let title: string;
     export let href: string;
     export let i: number;
     export let id: number;
+    export let sessionId: number;
 </script>
 
 <a
-    on:click={() => taskStore.set(id)}
+    on:click={() => {taskIdStore.set(id); sessionIdStore.set(sessionId)}}
     {href}
     class="bg-neutral-900 grid grid-cols-1 items-center shadow-xl text-neutral-100 text-sm font-mono w-[700px]
 

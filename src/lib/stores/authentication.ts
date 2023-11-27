@@ -1,25 +1,13 @@
 import { writable } from "svelte/store";
 
-type Jwt_auth = {
-    jwt_token: string;
-};
+export enum role {
+    STUDENT = 0,
+    TEACHER = 1,
+    TA = 2,
+}
 
-type Is_teacher_auth = {
-    is_teacher: boolean;
-};
+export const jwtStore = writable<string>("");
 
-type User_role = {
-    user_role: number;
-};
+export const isTeacherStore = writable<boolean>(false);
 
-export const jwtAuth = writable<Jwt_auth>({
-    jwt_token: "",
-});
-
-export const teacherAuth = writable<Is_teacher_auth>({
-    is_teacher: false,
-});
-
-export const userRole = writable<User_role>({
-    user_role: 0,
-});
+export const userRoleStore = writable<role>(0);

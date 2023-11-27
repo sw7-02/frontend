@@ -1,52 +1,88 @@
 <script lang="ts">
     import { cpp } from "@codemirror/lang-cpp";
     import { page } from "$app/stores";
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { onMount } from "svelte";
+    import { role } from "$lib/stores/authentication";
+    import { jwtStore, userRoleStore } from "$lib/stores/authentication";
+    import {
+        courseIdStore,
+        sessionIdStore,
+        taskIdStore,
+    } from "$lib/stores/ids";
+    import { get } from "svelte/store";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import TestCaseEditor from "$lib/components/TestCaseEditor.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
     import Hint from "$lib/components/Hint.svelte";
 
-    let examples: { input: string; output: string }[] = [
-        { input: "[1,2,3]", output: "[6]" },
-        { input: "Hello World", output: "[H,e,l,l,o,,w,o,r,l,d]" },
-    ];
-
-    let hints: string[] = [""];
-
-    function addExample() {
-        const newExample = { input: "", output: "" };
-        examples = [...examples, newExample];
-    }
-
-    function addHint() {
-        const newHint = "";
-        hints = [...hints, newHint];
-    }
-
-    //  TODO: Replace this with a fetch request to the API
-    let exercise: {
-        name: string;
+    type _Exercise = {
+        exercise_id: number;
+        title: string;
         description: string;
-        language: string;
+        code_template: string;
+        programming_language: string;
         points: number;
         hints: string[];
-    } = {
-        name: "Exercise 1: Hello World",
-        description:
-            "Description of the exercise. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        language: "C",
-        points: 3,
-        hints: ["Hint 1", "Hint 2", "Hint 3"],
+        test_cases: string[];
+        examples: { input: string; output: string }[];
     };
+
+    let data: _Exercise;
+
+    async function load() {
+        return fetch(
+            `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}`,
+            {
+                method: "GET",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                response.headers.get("auth") &&
+                    jwtStore.set(response.headers.get("auth")!);
+                return response
+                    .json()
+                    .then((data) => {
+                        return data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return { error: "Failed to parse data" };
+                    });
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
+
+    onMount(async () => {
+        data = await load();
+        console.log(data);
+    });
 
     let revealedHintIndex = -1;
 
+    function addHint() {
+        // const newHint = "";
+        // hints = [...hints, newHint];
+    }
+
     function revealHint() {
-        if (revealedHintIndex < exercise.hints.length - 1) {
-            revealedHintIndex++;
-        }
+        // if (revealedHintIndex < exercise.hints.length - 1) {
+        //     revealedHintIndex++;
+        // }
+    }
+
+    function addExample() {
+        // const newExample = { input: "", output: "" };
+        // examples = [...examples, newExample];
     }
 </script>
 
@@ -63,11 +99,18 @@
                 <div
                     class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
                 >
-                    {#if ($jwtAuth.jwt_token && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                        <p class="text-neutral-100 text-md cursor-default">
+                            {data.title}
+                        </p>
+                        <p class="text-green-700 text-md cursor-default">
+                            Points: {data.points}
+                        </p>
+                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                         <input
                             class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800"
                             type="text"
-                            value={exercise.name}
+                            value={data.title}
                         />
                         <div class="flex justify-end">
                             <p
@@ -77,24 +120,48 @@
                             </p>
                             <select
                                 class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
-                                value={exercise.points}
+                                value={data.points}
                             >
                                 {#each Array.from({ length: 11 }, (_, i) => i) as option}
                                     <option value={option}>{option}</option>
                                 {/each}
                             </select>
                         </div>
-                    {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
-                        <p class="text-neutral-100 text-md cursor-default">
-                            {exercise.name}
-                        </p>
-                        <p class="text-green-700 text-md cursor-default">
-                            Points: {exercise.points}
-                        </p>
                     {/if}
                 </div>
                 <div class="pl-2 pr-2 overflow-auto h-[737px]">
-                    {#if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                        <p class="mt-2 text-neutral-100 cursor-default text-lg">
+                            Description
+                        </p>
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            {data.description}
+                        </p>
+                        <p
+                            class="mt-4 text-neutral-100 cursor-default items-center text-lg"
+                        >
+                            Examples (Input <i
+                                class="fa-solid fa-arrow-right"
+                            /> Output)
+                        </p>
+                        {#each data.examples as example}
+                            <div
+                                class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
+                            >
+                                <p>{example.input}</p>
+                                <i class="fa-solid fa-arrow-right" />
+                                <p>{example.output}</p>
+                            </div>
+                        {/each}
+                        <p class="mt-4 text-neutral-100 cursor-default text-lg">
+                            Hints
+                        </p>
+                        {#each data.hints as hint, i}
+                            {#if revealedHintIndex >= i}
+                                <p class="mt-2 text-neutral-100">{hint}</p>
+                            {/if}
+                        {/each}
+                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                         <p class="mt-2 text-neutral-100 cursor-default">
                             Description
                         </p>
@@ -111,8 +178,10 @@
                                 class="fa-solid fa-arrow-right"
                             /> Output)
                         </p>
-                        {#each examples as example, i}
-                            <InputOutputExample bind:example={examples[i]} />
+                        {#each data.examples as example, i}
+                            <InputOutputExample
+                                bind:example={data.examples[i]}
+                            />
                         {/each}
                         <button
                             on:click={addExample}
@@ -123,8 +192,8 @@
                         <p class="mt-2 text-neutral-100 cursor-default">
                             Hints
                         </p>
-                        {#each hints as hint, i}
-                            <Hint bind:hint={hints[i]} />
+                        {#each data.hints as hint, i}
+                            <Hint bind:hint={data.hints[i]} />
                         {/each}
                         <button
                             on:click={addHint}
@@ -132,44 +201,13 @@
                 text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2 mb-2"
                             >Add hint</button
                         >
-                    {:else if $authentication.isAuthenticated && $authentication.user.role === 2}
-                        <p class="mt-2 text-neutral-100 cursor-default text-lg">
-                            Description
-                        </p>
-                        <p class="mt-2 text-neutral-100 cursor-default">
-                            {exercise.description}
-                        </p>
-                        <p
-                            class="mt-4 text-neutral-100 cursor-default items-center text-lg"
-                        >
-                            Examples (Input <i
-                                class="fa-solid fa-arrow-right"
-                            /> Output)
-                        </p>
-                        {#each examples as example}
-                            <div
-                                class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
-                            >
-                                <p>{example.input}</p>
-                                <i class="fa-solid fa-arrow-right" />
-                                <p>{example.output}</p>
-                            </div>
-                        {/each}
-                        <p class="mt-4 text-neutral-100 cursor-default text-lg">
-                            Hints
-                        </p>
-                        {#each exercise.hints as hint, i}
-                            {#if revealedHintIndex >= i}
-                                <p class="mt-2 text-neutral-100">{hint}</p>
-                            {/if}
-                        {/each}
                     {/if}
                 </div>
             </div>
             <div
                 class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
             >
-                {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                     <button
                         on:click={revealHint}
                         class="rounded-sm transition duration-200 ease-in-out text-neutral-100
@@ -186,15 +224,15 @@
                 <p
                     class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700"
                 >
-                    {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                         Solution
-                    {:else if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                         Code Template
                     {/if}
                 </p>
                 <CodeEditor lang={cpp()} />
             </div>
-            {#if $authentication.isAuthenticated && $authentication.user.role === 2}
+            {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                 <div>
                     <p
                         class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-t-[2px] border-neutral-700"
@@ -217,7 +255,7 @@
                         >Submit</button
                     >
                 </div>
-            {:else if ($authentication.isAuthenticated && $authentication.user.role === 0) || $authentication.user.role === 1}
+            {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                 <TestCaseEditor lang={cpp()} />
             {/if}
         </div>

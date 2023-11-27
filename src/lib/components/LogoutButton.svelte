@@ -1,13 +1,9 @@
 <script lang="ts">
-    import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
 
     function handleLogout() {
-        jwtAuth.set({
-            jwt_token: "",
-        });
-        teacherAuth.set({
-            is_teacher: false,
-        });
+        jwtStore.set("");
+        isTeacherStore.set(false);
     }
 </script>
 
