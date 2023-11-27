@@ -1,14 +1,18 @@
 <script lang="ts">
+    import { taskStore } from "$lib/stores/ids";
+
     export let title: string;
     export let href: string;
     export let i: number;
+    export let id: number;
 </script>
 
 <a
+    on:click={() => taskStore.set(id)}
     {href}
     class="bg-neutral-900 grid grid-cols-1 items-center shadow-xl text-neutral-100 text-sm font-mono w-[700px]
 
-h-8 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-neutral-700 border-b-[1px] border-neutral-700 {i ===
+h-8 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 border-b-[1px] border-neutral-700 {i ===
     0
         ? 'border-t-[1px]'
         : ''}"

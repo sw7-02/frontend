@@ -4,6 +4,9 @@
     import Course from "$lib/components/Course.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
+    let showModal: boolean = false;
+    let newTitle: string = "";
+
     async function load() {
         return fetch("http://localhost:8080/course/", {
             method: "GET",
@@ -11,7 +14,7 @@
                 auth: get(jwtAuth).jwt_token,
                 "Content-Type": "application/json",
             },
-        }).then((response) => {
+        }).then(async (response) => {
             if (response.ok) {
                 response.headers.get("auth") &&
                     jwtAuth.set({ jwt_token: response.headers.get("auth")! });
@@ -25,16 +28,30 @@
                         return { error: "Failed to parse data" };
                     });
             } else {
+                console.log(await response.text());
                 return { error: "Failed to fetch data" };
             }
         });
     }
 
-    let showModal: boolean = false;
-    let newTitle: string = "";
-
     function onSubmit() {
         // TODO: Put the new course in the database and fetch all courses
+        // fetch("http://localhost:8080/course/", {
+        //     method: "POST",
+        //     headers: {
+        //         auth: get(jwtAuth).jwt_token,
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({ title: newTitle }),
+        // }).then((response) => {
+        //     if (response.ok) {
+        //         response.headers.get("auth") &&
+        //             jwtAuth.set({ jwt_token: response.headers.get("auth")! });
+        //         load();
+        //     } else {
+        //         console.log("Failed to add course");
+        //     }
+        // });
     }
 </script>
 
@@ -43,7 +60,7 @@
     <div class="grid grid-cols-3 justify-items-center">
         {#await load() then data}
             {#each data as course}
-                <Course title={course.title} />
+                <Course title={course.title} id={course.course_id} />
             {/each}
         {/await}
         <!-- svelte-ignore a11y-click-events-have-key-events -->

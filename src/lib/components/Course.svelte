@@ -2,11 +2,13 @@
     import Modal from "./Modal.svelte";
     import LeaderboardButton from "./LeaderboardButton.svelte";
     import { jwtAuth, teacherAuth } from "$lib/stores/authentication";
+    import { courseIdStore } from "$lib/stores/ids";
 
     let showModal: boolean = false;
     let isHovered: boolean = false;
 
     export let title: string = "title";
+    export let id: number;
 
     function onDelete() {
         // TODO: Delete the course from the database and fetch all courses
@@ -18,6 +20,7 @@
 
 <!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <a
+    on:click={() => courseIdStore.set(id)}
     on:mouseover={() => (isHovered = true)}
     on:mouseout={() => (isHovered = false)}
     class="grid grid-cols-1 bg-neutral-900 mt-4 ml-2 mr-2 rounded-sm text-neutral-100 w-[470px] h-[264px] shadow-xl

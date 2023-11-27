@@ -7,7 +7,6 @@
     let wrongInput: boolean = false;
 
     async function loginHandler() {
-        console.log(inputUsername, inputPassword);
         await fetch("http://localhost:8080/login", {
             method: "POST",
             headers: {
@@ -20,7 +19,6 @@
         }).then((response) => {
             if (response.status === 200) {
                 response.json().then((data) => {
-                    console.log(data);
                     jwtAuth.set({
                         jwt_token: data.jwt_token,
                     });

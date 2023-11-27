@@ -9,11 +9,7 @@
     let showModal: boolean = false;
     let newTitle: string;
 
-    let exercises: string[] = [
-        "Do something",
-        "Learn something",
-        "Remember something",
-    ];
+    export let exercises: {title: string, id: number}[];
 
     let showExercises = false;
 
@@ -21,9 +17,9 @@
         showModal = false;
         showExercises = true;
         // TODO: Put the new course in the database and fetch all courses
-        const newExercise = { title: newTitle };
-        exercises = [...exercises, newTitle];
-        newTitle = "";
+        // const newExercise = { title: newTitle };
+        // exercises = [...exercises, newTitle];
+        // newTitle = "";
     }
 </script>
 
@@ -41,7 +37,7 @@
             <div
                 on:click={() => (showModal = true)}
                 on:click|stopPropagation
-                class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-950
+                class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
                  hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50"
             >
                 Add exercise
@@ -54,8 +50,9 @@
         {#each exercises as exercise, i}
             <ExerciseRow
                 {i}
-                title={"> Exercise " + i + ": " + exercise}
-                href={$page.url + "/" + "Exercise " + i + ": " + exercise}
+                title={"> Exercise " + (i+1) + ": " + exercise.title}
+                href={$page.url + "/" + "Exercise " + (i+1) + ": " + exercise.title}
+                id={exercise.id}
             />
         {/each}
     </div>
