@@ -17,7 +17,7 @@
         }).then(async (response) => {
             if (response.ok) {
                 response.headers.get("auth") &&
-                    jwtStore.set( response.headers.get("auth")! );
+                    jwtStore.set(response.headers.get("auth")!);
                 return response
                     .json()
                     .then((data) => {
@@ -50,6 +50,7 @@
             {#await load() then data}
                 {#each data.sessions as session, i}
                     <SessionRow
+                        reloadExercises={load}
                         title={"Session " + (i + 1) + ": " + session.title}
                         sessionId={session.session_id}
                         exercises={session.exercises}
