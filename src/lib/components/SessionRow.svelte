@@ -46,7 +46,7 @@
                 on:click={() => (showModal = true)}
                 on:click|stopPropagation
                 class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
-                 hover:text-green-700 hover:bg-neutral-800 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50"
+                 hover:text-green-700 hover:bg-neutral-700 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50"
             >
                 Add exercise
             </div>

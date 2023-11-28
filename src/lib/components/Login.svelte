@@ -1,6 +1,10 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
+    import {
+        jwtStore,
+        isTeacherStore,
+        usernameStore,
+    } from "$lib/stores/authentication";
 
     let inputUsername: string;
     let inputPassword: string;
@@ -19,6 +23,7 @@
         }).then((response) => {
             if (response.status === 200) {
                 response.json().then((data) => {
+                    usernameStore.set(inputUsername);
                     jwtStore.set(data.jwt_token);
                     isTeacherStore.set(data.is_teacher);
                     goto("/");

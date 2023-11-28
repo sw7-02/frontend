@@ -8,7 +8,7 @@
 >
     <a
         {href}
-        class="text-neutral-100 hover:text-green-700 text-md pl-3 pr-3 font-mono transition duration-200 ease-in-out"
+        class="text-neutral-100 hover:text-green-700 text-md pl-3 pr-3 pt-1 pb-1 font-mono transition duration-200 ease-in-out"
         ><p>{text}</p></a
     >
 </div>
