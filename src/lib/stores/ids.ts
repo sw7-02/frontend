@@ -1,7 +1,6 @@
-import { writable } from "svelte/store";
 
-export const courseIdStore = writable<number>();
+import { persistentWritable } from "./localStorage";
 
-export const sessionIdStore = writable<number>();
-
-export const taskIdStore = writable<number>();
+export const courseIdStore = persistentWritable("courseId", null); // You can replace null with the default value you want
+export const sessionIdStore = persistentWritable("sessionId", null); // You can replace null with the default value you want
+export const taskIdStore = persistentWritable("taskId", null); // You can replace null with the default value you want

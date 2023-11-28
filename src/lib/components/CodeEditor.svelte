@@ -3,8 +3,9 @@
     import { oneDark } from "@codemirror/theme-one-dark";
     import * as marked from "marked";
 
-    let value: string = "";
+    
     export let lang: any;
+    export let value: string = "";
 </script>
 
 <CodeMirror

@@ -3,15 +3,12 @@
     import { oneDark } from "@codemirror/theme-one-dark";
     import * as marked from "marked";
 
-    let testCases: string[] = [
-        "Test Case 1",
-        "Test Case 2",
-        "Test Case 3",
-    ];
+    export let testCases: string[];
 
     let currentTestCase: number = 0;
 
-    let value: string = testCases[currentTestCase];
+    let value: string;
+    testCases.length > 0 ? (value = testCases[currentTestCase]) : (value = "");
     export let lang: any;
 
     function changeTestCase(i: number) {

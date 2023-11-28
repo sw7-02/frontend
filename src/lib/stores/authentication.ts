@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { persistentWritable } from "./localStorage";
 
 export enum role {
     STUDENT = 0,
@@ -6,8 +6,6 @@ export enum role {
     TA = 2,
 }
 
-export const jwtStore = writable<string>("");
-
-export const isTeacherStore = writable<boolean>(false);
-
-export const userRoleStore = writable<role>(0);
+export const jwtStore = persistentWritable("jwt", "");
+export const isTeacherStore = persistentWritable("isTeacher", false);
+export const userRoleStore = persistentWritable("userRole", 0);

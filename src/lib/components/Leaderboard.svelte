@@ -33,9 +33,9 @@
                     <td class="p-2">{rank}</td>
                     <td class="p-2">{user}</td>
                     <td class="p-2">
-                        <div class="flex items-center">
+                        <div class="flex items-center border border-neutral-500 rounded">
                             <div
-                                class="w-full bg-green-500 rounded overflow-hidden h-6 relative"
+                                class="w-full rounded overflow-hidden h-6 relative"
                             >
                                 <div
                                     class="bg-green-700 h-full"
@@ -43,7 +43,7 @@
                                         100}%"
                                 />
                                 <span
-                                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-neutral-100"
+                                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-neutral-100 font-bold"
                                 >
                                     {points}
                                 </span>
