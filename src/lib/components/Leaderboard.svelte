@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { jwtStore } from "$lib/stores/authentication";
+    import { isTeacherStore, jwtStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import { onMount } from "svelte";
@@ -34,19 +34,94 @@
         });
     }
 
+    async function getAnonymity() {
+        return fetch(
+            `http://localhost:8080/course/${get(
+                courseIdStore
+            )}/leaderboard/anonymity`,
+            {
+                method: "GET",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                response.headers.get("auth") &&
+                    jwtStore.set(response.headers.get("auth")!);
+                return response
+                    .json()
+                    .then((data) => {
+                        return data.is_anonymous;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return { error: "Failed to parse data" };
+                    });
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
+
     let data: any;
+    let is_anonymous: boolean;
 
     onMount(async () => {
         data = await load();
+        console.log(data);
+        is_anonymous = await getAnonymity();
+        console.log(is_anonymous);
     });
+
+    async function toggleAnonymity() {
+        is_anonymous = !is_anonymous;
+        return fetch(
+            `http://localhost:8080/course/${get(
+                courseIdStore
+            )}/leaderboard/anonymity`,
+            {
+                method: "POST",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    anonymity: is_anonymous,
+                }),
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                response.headers.get("auth") &&
+                    jwtStore.set(response.headers.get("auth")!);
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
 </script>
 
 <div class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto">
     <table class="w-full">
         <thead class="text-neutral-100 text-center text-md">
             <td class="p-2">Rank</td>
-            <td class="p-2">User</td>
-            <td class="p-2" style="width: 500px;">Points</td>
+            <td class="p-2 flex justify-center items-center"
+                >User
+                {#if $jwtStore !== "" && $isTeacherStore === false}
+                    <div
+                        class="ml-2 p-1 bg-neutral-800 border border-neutral-700"
+                    >
+                        <input
+                            on:click={toggleAnonymity}
+                            type="checkbox"
+                            bind:checked={is_anonymous}
+                        /> Appear anonymous
+                    </div>
+                {/if}
+            </td><td class="p-2" style="width: 500px;">Points</td>
         </thead>
         <tbody>
             {#if data}
