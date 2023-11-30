@@ -25,9 +25,10 @@
 </script>
 
 <div>
-    <p
+    <div
         class="bg-neutral-800 text-neutral-100 pt-2 pl-2 border-b-[2px] border-t-[2px] border-neutral-700 flex align-bottom"
     >
+        <p class="pr-2">Test Cases</p>
         {#each testCases as _, i}
             <button
                 on:click={() => changeTestCase(i)}
@@ -46,9 +47,9 @@
         hover:bg-neutral-500 transition duration-200 ease-in-out hover:text-black border-r-[1px]"
             >+</button
         >
-    </p>
+    </div>
     <CodeMirror
-        class="text-neutral-100 w-full h-[349px] overflow-auto"
+        class="bg-neutral-900 text-neutral-100 w-full h-[300px] overflow-auto"
         bind:value
         tabSize={4}
         theme={oneDark}

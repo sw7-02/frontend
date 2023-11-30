@@ -92,9 +92,7 @@
 >
     <div class="flex overflow-hidden">
         {#if data}
-            <div
-                class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between"
-            >
+            <div class="mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between">
                 <div>
                     <div
                         class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
@@ -129,7 +127,9 @@
                             </div>
                         {/if}
                     </div>
-                    <div class="pl-2 pr-2 overflow-auto h-[737px]">
+                    <div
+                        class="bg-neutral-900 pl-2 pr-2 overflow-auto h-[739px]"
+                    >
                         {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                             <p
                                 class="mt-2 text-neutral-100 cursor-default text-lg"
@@ -209,22 +209,22 @@
                         {/if}
                     </div>
                 </div>
-                <div
-                    class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
-                >
-                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                    <div
+                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                    >
                         <button
                             on:click={revealHint}
                             class="rounded-sm transition duration-200 ease-in-out text-neutral-100
                     text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
                             >Hint</button
                         >
-                    {/if}
-                </div>
+                    </div>
+                {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                    <div class="flex justify-end p-2 h-[54px]" />
+                {/if}
             </div>
-            <div
-                class="bg-neutral-900 mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col"
-            >
+            <div class="mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col">
                 <div>
                     <p
                         class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700"
@@ -247,7 +247,7 @@
                         <OutputConsole />
                     </div>
                     <div
-                        class="flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
                     >
                         <button
                             class="rounded-sm transition duration-200 ease-in-out text-neutral-100
@@ -262,6 +262,13 @@
                     </div>
                 {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                     <TestCaseEditor lang={cpp()} testCases={data.test_cases} />
+                    <div class="flex justify-end pt-2 h-[54px]">
+                        <button
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100 bg-neutral-800
+                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                            >Save</button
+                        >
+                    </div>
                 {/if}
             </div>
         {/if}
