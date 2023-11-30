@@ -13,6 +13,7 @@
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import TestCaseEditor from "$lib/components/TestCaseEditor.svelte";
+    import SaveExerciseButton from "$lib/components/SaveExerciseButton.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
     import Hint from "$lib/components/Hint.svelte";
 
@@ -64,9 +65,34 @@
 
     onMount(async () => {
         data = await load();
+        data.programming_language = "C";
     });
 
     let revealedHintIndex = -1;
+
+    function updateExercise() {
+        console.log(data);
+        return fetch(
+            `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}`,
+            {
+                method: "PUT",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                return;
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
 
     function addHint() {
         const newHint = "";
@@ -108,7 +134,7 @@
                             <input
                                 class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800 pl-1"
                                 type="text"
-                                value={data.title}
+                                bind:value={data.title}
                             />
                             <div class="flex justify-end">
                                 <p
@@ -118,7 +144,7 @@
                                 </p>
                                 <select
                                     class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
-                                    value={data.points}
+                                    bind:value={data.points}
                                 >
                                     {#each Array.from({ length: 11 }, (_, i) => i) as option}
                                         <option value={option}>{option}</option>
@@ -171,7 +197,7 @@
                             </p>
                             <form class="mt-2">
                                 <textarea
-                                    value={data.description}
+                                    bind:value={data.description}
                                     class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
                                     rows="10"
                                 />
@@ -185,7 +211,7 @@
                             </p>
                             {#each data.examples as example, i}
                                 <InputOutputExample
-                                    example={data.examples[i]}
+                                    bind:example={data.examples[i]}
                                 />
                             {/each}
                             <button
@@ -198,7 +224,7 @@
                                 Hints
                             </p>
                             {#each data.hints as hint, i}
-                                <Hint hint={data.hints[i]} />
+                                <Hint bind:hint={data.hints[i]} />
                             {/each}
                             <button
                                 on:click={addHint}
@@ -227,15 +253,24 @@
             <div class="mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col">
                 <div>
                     <p
-                        class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700"
+                        class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700 justify-between flex"
                     >
                         {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                            Solution
+                            <p>Solution</p>
                         {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                            Code Template
+                            <p>Code Template</p>
+                            <div class="flex items-center">
+                                <p class="pr-1">Language:</p>
+                                <select
+                                    class="bg-neutral-700"
+                                    bind:value={data.programming_language}
+                                >
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
                         {/if}
                     </p>
-                    <CodeEditor lang={cpp()} value={data.code_template} />
+                    <CodeEditor lang={cpp()} bind:value={data.code_template} />
                 </div>
                 {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                     <div>
@@ -261,14 +296,11 @@
                         >
                     </div>
                 {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                    <TestCaseEditor lang={cpp()} testCases={data.test_cases} />
-                    <div class="flex justify-end pt-2 h-[54px]">
-                        <button
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100 bg-neutral-800
-                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
-                            >Save</button
-                        >
-                    </div>
+                    <TestCaseEditor
+                        lang={cpp()}
+                        bind:testCases={data.test_cases}
+                    />
+                    <SaveExerciseButton {updateExercise} />
                 {/if}
             </div>
         {/if}

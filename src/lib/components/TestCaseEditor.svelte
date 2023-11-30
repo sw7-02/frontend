@@ -11,6 +11,10 @@
     testCases.length > 0 ? (value = testCases[currentTestCase]) : (value = "");
     export let lang: any;
 
+    $: {
+        testCases[currentTestCase] = value;
+    }
+
     function changeTestCase(i: number) {
         testCases[currentTestCase] = value;
         value = testCases[i];
