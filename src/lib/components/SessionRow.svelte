@@ -1,7 +1,12 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { fade } from "svelte/transition";
-    import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
+    import {
+        jwtStore,
+        isTeacherStore,
+        userRoleStore,
+    } from "$lib/stores/authentication";
+    import { role } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import ExerciseRow from "./ExerciseRow.svelte";
@@ -11,14 +16,15 @@
     export let sessionId: number;
     export let exercises: { title: string; exercise_id: number }[];
 
-    let showModal: boolean = false;
-    let newTitle: string;
+    let showExerciseModal: boolean = false;
+    let showSessionModal: boolean = false;
+    let newExerciseTitle: string;
+    let newSessionTitle: string = title.split(":")[1].trim();
     let showExercises = false;
 
     export let reloadExercises: () => void;
 
     function createExercise() {
-        showModal = false;
         showExercises = true;
         return fetch(
             `http://localhost:8080/course/${get(
@@ -30,12 +36,40 @@
                     auth: get(jwtStore),
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ title: newTitle }),
+                body: JSON.stringify({ title: newExerciseTitle }),
             }
         ).then(async (response) => {
             if (response.ok) {
                 reloadExercises();
-                newTitle = "";
+                newExerciseTitle = "";
+                return;
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
+
+    function updateSessionTitle() {
+        if (newSessionTitle === "") {
+            return;
+        }
+        return fetch(
+            `http://localhost:8080/course/${get(
+                courseIdStore
+            )}/session/${sessionId}`,
+            {
+                method: "PUT",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ title: newSessionTitle }),
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                reloadExercises();
+                newExerciseTitle = "";
                 return;
             } else {
                 console.log(await response.text());
@@ -54,16 +88,27 @@
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
 >
     <div class="flex justify-between">
-        <div class="ml-6">
+        <div class="ml-6 flex items-center">
             {#if !showExercises}
-                <i class="fa-solid fa-chevron-right w-5" />{title}
+                <i class="fa-solid fa-chevron-right w-5" />
             {:else}
-                <i class="fa-solid fa-chevron-down w-5" />{title}
+                <i class="fa-solid fa-chevron-down w-5" />
+            {/if}
+            {title}
+            {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                <div
+                    on:click={() => (showSessionModal = true)}
+                    on:click|stopPropagation
+                    class="ml-1 p-1 text-sm rounded-sm bg-neutral-700 transition duration-200 ease-in-out
+            text-neutral-400 hover:text-green-700 hover:bg-neutral-700 border border-neutral-700 bg-opacity-50 items-center"
+                >
+                    <i class="fa-solid fa-pencil fa-md" />
+                </div>
             {/if}
         </div>
         {#if $jwtStore !== "" && $isTeacherStore === true}
             <div
-                on:click={() => (showModal = true)}
+                on:click={() => (showExerciseModal = true)}
                 on:click|stopPropagation
                 class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
                  hover:text-green-700 hover:bg-neutral-700 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50"
@@ -93,8 +138,15 @@
 {/if}
 
 <Modal
-    bind:showModal
-    bind:newTitle
+    bind:showModal={showExerciseModal}
+    bind:newTitle={newExerciseTitle}
     onSubmit={createExercise}
-    onCancel={() => (newTitle = "")}
+    onCancel={() => (newExerciseTitle = "")}
+/>
+
+<Modal
+    bind:showModal={showSessionModal}
+    bind:newTitle={newSessionTitle}
+    onSubmit={updateSessionTitle}
+    onCancel={() => (newSessionTitle = title.split(":")[1].trim())}
 />

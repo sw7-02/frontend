@@ -1,8 +1,9 @@
 <script lang="ts">
     export let showModal: boolean;
-    export let newTitle: string;
+    export let newTitle: string = "";
 
     let dialog: any;
+    let isTitleEmpty = false;
 
     $: if (dialog && showModal) dialog.showModal();
 
@@ -14,6 +15,21 @@
             onCancel();
             dialog.close();
         } else if (event.key === "Enter") {
+            if (isTitleEmpty) {
+                return;
+            }
+            onSubmit();
+            dialog.close();
+        }
+    }
+
+    function closeModalSubmit() {
+        if (newTitle === "") {
+            isTitleEmpty = true;
+            return;
+        }
+        if (newTitle !== "") {
+            isTitleEmpty = false;
             onSubmit();
             dialog.close();
         }
@@ -29,6 +45,9 @@
     on:keypress={handleKeyPress}
 >
     <div class="flex flex-col grid-cols-1 justify-items-center">
+        {#if isTitleEmpty}
+            <p class="text-red-500 ml-4">Title cannot be empty</p>
+        {/if}
         <input
             class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
             type="text"
@@ -51,8 +70,7 @@
             <button
                 class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]
 				transition duration-200 ease-in-out hover:bg-green-900"
-                on:click={onSubmit}
-                on:click={() => dialog.close()}>Submit</button
+                on:click={closeModalSubmit}>Submit</button
             >
         </div>
     </div>
