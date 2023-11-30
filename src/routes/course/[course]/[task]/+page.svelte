@@ -209,10 +209,8 @@
                                     class="fa-solid fa-arrow-right"
                                 /> Output)
                             </p>
-                            {#each data.examples as example, i}
-                                <InputOutputExample
-                                    bind:example={data.examples[i]}
-                                />
+                            {#each data.examples as example}
+                                <InputOutputExample bind:example />
                             {/each}
                             <button
                                 on:click={addExample}
@@ -223,8 +221,8 @@
                             <p class="mt-2 text-neutral-100 cursor-default">
                                 Hints
                             </p>
-                            {#each data.hints as hint, i}
-                                <Hint bind:hint={data.hints[i]} />
+                            {#each data.hints as hint}
+                                <Hint bind:hint />
                             {/each}
                             <button
                                 on:click={addHint}
