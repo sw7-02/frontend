@@ -40,7 +40,6 @@
         "@fortawesome/fontawesome-free": "^6.4.2",
         "@sveltejs/adapter-auto": "^2.1.1",
         "dotenv": "^16.3.1",
-        "marked": "^10.0.0",
         "monaco-editor": "^0.44.0",
         "svelte-codemirror-editor": "^1.1.0"
     },
