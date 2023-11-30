@@ -20,7 +20,7 @@
 >
     <a
         href="/"
-        class="text-neutral-100 hover:text-green-700 text-md pl-3 pr-3 pb-1 pt-1 font-mono transition duration-200 ease-in-out"
+        class="text-neutral-100 hover:text-green-700 text-md pl-3 pr-3 pb-1 pt-1 font-mono transition duration-200 ease-in-out border border-neutral-700"
         ><p>Log out</p></a
     >
 </div>

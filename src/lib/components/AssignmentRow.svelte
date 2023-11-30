@@ -9,5 +9,7 @@
 			shadow-xl text-neutral-100 text-md w-[700px] h-16
 			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
 >
-    <div class="ml-6">{title}</div>
+    <div class="ml-6">
+        <i class="fa-solid fa-chevron-right w-5" />{title}
+    </div>
 </a>

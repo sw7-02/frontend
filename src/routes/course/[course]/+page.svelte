@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { onMount } from "svelte";
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
@@ -38,6 +39,18 @@
     let newRowTitle: string;
     let newRowType: string;
 
+    let assignments: string[] = ["Not implemented yet"];
+
+    let data: any;
+
+    async function reload() {
+        data = await load();
+    }
+
+    onMount(async () => {
+        reload();
+    });
+
     function onSubmit() {
         // TODO: Put the new session/assignment in the database and fetch all sessions/assignments
     }
@@ -47,16 +60,16 @@
 <div class="flex justify-center mt-3 mb-3">
     <div class="grid grid-cols-2 justify-items-center items-start">
         <div class="grid grid-cols-1 justify-items-center mr-2">
-            {#await load() then data}
+            {#if data}
                 {#each data.sessions as session, i}
                     <SessionRow
-                        reloadExercises={load}
+                        reloadExercises={reload}
                         title={"Session " + (i + 1) + ": " + session.title}
                         sessionId={session.session_id}
                         exercises={session.exercises}
                     />
                 {/each}
-            {/await}
+            {/if}
 
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -73,12 +86,12 @@
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
-            <!-- {#each assignments as assignment, i}
+            {#each assignments as assignment, i}
                 <AssignmentRow
                     title={"Assignment " + (i + 1) + ": " + assignment}
                     href={$page.params.course + "/" + assignment}
                 />
-            {/each} -->
+            {/each}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#if $jwtStore !== "" && $isTeacherStore === true}

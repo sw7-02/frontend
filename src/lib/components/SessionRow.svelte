@@ -15,15 +15,15 @@
     let newTitle: string;
     let showExercises = false;
 
-    export function reloadExercises() {};
+    export let reloadExercises: () => void;
 
-    function onSubmit() {
+    function createExercise() {
         showModal = false;
         showExercises = true;
         return fetch(
             `http://localhost:8080/course/${get(
                 courseIdStore
-            )}/session/${sessionId}`,
+            )}/session/${sessionId}/exercise`,
             {
                 method: "POST",
                 headers: {
@@ -35,6 +35,7 @@
         ).then(async (response) => {
             if (response.ok) {
                 reloadExercises();
+                newTitle = "";
                 return;
             } else {
                 console.log(await response.text());
@@ -94,6 +95,6 @@
 <Modal
     bind:showModal
     bind:newTitle
-    {onSubmit}
+    onSubmit={createExercise}
     onCancel={() => (newTitle = "")}
 />
