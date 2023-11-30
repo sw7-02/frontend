@@ -43,7 +43,9 @@
         {/each}
     </div>
     <div class="flex items-center rounded-sm text-md">
-        <div class="text-neutral-100 font-mono pl-3 pr-3 pt-1 pb-1">{username}</div>
+        <div class="text-neutral-100 font-mono pl-3 pr-3 pt-1 pb-1">
+            {username}
+        </div>
         <LogoutButton />
     </div>
 </nav>

@@ -63,7 +63,11 @@
                 {/each}
             {/if}
             {#if $jwtStore !== "" && $isTeacherStore === true}
-                <AddSessionAssigmentButton buttonText="Add session" type={"session"} reloadExercises={reload}/>
+                <AddSessionAssigmentButton
+                    buttonText="Add session"
+                    type={"session"}
+                    reloadExercises={reload}
+                />
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
@@ -74,7 +78,11 @@
                 />
             {/each}
             {#if $jwtStore !== "" && $isTeacherStore === true}
-                <AddSessionAssigmentButton buttonText="Add assignment" type={"assignment"} reloadExercises={reload}/>
+                <AddSessionAssigmentButton
+                    buttonText="Add assignment"
+                    type={"assignment"}
+                    reloadExercises={reload}
+                />
             {/if}
         </div>
     </div>

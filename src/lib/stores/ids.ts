@@ -1,4 +1,3 @@
-
 import { persistentWritable } from "./localStorage";
 
 export const courseIdStore = persistentWritable("courseId", null); // You can replace null with the default value you want

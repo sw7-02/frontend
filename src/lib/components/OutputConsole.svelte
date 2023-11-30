@@ -61,7 +61,7 @@
     });
 
     // function scrollToBottom(outputConsole: HTMLElement) {
-        
+
     // }
 </script>
 

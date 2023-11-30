@@ -9,7 +9,10 @@
 </script>
 
 <a
-    on:click={() => {taskIdStore.set(id); sessionIdStore.set(sessionId)}}
+    on:click={() => {
+        taskIdStore.set(id);
+        sessionIdStore.set(sessionId);
+    }}
     {href}
     class="bg-neutral-900 grid grid-cols-1 items-center shadow-xl text-neutral-100 text-sm font-mono w-[700px]
 
