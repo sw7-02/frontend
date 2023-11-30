@@ -6,7 +6,7 @@
     import { courseIdStore } from "$lib/stores/ids";
     import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
-    import Modal from "$lib/components/Modal.svelte";
+    import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
 
     async function load() {
         return fetch(`http://localhost:8080/course/${get(courseIdStore)}`, {
@@ -35,10 +35,6 @@
         });
     }
 
-    let showModal: boolean = false;
-    let newRowTitle: string;
-    let newRowType: string;
-
     let assignments: string[] = ["Not implemented yet"];
 
     let data: any;
@@ -50,10 +46,6 @@
     onMount(async () => {
         reload();
     });
-
-    function onSubmit() {
-        // TODO: Put the new session/assignment in the database and fetch all sessions/assignments
-    }
 </script>
 
 <title>{$page.params.course}</title>
@@ -70,19 +62,8 @@
                     />
                 {/each}
             {/if}
-
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#if $jwtStore !== "" && $isTeacherStore === true}
-                <div
-                    on:click={() => (showModal = true)}
-                    on:click={() => (newRowType = "session")}
-                    class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
-				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
-                    style="cursor: pointer;"
-                >
-                    <p>Add session</p>
-                </div>
+                <AddSessionAssigmentButton buttonText="Add session" type={"session"} reloadExercises={reload}/>
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
@@ -92,28 +73,9 @@
                     href={$page.params.course + "/" + assignment}
                 />
             {/each}
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
             {#if $jwtStore !== "" && $isTeacherStore === true}
-                <div
-                    on:click={() => (showModal = true)}
-                    on:click={() => (newRowType = "assignment")}
-                    class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-sm w-[700px] h-16 bg-opacity-50
-				font-mono text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 mt-1"
-                    style="cursor: pointer;"
-                >
-                    <p>Add assignment</p>
-                </div>
+                <AddSessionAssigmentButton buttonText="Add assignment" type={"assignment"} reloadExercises={reload}/>
             {/if}
         </div>
     </div>
 </div>
-
-<Modal
-    bind:showModal
-    bind:newTitle={newRowTitle}
-    {onSubmit}
-    onCancel={() => {
-        newRowTitle = "";
-    }}
-/>
