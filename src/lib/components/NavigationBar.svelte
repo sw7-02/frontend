@@ -30,12 +30,12 @@
 </script>
 
 <nav
-    class="flex justify-between items-center bg-neutral-900 h-16 pl-2 pr-2 shadow-md"
+    class="flex justify-between items-center bg-neutral-900 h-16 pl-2 pr-2 shadow-md border-b border-neutral-600"
 >
     <div class="flex items-center">
         <NavigationButton text={"Courses"} href={"/"} />
         {#each navigation as nav}
-            <p class="text-neutral-300 text-xl p-2">/</p>
+            <i class="fa-solid fa-chevron-right text-neutral-100 p-2" />
             <NavigationButton
                 text={decodeURIComponent(nav.path)}
                 href={decodeURIComponent(nav.route)}
@@ -43,7 +43,7 @@
         {/each}
     </div>
     <div class="flex items-center rounded-sm text-md">
-        <div class="text-neutral-100 font-mono pl-3 pr-3 pt-1 pb-1">
+        <div class="text-neutral-100 font-light pl-3 pr-3 pt-1 pb-1">
             {username}
         </div>
         <LogoutButton />

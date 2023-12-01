@@ -1,13 +1,12 @@
 <script>
     import "../app.css";
     import { jwtStore } from "$lib/stores/authentication";
-    import Login from "$lib/components/Login.svelte";
     import NavigationBar from "$lib/components/NavigationBar.svelte";
-    import Background from "$lib/components/Background.svelte";
+    import Login from "$lib/components/Login.svelte";
 </script>
 
+<title>IMPRoved</title>
 <body class="overflow-hidden bg-gray-800">
-    <!-- <Background /> -->
     {#if $jwtStore !== ""}
         <NavigationBar />
         <div class="overflow-auto" style="height: calc(100vh - 64px);">

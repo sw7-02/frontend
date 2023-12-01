@@ -8,13 +8,15 @@
     import { courseIdStore } from "$lib/stores/ids";
     import Modal from "./Modal.svelte";
     import LeaderboardButton from "./LeaderboardButton.svelte";
-
-    let showModal: boolean = false;
+    import DeleteButton from "./DeleteButton.svelte";
+    import EditButton from "./EditButton.svelte";
 
     export let title: string;
-    let newCourseTitle: string = title.trim();
     export let id: number;
     export let userRole: number;
+
+    let showModal: boolean = false;
+    let newCourseTitle: string = title.trim();
 
     export let deleteCourse: () => void;
     export let reloadCourses: () => void;
@@ -55,22 +57,8 @@
     <div class="flex justify-evenly items-center">
         <LeaderboardButton course={title} />
         {#if $jwtStore !== "" && $isTeacherStore === true}
-            <button
-                on:click|preventDefault={() => (showModal = true)}
-                class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-700 hover:text-white
-                    border border-neutral-700"
-            >
-                <i class="fa-solid fa-pencil fa-md pr-1" />
-                Edit
-            </button>
-            <button
-                on:click|preventDefault={deleteCourse}
-                class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-700 hover:text-white
-                       border border-neutral-700"
-            >
-                <i class="fa-solid fa-trash-can fa-md pr-1" />
-                Delete
-            </button>
+            <EditButton onClick={() => (showModal = true)} />
+            <DeleteButton onClick={deleteCourse} />
         {/if}
     </div>
 </a>

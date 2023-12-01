@@ -3,6 +3,7 @@
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import Course from "$lib/components/Course.svelte";
+    import AddCourseButton from "$lib/components/AddCourseButton.svelte";
     import Modal from "$lib/components/Modal.svelte";
 
     let showModal: boolean = false;
@@ -10,7 +11,7 @@
     let data: any;
 
     async function load() {
-        return fetch("http://localhost:8080/course/", {
+        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/`, {
             method: "GET",
             headers: {
                 auth: get(jwtStore),
@@ -37,7 +38,7 @@
     }
 
     function createCourse() {
-        return fetch(`http://localhost:8080/course`, {
+        return fetch(`${import.meta.env.VITE_API_PREFIX}/course`, {
             method: "POST",
             headers: {
                 auth: get(jwtStore),
@@ -57,7 +58,7 @@
     }
 
     function deleteCourse(id: number) {
-        return fetch(`http://localhost:8080/course/${id}`, {
+        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/${id}`, {
             method: "DELETE",
             headers: {
                 auth: get(jwtStore),
@@ -83,7 +84,6 @@
     });
 </script>
 
-<title>IMPRoved</title>
 <div class="flex justify-center">
     <div class="grid grid-cols-3 justify-items-center">
         {#if data}
@@ -98,16 +98,11 @@
             {/each}
         {/if}
         {#if $jwtStore !== "" && $isTeacherStore === true}
-            <button
-                on:click={() => (showModal = true)}
-                class="bg-neutral-700 justify-center items-center flex mt-4 ml-2 mr-2 bg-opacity-50
-			shadow-xl rounded-sm text-neutral-950 w-[470px] h-[264px] font-mono
-			text-xl
-			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
-                style="cursor: pointer;"
-            >
-                <p>Add course</p>
-            </button>
+            <AddCourseButton
+                onClick={() => {
+                    showModal = true;
+                }}
+            />
         {/if}
     </div>
 </div>

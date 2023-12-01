@@ -4,7 +4,9 @@
 
 <button
     on:click|preventDefault={() => onClick()}
-    class="hover:text-red-700 rounded-full text-neutral-100 mr-4"
+    class="hover:bg-neutral-700 hover:text-red-700 text-neutral-100 p-4 mr-4 rounded-full relative"
 >
-    <i class="fa-regular fa-circle-xmark" />
+    <span class="absolute inset-0 flex items-center justify-center">
+        <i class="fa-solid fa-xmark" />
+    </span>
 </button>
