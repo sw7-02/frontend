@@ -1,39 +1,67 @@
-<div class="elaborate-background">
-    <div class="wave-pattern" />
+<div class="background">
+    <div class="wave-pattern wave1" />
+    <div class="wave-pattern wave2" />
+    <div class="wave-pattern wave3" />
 </div>
 
 <style>
-    .elaborate-background {
+    .background {
         position: fixed;
         width: 100vw;
         height: 100vh;
         top: 0;
         left: 0;
         z-index: -1;
-        background: linear-gradient(
-            45deg,
-            #003366,
-            #006699,
-            #003366
-        ); /* Dark blue color with blueish gradient */
-        animation: movementAnimation 30s infinite linear;
+        background: linear-gradient(45deg, #000509, #01142b, #061b2c);
+        animation: movementAnimation 60s infinite linear;
         overflow: hidden;
     }
 
     .wave-pattern {
         position: absolute;
         width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-            90deg,
-            #002147,
-            #002147 10px,
-            #003366 10px,
-            #003366 20px
-        );
         opacity: 0.2;
         transform: skewY(-12deg);
-        animation: waveAnimation 10s infinite linear;
+        animation: waveAnimation 240s infinite linear;
+    }
+
+    .wave1 {
+        height: 10%;
+        background: repeating-linear-gradient(
+            90deg,
+            #000305,
+            #000305 120px,
+            #2f5277 120px,
+            #010b16 200px
+        );
+        top: 25%;
+        animation-delay: 0s;
+    }
+
+    .wave2 {
+        height: 40%;
+        background: repeating-linear-gradient(
+            90deg,
+            #000305,
+            #000305 120px,
+            #2f5277 120px,
+            #010b16 200px
+        );
+        top: 40%;
+        animation-delay: -40s; /* Adjust the delay for the second wave */
+    }
+
+    .wave3 {
+        height: 80%;
+        background: repeating-linear-gradient(
+            90deg,
+            #000305,
+            #000305 120px,
+            #2f5277 120px,
+            #010b16 200px
+        );
+        top: 60%;
+        animation-delay: -80s; /* Adjust the delay for the third wave */
     }
 
     @keyframes movementAnimation {
@@ -50,10 +78,10 @@
 
     @keyframes waveAnimation {
         0% {
-            transform: skewY(-12deg) translateX(0);
+            transform: skewY(-12deg) translateX(100%);
         }
         100% {
-            transform: skewY(-12deg) translateX(-50%);
+            transform: skewY(-12deg) translateX(-100%);
         }
     }
 </style>

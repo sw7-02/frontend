@@ -75,6 +75,7 @@
 
     function updateExercise() {
         showToast = true;
+        console.log(data);
         return fetch(
             `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
                 sessionIdStore
@@ -142,7 +143,7 @@
     >
         {#if data}
             <div
-                class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between rounded-md border border-neutral-600"
+                class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] overflow-hidden flex flex-col justify-between rounded-md border border-neutral-600"
             >
                 <div
                     class="flex justify-between items-center p-2 border-b border-neutral-600"
@@ -181,7 +182,7 @@
                         </div>
                     {/if}
                 </div>
-                <div class="pl-2 pr-2 overflow-auto h-full">
+                <div class="pl-2 pr-2 overflow-y-auto h-full">
                     {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                         <p class="mt-2 text-neutral-100 cursor-default">
                             {data.description}
@@ -290,7 +291,7 @@
                         {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                             <p class="font-bold">Code Template</p>
                             <div class="flex items-center">
-                                <p class="pr-1 font-bold">Language:</p>
+                                <p class="pr-2 font-bold">Language:</p>
                                 <select
                                     class="bg-neutral-700 rounded-md border border-neutral-600"
                                     bind:value={data.programming_language}
@@ -334,8 +335,10 @@
             </div>
         {/if}
     </div>
-    <div class="flex justify-end w-[1816px]">
-        <SaveExerciseButton {updateExercise} />
-    </div>
+    {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+        <div class="flex justify-end w-[1816px]">
+            <SaveExerciseButton {updateExercise} />
+        </div>
+    {/if}
 </div>
 <Toast bind:showToast message="Exercise saved" />

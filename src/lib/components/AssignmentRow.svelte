@@ -29,7 +29,7 @@
                 </div>
             {/if}
         </div>
-        <DeleteButton onClick={deleteAssignment} />
+        <div class="mr-2"><DeleteButton onClick={deleteAssignment} /></div>
     </div>
 </a>
 

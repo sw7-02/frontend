@@ -35,8 +35,6 @@
         });
     }
 
-    let assignments: string[] = ["Not implemented yet"];
-
     let data: any;
 
     async function reload() {
@@ -71,12 +69,12 @@
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
-            {#each assignments as assignment, i}
+            <!-- {#each assignments as assignment, i}
                 <AssignmentRow
                     title={"Assignment " + (i + 1) + ": " + assignment}
                     href={$page.params.course + "/" + assignment}
                 />
-            {/each}
+            {/each} -->
             {#if $jwtStore !== "" && $isTeacherStore === true}
                 <AddSessionAssigmentButton
                     buttonText="Add assignment"
