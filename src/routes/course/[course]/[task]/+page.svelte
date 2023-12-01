@@ -109,6 +109,16 @@
         const newExample = { input: "", output: "" };
         data.examples = [...data.examples, newExample];
     }
+
+    function deleteExample(i: number) {
+        if (data.examples.length > 0) {
+            data.examples = [
+                ...data.examples.slice(0, i),
+                ...data.examples.slice(i + 1),
+            ];
+        }
+        console.log(data.examples);
+    }
 </script>
 
 <title>{$page.params.task}</title>
@@ -209,8 +219,11 @@
                                     class="fa-solid fa-arrow-right"
                                 /> Output)
                             </p>
-                            {#each data.examples as example}
-                                <InputOutputExample bind:example />
+                            {#each data.examples as example, i}
+                                <InputOutputExample
+                                    deleteExample={() => deleteExample(i)}
+                                    bind:example
+                                />
                             {/each}
                             <button
                                 on:click={addExample}
@@ -232,21 +245,21 @@
                             >
                         {/if}
                     </div>
-                </div>
-                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                    <div
-                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
-                    >
-                        <button
-                            on:click={revealHint}
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
-                            >Hint</button
+                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                        <div
+                            class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
                         >
-                    </div>
-                {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                    <div class="flex justify-end p-2 h-[54px]" />
-                {/if}
+                            <button
+                                on:click={revealHint}
+                                class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                                >Hint</button
+                            >
+                        </div>
+                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                        <div class="flex justify-end p-2 h-[54px]" />
+                    {/if}
+                </div>
             </div>
             <div class="mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col">
                 <div>
