@@ -43,9 +43,11 @@
         {/each}
     </div>
     <div class="flex items-center rounded-sm text-md">
-        <div class="text-neutral-100 font-light pl-3 pr-3 pt-1 pb-1">
-            {username}
-        </div>
+        <p
+            class="text-neutral-100 font-light pl-3 pr-3 pt-1 pb-1 cursor-default"
+        >
+            <i class="fa-regular fa-circle-user mr-1" />{username}
+        </p>
         <LogoutButton />
     </div>
 </nav>
