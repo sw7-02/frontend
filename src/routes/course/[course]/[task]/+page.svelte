@@ -146,143 +146,136 @@
 >
     <div class="flex overflow-hidden">
         {#if data}
-            <div class="mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between">
-                <div>
-                    <div
-                        class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
-                    >
-                        {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                            <p class="text-neutral-100 text-md cursor-default">
-                                {data.title}
-                            </p>
-                            <p class="text-green-700 text-md cursor-default">
-                                Points: {data.points}
-                            </p>
-                        {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                            <input
-                                class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800 pl-1"
-                                type="text"
-                                bind:value={data.title}
-                            />
-                            <div class="flex justify-end">
-                                <p
-                                    class="ml-2 mr-2 text-green-700 text-md cursor-default"
-                                >
-                                    Points:
-                                </p>
-                                <select
-                                    class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
-                                    bind:value={data.points}
-                                >
-                                    {#each Array.from({ length: 11 }, (_, i) => i) as option}
-                                        <option value={option}>{option}</option>
-                                    {/each}
-                                </select>
-                            </div>
-                        {/if}
-                    </div>
-                    <div
-                        class="bg-neutral-900 pl-2 pr-2 overflow-auto h-[739px]"
-                    >
-                        {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                            <p
-                                class="mt-2 text-neutral-100 cursor-default text-lg"
-                            >
-                                Description
-                            </p>
-                            <p class="mt-2 text-neutral-100 cursor-default">
-                                {data.description}
-                            </p>
-                            <p
-                                class="mt-4 text-neutral-100 cursor-default items-center text-lg"
-                            >
-                                Examples (Input <i
-                                    class="fa-solid fa-arrow-right"
-                                /> Output)
-                            </p>
-                            {#each data.examples as example}
-                                <div
-                                    class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
-                                >
-                                    <p>{example.input}</p>
-                                    <i class="fa-solid fa-arrow-right" />
-                                    <p>{example.output}</p>
-                                </div>
-                            {/each}
-                            <p
-                                class="mt-4 text-neutral-100 cursor-default text-lg"
-                            >
-                                Hints
-                            </p>
-                            {#each data.hints as hint, i}
-                                {#if revealedHintIndex >= i}
-                                    <p class="mt-2 text-neutral-100">{hint}</p>
-                                {/if}
-                            {/each}
-                        {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                            <p class="mt-2 text-neutral-100 cursor-default">
-                                Description
-                            </p>
-                            <form class="mt-2">
-                                <textarea
-                                    bind:value={data.description}
-                                    class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
-                                    rows="10"
-                                />
-                            </form>
-                            <p
-                                class="mt-2 text-neutral-100 cursor-default items-center"
-                            >
-                                Examples (Input <i
-                                    class="fa-solid fa-arrow-right"
-                                /> Output)
-                            </p>
-                            {#each data.examples as example, i}
-                                <InputOutputExample
-                                    deleteExample={() => deleteExample(i)}
-                                    bind:example
-                                />
-                            {/each}
-                            <button
-                                on:click={addExample}
-                                class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2"
-                                >Add example</button
-                            >
-                            <p class="mt-2 text-neutral-100 cursor-default">
-                                Hints
-                            </p>
-                            {#each data.hints as hint, i}
-                                <Hint
-                                    deleteHint={() => deleteHint(i)}
-                                    bind:hint
-                                />
-                            {/each}
-                            <button
-                                on:click={addHint}
-                                class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2 mb-2"
-                                >Add hint</button
-                            >
-                        {/if}
-                    </div>
+            <div
+                class="mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between rounded-md"
+            >
+                <div
+                    class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
+                >
                     {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                        <div
-                            class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
-                        >
-                            <button
-                                on:click={revealHint}
-                                class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
-                                >Hint</button
-                            >
-                        </div>
+                        <p class="text-neutral-100 text-md cursor-default">
+                            {data.title}
+                        </p>
+                        <p class="text-green-700 text-md cursor-default">
+                            Points: {data.points}
+                        </p>
                     {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                        <div class="flex justify-end p-2 h-[54px]" />
+                        <input
+                            class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800 pl-1"
+                            type="text"
+                            bind:value={data.title}
+                        />
+                        <div class="flex justify-end">
+                            <p
+                                class="ml-2 mr-2 text-green-700 text-md cursor-default"
+                            >
+                                Points:
+                            </p>
+                            <select
+                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
+                                bind:value={data.points}
+                            >
+                                {#each Array.from({ length: 11 }, (_, i) => i) as option}
+                                    <option value={option}>{option}</option>
+                                {/each}
+                            </select>
+                        </div>
                     {/if}
                 </div>
+                <div class="bg-neutral-900 pl-2 pr-2 overflow-auto h-[739px]">
+                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                        <p class="mt-2 text-neutral-100 cursor-default text-lg">
+                            Description
+                        </p>
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            {data.description}
+                        </p>
+                        <p
+                            class="mt-4 text-neutral-100 cursor-default items-center text-lg"
+                        >
+                            Examples (Input <i
+                                class="fa-solid fa-arrow-right"
+                            /> Output)
+                        </p>
+                        {#each data.examples as example}
+                            <div
+                                class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
+                            >
+                                <p>{example.input}</p>
+                                <i class="fa-solid fa-arrow-right" />
+                                <p>{example.output}</p>
+                            </div>
+                        {/each}
+                        <p class="mt-4 text-neutral-100 cursor-default text-lg">
+                            Hints
+                        </p>
+                        {#each data.hints as hint, i}
+                            {#if revealedHintIndex >= i}
+                                <p class="mt-2 text-neutral-100">{hint}</p>
+                            {/if}
+                        {/each}
+                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Description
+                        </p>
+                        <form class="mt-2">
+                            <textarea
+                                bind:value={data.description}
+                                class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
+                                rows="10"
+                            />
+                        </form>
+                        <p
+                            class="mt-2 text-neutral-100 cursor-default items-center"
+                        >
+                            Examples (Input <i
+                                class="fa-solid fa-arrow-right"
+                            /> Output)
+                        </p>
+                        {#each data.examples as example, i}
+                            <InputOutputExample
+                                deleteExample={() => deleteExample(i)}
+                                bind:example
+                            />
+                        {/each}
+                        <button
+                            on:click={addExample}
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2"
+                            >Add example</button
+                        >
+                        <p class="mt-2 text-neutral-100 cursor-default">
+                            Hints
+                        </p>
+                        {#each data.hints as hint, i}
+                            <Hint deleteHint={() => deleteHint(i)} bind:hint />
+                        {/each}
+                        <button
+                            on:click={addHint}
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2 mb-2"
+                            >Add hint</button
+                        >
+                    {/if}
+                </div>
+                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                    <div
+                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                    >
+                        <button
+                            on:click={revealHint}
+                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
+                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                            >Hint</button
+                        >
+                    </div>
+                {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                    <div class="flex justify-end p-2 h-[54px]" />
+                {/if}
             </div>
-            <div class="mt-4 mb-4 w-[1100px] overflow-hidden flex flex-col">
+            <div
+                class="mt-4 mb-4 w-[1100px] flex flex-col overflow-hidden rounded-md"
+            >
                 <div>
                     <p
                         class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700 justify-between flex"
@@ -294,7 +287,7 @@
                             <div class="flex items-center">
                                 <p class="pr-1">Language:</p>
                                 <select
-                                    class="bg-neutral-700"
+                                    class="bg-neutral-700 rounded-md border border-neutral-600"
                                     bind:value={data.programming_language}
                                 >
                                     <option value="C">C</option>

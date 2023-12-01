@@ -138,9 +138,9 @@
     <div class="flex justify-between">
         <div class="flex items-center ml-6">
             {#if !showExercises}
-                <i class="fa-solid fa-chevron-right w-5 text-sm" />
+                <i class="fa-solid fa-chevron-right w-4 text-sm" />
             {:else}
-                <i class="fa-solid fa-chevron-down w-5 text-sm" />
+                <i class="fa-solid fa-chevron-down w-4 text-sm" />
             {/if}
             {title}
             {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
@@ -179,8 +179,6 @@
                 id={exercise.exercise_id}
                 {sessionId}
             >
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
-                <!-- svelte-ignore a11y-no-static-element-interactions -->
                 <DeleteButton
                     onClick={() => deleteExercise(exercise.exercise_id)}
                 />

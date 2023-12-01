@@ -14,12 +14,11 @@
         sessionIdStore.set(sessionId);
     }}
     {href}
-    class="bg-neutral-900 flex justify-between items-center shadow-xl text-neutral-100 text-sm font-mono w-[700px] h-8
-    hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700 border-b-[1px] border-neutral-700 {i ===
-    0
-        ? 'border-t-[1px]'
-        : ''}"
+    class="bg-neutral-900 flex justify-between items-center shadow-xl text-neutral-100 text-sm rounded-md w-[700px] h-8
+    hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600"
 >
-    <div class="ml-6">{title}</div>
+    <div class="ml-6">
+        {title}
+    </div>
     <slot />
 </a>
