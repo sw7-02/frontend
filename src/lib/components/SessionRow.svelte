@@ -11,6 +11,7 @@
     import { get } from "svelte/store";
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
+    import DeleteButton from "./DeleteButton.svelte";
 
     export let title: string;
     export let sessionId: number;
@@ -162,13 +163,7 @@
                 >
                     Add exercise
                 </div>
-                <div
-                    on:click={deleteSession}
-                    on:click|stopPropagation
-                    class="hover:text-red-700 rounded-full text-neutral-100 mr-4"
-                >
-                    <i class="fa-regular fa-circle-xmark" />
-                </div>
+                <DeleteButton onClick={deleteSession} />
             </div>
         {/if}
     </div>
@@ -190,13 +185,9 @@
             >
                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                <div
-                    on:click|preventDefault={() =>
-                        deleteExercise(exercise.exercise_id)}
-                    class="hover:text-red-700 rounded-full text-neutral-100 mr-4"
-                >
-                    <i class="fa-regular fa-circle-xmark" />
-                </div>
+                <DeleteButton
+                    onClick={() => deleteExercise(exercise.exercise_id)}
+                />
             </ExerciseRow>
         {/each}
     </div>
