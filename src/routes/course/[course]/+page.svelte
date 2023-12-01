@@ -44,7 +44,7 @@
     }
 
     onMount(async () => {
-        reload();
+        data = await load();
     });
 </script>
 
@@ -55,7 +55,7 @@
             {#if data}
                 {#each data.sessions as session, i}
                     <SessionRow
-                        reloadExercises={reload}
+                        reloadSessions={reload}
                         title={"Session " + (i + 1) + ": " + session.title}
                         sessionId={session.session_id}
                         exercises={session.exercises}

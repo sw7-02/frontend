@@ -7,7 +7,7 @@
         userRoleStore,
     } from "$lib/stores/authentication";
     import { role } from "$lib/stores/authentication";
-    import { courseIdStore } from "$lib/stores/ids";
+    import { courseIdStore, taskIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
@@ -22,7 +22,7 @@
     let newSessionTitle: string = title.split(":")[1].trim();
     let showExercises = false;
 
-    export let reloadExercises: () => void;
+    export let reloadSessions: () => void;
 
     function createExercise() {
         showExercises = true;
@@ -40,8 +40,31 @@
             }
         ).then(async (response) => {
             if (response.ok) {
-                reloadExercises();
+                reloadSessions();
                 newExerciseTitle = "";
+                return;
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
+
+    function deleteExercise(exerciseId: number) {
+        return fetch(
+            `http://localhost:8080/course/${get(
+                courseIdStore
+            )}/session/${sessionId}/exercise/${exerciseId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                reloadSessions();
                 return;
             } else {
                 console.log(await response.text());
@@ -68,8 +91,31 @@
             }
         ).then(async (response) => {
             if (response.ok) {
-                reloadExercises();
+                reloadSessions();
                 newExerciseTitle = "";
+                return;
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
+    }
+
+    function deleteSession() {
+        return fetch(
+            `http://localhost:8080/course/${get(
+                courseIdStore
+            )}/session/${sessionId}`,
+            {
+                method: "DELETE",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                reloadSessions();
                 return;
             } else {
                 console.log(await response.text());
@@ -107,13 +153,22 @@
             {/if}
         </div>
         {#if $jwtStore !== "" && $isTeacherStore === true}
-            <div
-                on:click={() => (showExerciseModal = true)}
-                on:click|stopPropagation
-                class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
-                 hover:text-green-700 hover:bg-neutral-700 text-sm pl-3 pr-3 mr-6 font-mono border border-neutral-700 bg-opacity-50"
-            >
-                Add exercise
+            <div class="flex items-center">
+                <div
+                    on:click={() => (showExerciseModal = true)}
+                    on:click|stopPropagation
+                    class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
+                 hover:text-green-700 hover:bg-neutral-700 text-sm pl-3 pr-3 mr-2 font-mono border border-neutral-700 bg-opacity-50"
+                >
+                    Add exercise
+                </div>
+                <div
+                    on:click={deleteSession}
+                    on:click|stopPropagation
+                    class="hover:text-red-700 rounded-full text-neutral-100 mr-4"
+                >
+                    <i class="fa-regular fa-circle-xmark" />
+                </div>
             </div>
         {/if}
     </div>
@@ -132,7 +187,17 @@
                     exercise.title}
                 id={exercise.exercise_id}
                 {sessionId}
-            />
+            >
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <div
+                    on:click|preventDefault={() =>
+                        deleteExercise(exercise.exercise_id)}
+                    class="hover:text-red-700 rounded-full text-neutral-100 mr-4"
+                >
+                    <i class="fa-regular fa-circle-xmark" />
+                </div>
+            </ExerciseRow>
         {/each}
     </div>
 {/if}
