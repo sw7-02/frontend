@@ -10,6 +10,7 @@
         taskIdStore,
     } from "$lib/stores/ids";
     import { get } from "svelte/store";
+    import Toast from "$lib/components/Toast.svelte";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
     import TestCaseEditor from "$lib/components/TestCaseEditor.svelte";
@@ -30,6 +31,10 @@
     };
 
     let data: _Exercise;
+
+    let showToast = false;
+
+    let revealedHintIndex = -1;
 
     async function load() {
         return fetch(
@@ -68,10 +73,15 @@
         data.programming_language = "C";
     });
 
-    let revealedHintIndex = -1;
+    function showSaveToast() {
+        showToast = true;
+        setTimeout(() => {
+            showToast = false;
+        }, 2000);
+    }
 
     function updateExercise() {
-        console.log(data);
+        showSaveToast();
         return fetch(
             `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
                 sessionIdStore
@@ -94,14 +104,23 @@
         });
     }
 
+    function revealHint() {
+        if (revealedHintIndex < data.hints.length - 1) {
+            revealedHintIndex++;
+        }
+    }
+
     function addHint() {
         const newHint = "";
         data.hints = [...data.hints, newHint];
     }
 
-    function revealHint() {
-        if (revealedHintIndex < data.hints.length - 1) {
-            revealedHintIndex++;
+    function deleteHint(i: number) {
+        if (data.hints.length > 0) {
+            data.hints = [
+                ...data.hints.slice(0, i),
+                ...data.hints.slice(i + 1),
+            ];
         }
     }
 
@@ -117,7 +136,6 @@
                 ...data.examples.slice(i + 1),
             ];
         }
-        console.log(data.examples);
     }
 </script>
 
@@ -234,8 +252,11 @@
                             <p class="mt-2 text-neutral-100 cursor-default">
                                 Hints
                             </p>
-                            {#each data.hints as hint}
-                                <Hint bind:hint />
+                            {#each data.hints as hint, i}
+                                <Hint
+                                    deleteHint={() => deleteHint(i)}
+                                    bind:hint
+                                />
                             {/each}
                             <button
                                 on:click={addHint}
@@ -312,6 +333,9 @@
                         bind:testCases={data.test_cases}
                     />
                     <SaveExerciseButton {updateExercise} />
+                {/if}
+                {#if showToast}
+                    <Toast message="Exercise saved" />
                 {/if}
             </div>
         {/if}
