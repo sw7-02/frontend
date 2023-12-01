@@ -1,23 +1,44 @@
 <script lang="ts">
-    import Modal from "./Modal.svelte";
-    import LeaderboardButton from "./LeaderboardButton.svelte";
+    import { get } from "svelte/store";
     import {
         jwtStore,
         isTeacherStore,
         userRoleStore,
     } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
+    import Modal from "./Modal.svelte";
+    import LeaderboardButton from "./LeaderboardButton.svelte";
 
     let showModal: boolean = false;
-    let isHovered: boolean = false;
 
-    export let title: string = "title";
+    export let title: string;
+    let newCourseTitle: string = title.trim();
     export let id: number;
     export let userRole: number;
 
     export let deleteCourse: () => void;
-    function onSubmit() {
-        // TODO: Put the new course in the database and fetch all courses
+    export let reloadCourses: () => void;
+
+    function updateCourseTitle() {
+        if (title === "") {
+            return;
+        }
+        return fetch(`http://localhost:8080/course/${id}`, {
+            method: "PUT",
+            headers: {
+                auth: get(jwtStore),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title: newCourseTitle }),
+        }).then(async (response) => {
+            if (response.ok) {
+                reloadCourses();
+                return;
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        });
     }
 </script>
 
@@ -54,4 +75,9 @@
     </div>
 </a>
 
-<Modal bind:showModal bind:newTitle={title} {onSubmit} onCancel={() => {}} />
+<Modal
+    bind:showModal
+    bind:newTitle={newCourseTitle}
+    onSubmit={updateCourseTitle}
+    onCancel={() => {}}
+/>

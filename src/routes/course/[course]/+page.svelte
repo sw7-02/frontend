@@ -44,7 +44,7 @@
     }
 
     onMount(async () => {
-        data = await load();
+        reload();
     });
 </script>
 

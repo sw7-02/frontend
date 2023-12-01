@@ -74,8 +74,12 @@
         });
     }
 
-    onMount(async () => {
+    async function reload() {
         data = await load();
+    }
+
+    onMount(async () => {
+        reload();
     });
 </script>
 
@@ -89,6 +93,7 @@
                     id={course.course_id}
                     userRole={course.user_role}
                     deleteCourse={() => deleteCourse(course.course_id)}
+                    reloadCourses={reload}
                 />
             {/each}
         {/if}
