@@ -71,9 +71,7 @@
 
     onMount(async () => {
         data = await load();
-        console.log(data);
         is_anonymous = await getAnonymity();
-        console.log(is_anonymous);
     });
 
     async function toggleAnonymity() {
@@ -94,6 +92,7 @@
             }
         ).then(async (response) => {
             if (response.ok) {
+                data = await load();
                 response.headers.get("auth") &&
                     jwtStore.set(response.headers.get("auth")!);
             } else {
