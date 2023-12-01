@@ -103,11 +103,13 @@
     }
 </script>
 
-<div class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto">
+<div
+    class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto rounded-md border border-neutral-800"
+>
     <table class="w-full">
         <thead class="text-neutral-100 text-center text-md">
-            <td class="p-2">Rank</td>
-            <td class="p-2 flex justify-center items-center"
+            <td class="p-2 font-bold">Rank</td>
+            <td class="p-2 flex justify-center items-center font-bold"
                 >User
                 {#if $jwtStore !== "" && $isTeacherStore === false}
                     <div
@@ -120,20 +122,13 @@
                         /> Appear anonymous
                     </div>
                 {/if}
-            </td><td class="p-2" style="width: 500px;">Points</td>
+            </td><td class="p-2 font-bold" style="width: 500px;">Points</td>
         </thead>
         <tbody>
             {#if data}
                 {#each data as user, i}
                     <tr
-                        class="{i + 1 === 1
-                            ? 'text-yellow-400'
-                            : i + 1 === 2
-                            ? 'text-gray-400'
-                            : i + 1 === 3
-                            ? 'text-yellow-700'
-                            : 'text-neutral-100'}
-                    {(i + 1) % 2 === 0
+                        class="{(i + 1) % 2 === 0
                             ? 'bg-neutral-900'
                             : 'bg-neutral-800'} text-neutral-100 text-md text-center"
                     >
@@ -147,7 +142,7 @@
                                     class="w-full rounded overflow-hidden h-6 relative"
                                 >
                                     <div
-                                        class="bg-green-700 h-full"
+                                        class="bg-gray-800 h-full"
                                         style="width: {(user.total_points /
                                             data[0].total_points) *
                                             100}%"

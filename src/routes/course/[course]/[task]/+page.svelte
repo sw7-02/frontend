@@ -73,15 +73,8 @@
         data.programming_language = "C";
     });
 
-    function showSaveToast() {
-        showToast = true;
-        setTimeout(() => {
-            showToast = false;
-        }, 2000);
-    }
-
     function updateExercise() {
-        showSaveToast();
+        showToast = true;
         return fetch(
             `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
                 sessionIdStore
@@ -140,13 +133,13 @@
 </script>
 
 <title>{$page.params.task}</title>
-<div
-    class="grid grid-cols-1 justify-items-center overflow-hidden"
-    style={role.STUDENT === get(userRoleStore)
-        ? "height: calc(100vh - 64px);"
-        : "height: calc(100vh - 118px);"}
->
-    <div class="flex overflow-hidden">
+<div class="grid grid-cols-1 justify-items-center overflow-hidden">
+    <div
+        class="flex overflow-hidden"
+        style={role.STUDENT === get(userRoleStore)
+            ? "height: calc(100vh - 64px);"
+            : "height: calc(100vh - 114px);"}
+    >
         {#if data}
             <div
                 class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between rounded-md border border-neutral-600"
@@ -155,26 +148,30 @@
                     class="flex justify-between items-center p-2 border-b border-neutral-600"
                 >
                     {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                        <p class="text-neutral-100 text-md cursor-default font-bold">
+                        <p
+                            class="text-neutral-100 text-md cursor-default font-bold"
+                        >
                             {data.title}
                         </p>
-                        <p class="text-md cursor-default text-blue-500 font-bold">
+                        <p
+                            class="text-md cursor-default text-blue-500 font-bold"
+                        >
                             Points: {data.points}
                         </p>
                     {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                         <input
-                            class="pl-1 w-full text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md"
+                            class="pl-1 w-full text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md font-bold"
                             type="text"
                             bind:value={data.title}
                         />
                         <div class="flex justify-end">
                             <p
-                                class="ml-2 mr-2 text-md cursor-default text-neutral-100"
+                                class="ml-2 mr-2 text-md cursor-default text-neutral-100 font-bold"
                             >
                                 Points:
                             </p>
                             <select
-                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md"
+                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md font-bold"
                                 bind:value={data.points}
                             >
                                 {#each Array.from({ length: 11 }, (_, i) => i) as option}
@@ -220,7 +217,9 @@
                             {/if}
                         {/each}
                     {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                        <p class="mt-2 text-neutral-100 cursor-default">
+                        <p
+                            class="mt-2 text-neutral-100 cursor-default font-bold"
+                        >
                             Description
                         </p>
                         <form class="mt-2">
@@ -232,7 +231,7 @@
                             />
                         </form>
                         <p
-                            class="mt-2 text-neutral-100 cursor-default items-center"
+                            class="mt-2 text-neutral-100 cursor-default items-center font-bold"
                         >
                             Examples (Input <i
                                 class="fa-solid fa-arrow-right-long text-sm"
@@ -248,9 +247,11 @@
                             on:click={addExample}
                             class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
                             border-neutral-600 rounded-md w-full mt-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
-                            >Add example</button
+                            >Add Example</button
                         >
-                        <p class="mt-2 text-neutral-100 cursor-default">
+                        <p
+                            class="mt-2 text-neutral-100 cursor-default font-bold"
+                        >
                             Hints
                         </p>
                         {#each data.hints as hint, i}
@@ -260,7 +261,7 @@
                             on:click={addHint}
                             class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
                             border-neutral-600 rounded-md w-full mt-2 mb-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
-                            >Add hint</button
+                            >Add Hint</button
                         >
                     {/if}
                 </div>
@@ -275,8 +276,6 @@
                             >Hint</button
                         >
                     </div>
-                {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                    <div class="flex justify-end p-2 h-[54px]" />
                 {/if}
             </div>
             <div
@@ -289,7 +288,7 @@
                         {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                             <p class="font-bold">Solution</p>
                         {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                            <p>Code Template</p>
+                            <p class="font-bold">Code Template</p>
                             <div class="flex items-center">
                                 <p class="pr-1 font-bold">Language:</p>
                                 <select
@@ -331,12 +330,12 @@
                         lang={cpp()}
                         bind:testCases={data.test_cases}
                     />
-                    <SaveExerciseButton {updateExercise} />
-                {/if}
-                {#if showToast}
-                    <Toast message="Exercise saved" />
                 {/if}
             </div>
         {/if}
     </div>
+    <div class="flex justify-end w-[1816px]">
+        <SaveExerciseButton {updateExercise} />
+    </div>
 </div>
+<Toast bind:showToast message="Exercise saved" />

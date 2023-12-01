@@ -82,7 +82,7 @@
     </div>
     <button
         class="text-neutral-100 rounded-md w-[300px] h-[40px] font-light bg-neutral-800 border border-neutral-600
-        transition duration-200 ease-in-out hover:bg-neutral-800"
+        transition duration-200 ease-in-out hover:bg-neutral-700"
         on:click={loginHandler}
         disabled={loading}
     >
