@@ -38,7 +38,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-    class="bg-neutral-800 rounded-md p-8"
+    class="bg-neutral-900 rounded-md p-8 border border-neutral-600"
     bind:this={dialog}
     on:close={() => (showModal = false)}
     on:click|self={() => dialog.close()}
@@ -49,7 +49,7 @@
             <p class="text-red-500 ml-4">Title cannot be empty</p>
         {/if}
         <input
-            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 outline-none"
+            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 border border-neutral-600 rounded-md"
             type="text"
             placeholder="Title"
             bind:value={newTitle}
@@ -62,13 +62,13 @@
     >
         <div class="flex justify-between">
             <button
-                class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]
+                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-[150px] border border-neutral-600
 				transition duration-200 ease-in-out hover:bg-red-900"
                 on:click={onCancel}
                 on:click={() => dialog.close()}>Cancel</button
             >
             <button
-                class="text-neutral-100 m-2 p-2 rounded-sm bg-neutral-900 w-[150px]
+                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-[150px] border border-neutral-600
 				transition duration-200 ease-in-out hover:bg-green-900"
                 on:click={closeModalSubmit}>Submit</button
             >

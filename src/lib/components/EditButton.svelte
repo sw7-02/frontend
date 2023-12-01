@@ -4,9 +4,9 @@
 
 <button
     on:click|preventDefault={onClick}
-    class="flex items-center text-neutral-100 text-sm font-mono h-10 p-2 rounded-sm hover:bg-neutral-700 hover:text-white
-    border border-neutral-700"
+    class="hover:bg-neutral-700 text-neutral-100 p-4 rounded-full relative"
 >
-    <i class="fa-solid fa-pencil fa-md pr-1" />
-    Edit
+    <span class="absolute inset-0 flex items-center justify-center">
+        <i class="fa-solid fa-pencil fa-md text-sm" />
+    </span>
 </button>

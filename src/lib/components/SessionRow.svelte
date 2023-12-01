@@ -12,6 +12,7 @@
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
     import DeleteButton from "./DeleteButton.svelte";
+    import EditButton from "./EditButton.svelte";
 
     export let title: string;
     export let sessionId: number;
@@ -132,24 +133,19 @@
     on:click={() => (showExercises = !showExercises)}
     class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-pointer
 			shadow-xl text-neutral-100 text-md w-[700px] h-16
-			hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-green-700"
+			hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600 rounded-md"
 >
     <div class="flex justify-between">
-        <div class="ml-6 flex items-center">
+        <div class="flex items-center ml-6">
             {#if !showExercises}
-                <i class="fa-solid fa-chevron-right w-5" />
+                <i class="fa-solid fa-chevron-right w-5 text-sm" />
             {:else}
-                <i class="fa-solid fa-chevron-down w-5" />
+                <i class="fa-solid fa-chevron-down w-5 text-sm" />
             {/if}
             {title}
             {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                <div
-                    on:click={() => (showSessionModal = true)}
-                    on:click|stopPropagation
-                    class="ml-1 p-1 text-sm rounded-sm bg-neutral-700 transition duration-200 ease-in-out
-            text-neutral-400 hover:text-green-700 hover:bg-neutral-700 border border-neutral-700 bg-opacity-50 items-center"
-                >
-                    <i class="fa-solid fa-pencil fa-md" />
+                <div class="ml-1">
+                    <EditButton onClick={() => (showSessionModal = true)} />
                 </div>
             {/if}
         </div>
@@ -158,10 +154,10 @@
                 <div
                     on:click={() => (showExerciseModal = true)}
                     on:click|stopPropagation
-                    class="flex items-center rounded-sm bg-neutral-700 transition duration-200 ease-in-out text-neutral-400
-                 hover:text-green-700 hover:bg-neutral-700 text-sm pl-3 pr-3 mr-2 font-mono border border-neutral-700 bg-opacity-50"
+                    class="flex items-center rounded-md bg-neutral-800 transition duration-200 ease-in-out text-neutral-100
+                  hover:bg-neutral-700 text-sm pl-3 pr-3 pt-1 pb-1 mr-2 font-light border border-neutral-600"
                 >
-                    Add exercise
+                    <i class="fa-solid fa-plus pr-1" />Add exercise
                 </div>
                 <DeleteButton onClick={deleteSession} />
             </div>

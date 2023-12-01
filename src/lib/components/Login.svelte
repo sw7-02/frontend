@@ -46,7 +46,7 @@
 >
     <h1 class="text-3xl font-light text-neutral-200 mb-6">IMPRoved</h1>
     {#if wrongInput}
-        <p class="text-red-700 text-sm mb-4">Incorrect username or password!</p>
+        <p class="text-red-700 text-sm mb-4">Incorrect username or password</p>
     {/if}
     <div class="mb-4">
         <label class="block text-neutral-200 text-sm mb-1" for="username"
