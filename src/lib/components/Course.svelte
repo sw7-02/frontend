@@ -52,7 +52,7 @@
     href={"course/" + title}
 >
     {#if $jwtStore !== "" && $isTeacherStore === true}
-        <div class="flex h-min mt-2 w-full justify-end">
+        <div class="flex h-min mt-2 mr-2 w-full justify-end">
             <DeleteButton onClick={deleteCourse} />
         </div>
     {/if}

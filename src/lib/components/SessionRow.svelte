@@ -159,7 +159,7 @@
                 >
                     <i class="fa-solid fa-plus pr-1" />Add exercise
                 </div>
-                <DeleteButton onClick={deleteSession} />
+                <div class="mr-2"><DeleteButton onClick={deleteSession} /></div>
             </div>
         {/if}
     </div>

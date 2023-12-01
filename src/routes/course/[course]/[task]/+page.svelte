@@ -142,37 +142,39 @@
 <title>{$page.params.task}</title>
 <div
     class="grid grid-cols-1 justify-items-center overflow-hidden"
-    style="height: calc(100vh - 64px);"
+    style={role.STUDENT === get(userRoleStore)
+        ? "height: calc(100vh - 64px);"
+        : "height: calc(100vh - 118px);"}
 >
     <div class="flex overflow-hidden">
         {#if data}
             <div
-                class="mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between rounded-md"
+                class="bg-neutral-900 mt-4 mb-4 mr-4 w-[700px] flex flex-col justify-between rounded-md border border-neutral-600"
             >
                 <div
-                    class="flex justify-between bg-neutral-800 items-center p-2 border-b-[2px] border-neutral-700"
+                    class="flex justify-between items-center p-2 border-b border-neutral-600"
                 >
                     {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                        <p class="text-neutral-100 text-md cursor-default">
+                        <p class="text-neutral-100 text-md cursor-default font-bold">
                             {data.title}
                         </p>
-                        <p class="text-green-700 text-md cursor-default">
+                        <p class="text-md cursor-default text-blue-500 font-bold">
                             Points: {data.points}
                         </p>
                     {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                         <input
-                            class="text-neutral-100 text-md bg-neutral-700 w-full border border-neutral-800 pl-1"
+                            class="pl-1 w-full text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md"
                             type="text"
                             bind:value={data.title}
                         />
                         <div class="flex justify-end">
                             <p
-                                class="ml-2 mr-2 text-green-700 text-md cursor-default"
+                                class="ml-2 mr-2 text-md cursor-default text-neutral-100"
                             >
                                 Points:
                             </p>
                             <select
-                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-800"
+                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md"
                                 bind:value={data.points}
                             >
                                 {#each Array.from({ length: 11 }, (_, i) => i) as option}
@@ -182,33 +184,36 @@
                         </div>
                     {/if}
                 </div>
-                <div class="bg-neutral-900 pl-2 pr-2 overflow-auto h-[739px]">
+                <div class="pl-2 pr-2 overflow-auto h-full">
                     {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                        <p class="mt-2 text-neutral-100 cursor-default text-lg">
-                            Description
-                        </p>
                         <p class="mt-2 text-neutral-100 cursor-default">
                             {data.description}
                         </p>
                         <p
-                            class="mt-4 text-neutral-100 cursor-default items-center text-lg"
+                            class="mt-4 text-neutral-100 cursor-default items-center text-md font-bold"
                         >
                             Examples (Input <i
-                                class="fa-solid fa-arrow-right"
+                                class="fa-solid fa-arrow-right-long text-sm"
                             /> Output)
                         </p>
                         {#each data.examples as example}
                             <div
-                                class="mt-2 text-neutral-100 cursor-default grid grid-cols-3"
+                                class="mt-2 text-neutral-100 cursor-default flex items-center"
                             >
                                 <p>{example.input}</p>
-                                <i class="fa-solid fa-arrow-right" />
+                                <i
+                                    class="fa-solid fa-arrow-right-long text-sm ml-2 mr-2"
+                                />
                                 <p>{example.output}</p>
                             </div>
                         {/each}
-                        <p class="mt-4 text-neutral-100 cursor-default text-lg">
-                            Hints
-                        </p>
+                        {#if revealedHintIndex >= 0}
+                            <p
+                                class="mt-4 text-neutral-100 cursor-default text-md font-bold"
+                            >
+                                Hints
+                            </p>
+                        {/if}
                         {#each data.hints as hint, i}
                             {#if revealedHintIndex >= i}
                                 <p class="mt-2 text-neutral-100">{hint}</p>
@@ -221,15 +226,16 @@
                         <form class="mt-2">
                             <textarea
                                 bind:value={data.description}
-                                class="text-neutral-100 text-md bg-neutral-700 w-full p-1"
+                                class="text-neutral-100 text-md bg-neutral-700 w-full p-1 border border-neutral-600 rounded-md"
                                 rows="10"
+                                placeholder="Write a description for the exercise"
                             />
                         </form>
                         <p
                             class="mt-2 text-neutral-100 cursor-default items-center"
                         >
                             Examples (Input <i
-                                class="fa-solid fa-arrow-right"
+                                class="fa-solid fa-arrow-right-long text-sm"
                             /> Output)
                         </p>
                         {#each data.examples as example, i}
@@ -240,8 +246,8 @@
                         {/each}
                         <button
                             on:click={addExample}
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2"
+                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
+                            border-neutral-600 rounded-md w-full mt-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
                             >Add example</button
                         >
                         <p class="mt-2 text-neutral-100 cursor-default">
@@ -252,20 +258,20 @@
                         {/each}
                         <button
                             on:click={addHint}
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-full h-[36px] mt-2 mb-2"
+                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
+                            border-neutral-600 rounded-md w-full mt-2 mb-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
                             >Add hint</button
                         >
                     {/if}
                 </div>
                 {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                     <div
-                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                        class="flex justify-end p-2 border-t border-neutral-600"
                     >
                         <button
                             on:click={revealHint}
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
+                    text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
                             >Hint</button
                         >
                     </div>
@@ -274,18 +280,18 @@
                 {/if}
             </div>
             <div
-                class="mt-4 mb-4 w-[1100px] flex flex-col overflow-hidden rounded-md"
+                class="mt-4 mb-4 w-[1100px] flex flex-col overflow-hidden rounded-md border border-neutral-600 bg-neutral-900"
             >
                 <div>
                     <p
-                        class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-neutral-700 justify-between flex"
+                        class="text-neutral-100 p-2 border-b-[1px] border-neutral-700 justify-between flex"
                     >
                         {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                            <p>Solution</p>
+                            <p class="font-bold">Solution</p>
                         {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
                             <p>Code Template</p>
                             <div class="flex items-center">
-                                <p class="pr-1">Language:</p>
+                                <p class="pr-1 font-bold">Language:</p>
                                 <select
                                     class="bg-neutral-700 rounded-md border border-neutral-600"
                                     bind:value={data.programming_language}
@@ -300,23 +306,23 @@
                 {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
                     <div>
                         <p
-                            class="bg-neutral-800 text-neutral-100 p-2 border-b-[2px] border-t-[2px] border-neutral-700"
+                            class="text-neutral-100 p-2 border-b border-t border-neutral-600 font-bold"
                         >
                             Output
                         </p>
                         <OutputConsole />
                     </div>
                     <div
-                        class="bg-neutral-900 flex justify-end p-2 h-[54px] border-t-[2px] border-neutral-700"
+                        class="flex justify-end p-2 border-t border-neutral-600"
                     >
                         <button
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-                    text-sm mr-4 font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
+                        text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1 mr-2"
                             >Test</button
                         >
                         <button
-                            class="rounded-sm transition duration-200 ease-in-out text-neutral-100
-             text-sm pl-3 pr-3 font-mono hover:bg-neutral-700 hover:text-white border border-neutral-700 w-[80px] h-[36px]"
+                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
+                        text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
                             >Submit</button
                         >
                     </div>

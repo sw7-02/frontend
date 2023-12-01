@@ -84,6 +84,7 @@
     });
 </script>
 
+<title>IMPRoved</title>
 <div class="flex justify-center">
     <div class="grid grid-cols-3 justify-items-center">
         {#if data}
