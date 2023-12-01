@@ -6,8 +6,8 @@
     import Background from "$lib/components/Background.svelte";
 </script>
 
-<body class="overflow-hidden">
-    <Background />
+<body class="overflow-hidden bg-gray-800">
+    <!-- <Background /> -->
     {#if $jwtStore !== ""}
         <NavigationBar />
         <div class="overflow-auto" style="height: calc(100vh - 64px);">

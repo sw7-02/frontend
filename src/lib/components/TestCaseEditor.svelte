@@ -25,6 +25,14 @@
             testCases = [...testCases, ""];
         }
     }
+
+    function deleteTestCase(i: number) {
+        if (testCases.length > 1) {
+            testCases = [...testCases.slice(0, i), ...testCases.slice(i + 1)]
+            currentTestCase = 0;
+            value = testCases[currentTestCase];
+        }
+    }
 </script>
 
 <div>
@@ -33,16 +41,27 @@
     >
         <p class="pr-2">Test Cases</p>
         {#each testCases as _, i}
-            <button
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div
                 on:click={() => changeTestCase(i)}
-                class="text-neutral-100 text-sm border-t-[1px] border-l-[1px] border-neutral-500 pt-1 pb-1 pl-4 pr-4
-                hover:bg-neutral-700 transition duration-200 ease-in-out hover:text-white {i ===
+                class="text-neutral-100 text-sm border-t-[1px] border-l-[1px] border-neutral-500 pt-1 pb-1 items-center justify-between
+                hover:bg-neutral-700 transition duration-200 ease-in-out hover:text-white flex {i ===
                 currentTestCase
                     ? 'bg-neutral-600'
                     : ''}"
             >
-                Test Case {i + 1}
-            </button>
+                <p class="pl-1 pr-1">Test Case {i + 1}</p>
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                <div
+                    on:click={() => deleteTestCase(i)}
+                    on:click|stopPropagation
+                    class="hover:text-red-700 rounded-full text-neutral-100"
+                >
+                    <i class="fa-regular fa-circle-xmark pl-1 pr-1" />
+                </div>
+            </div>
         {/each}
         <button
             on:click={addTestCase}
