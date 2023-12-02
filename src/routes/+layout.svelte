@@ -8,7 +8,6 @@
 </script>
 
 {#if $jwtStore !== ""}
-    <title>IMPRoved</title>
     <body class="overflow-hidden">
         <Background />
         <NavigationBar />

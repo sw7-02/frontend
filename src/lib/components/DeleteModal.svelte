@@ -43,12 +43,12 @@
         <div class="flex justify-between">
             <button
                 class="text-neutral-100 m-2 p-2 rounded-md bg-gray-800 w-full border border-neutral-600
-				transition duration-200 ease-in-out hover:bg-neutral-700"
+				transition duration-200 ease-in-out hover:bg-gray-700"
                 on:click={onCancel}
                 on:click={() => dialog.close()}>Cancel</button
             >
             <button
-                class="text-red-600 m-2 p-2 rounded-md bg-neutral-800 w-full border border-red-600
+                class="text-red-600 m-2 p-2 rounded-md bg-gray-800 w-full border border-red-600
 				transition duration-200 ease-in-out hover:bg-red-900"
                 on:click={closeModalSubmit}>Delete</button
             >

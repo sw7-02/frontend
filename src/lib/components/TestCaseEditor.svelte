@@ -56,16 +56,20 @@
                     : ''}"
             >
                 <p class="pl-2">Test Case {i + 1}</p>
-                <button
-                    on:click|preventDefault={() => setDeleteIndex(i)}
-                    class="hover:bg-gray-700 hover:text-red-700 text-neutral-100 p-3 m-1 rounded-full relative"
-                >
-                    <span
-                        class="absolute inset-0 flex items-center justify-center"
+                {#if i >= 1}
+                    <button
+                        on:click|preventDefault={() => setDeleteIndex(i)}
+                        class="hover:bg-gray-700 hover:text-red-700 text-neutral-100 p-3 m-1 rounded-full relative"
                     >
-                        <i class="fa-solid fa-xmark text-md" />
-                    </span>
-                </button>
+                        <span
+                            class="absolute inset-0 flex items-center justify-center"
+                        >
+                            <i class="fa-solid fa-xmark text-md" />
+                        </span>
+                    </button>
+                {:else}
+                    <span class="m-1" />
+                {/if}
             </button>
         {/each}
         <button

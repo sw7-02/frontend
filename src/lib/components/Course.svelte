@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { get } from "svelte/store";
     import {
         jwtStore,
@@ -44,12 +45,14 @@
     }
 </script>
 
-<a
-    on:click={() => courseIdStore.set(id)}
-    on:click={() => userRoleStore.set(userRole)}
+<button
+    on:click={() => {
+        courseIdStore.set(id);
+        userRoleStore.set(userRole);
+        goto("course/" + title);
+    }}
     class="grid grid-cols-1 justify-items-center bg-neutral-900 mt-4 ml-2 mr-2 rounded-md text-neutral-100 w-[470px] h-[264px] shadow-lg
 		hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600"
-    href={"course/" + title}
 >
     {#if $jwtStore !== "" && $isTeacherStore === true}
         <div class="flex h-min pt-2 pr-2 w-full justify-end">
@@ -57,7 +60,7 @@
         </div>
     {/if}
     <div class="flex items-center">
-        <p id="title" class="text-2xl ml-5">
+        <p id="title" class="text-2xl">
             {title}
         </p>
         {#if $jwtStore !== "" && $isTeacherStore === true}
@@ -79,7 +82,7 @@
             />
         {/if}
     </div>
-</a>
+</button>
 
 <Modal
     bind:showModal
