@@ -1,12 +1,15 @@
 <script lang="ts">
     import CodeMirror from "svelte-codemirror-editor";
     import { oneDark } from "@codemirror/theme-one-dark";
+    import DeleteModal from "./DeleteModal.svelte";
 
     export let testCases: string[];
     export let lang: any;
 
+    let showModal: boolean = false;
     let currentTestCase: number = 0;
     let value: string;
+    let deleteIndex: number;
     testCases.length > 0 ? (value = testCases[currentTestCase]) : (value = "");
 
     $: {
@@ -23,6 +26,11 @@
         if (testCases.length < 10) {
             testCases = [...testCases, ""];
         }
+    }
+
+    function setDeleteIndex(i: number) {
+        showModal = true;
+        deleteIndex = i;
     }
 
     function deleteTestCase(i: number) {
@@ -49,7 +57,7 @@
             >
                 <p class="pl-2">Test Case {i + 1}</p>
                 <button
-                    on:click|preventDefault={() => deleteTestCase(i)}
+                    on:click|preventDefault={() => setDeleteIndex(i)}
                     class="hover:bg-gray-700 hover:text-red-700 text-neutral-100 p-3 m-1 rounded-full relative"
                 >
                     <span
@@ -77,3 +85,8 @@
         {lang}
     />
 </div>
+<DeleteModal
+    bind:showModal
+    onDelete={() => deleteTestCase(deleteIndex)}
+    onCancel={() => (showModal = false)}
+/>

@@ -1,13 +1,11 @@
 <script lang="ts">
     export let showModal: boolean;
-    export let newTitle: string = "";
 
     let dialog: any;
-    let isTitleEmpty = false;
 
     $: if (dialog && showModal) dialog.showModal();
 
-    export let onSubmit: () => void;
+    export let onDelete: () => void;
     export let onCancel: () => void;
 
     function handleKeyPress(event: KeyboardEvent) {
@@ -15,24 +13,14 @@
             onCancel();
             dialog.close();
         } else if (event.key === "Enter") {
-            if (isTitleEmpty) {
-                return;
-            }
-            onSubmit();
+            onDelete();
             dialog.close();
         }
     }
 
     function closeModalSubmit() {
-        if (newTitle === "") {
-            isTitleEmpty = true;
-            return;
-        }
-        if (newTitle !== "") {
-            isTitleEmpty = false;
-            onSubmit();
-            dialog.close();
-        }
+        onDelete();
+        dialog.close();
     }
 </script>
 
@@ -45,18 +33,7 @@
     on:keypress={handleKeyPress}
 >
     <div class="flex flex-col grid-cols-1 justify-items-center">
-        {#if isTitleEmpty}
-            <p class="text-red-500 ml-4">Title cannot be empty</p>
-        {/if}
-        <div class="flex items-center">
-            <slot />
-            <input
-                class="bg-neutral-700 m-2 p-2 w-[316px] h-[40px] text-neutral-100 border border-neutral-600 rounded-md"
-                type="text"
-                placeholder="Title"
-                bind:value={newTitle}
-            />
-        </div>
+        <p class="text-neutral-100">Are you sure you want to delete?</p>
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
@@ -66,14 +43,14 @@
         <div class="flex justify-between">
             <button
                 class="text-neutral-100 m-2 p-2 rounded-md bg-gray-800 w-full border border-neutral-600
-				transition duration-200 ease-in-out hover:bg-red-900"
+				transition duration-200 ease-in-out hover:bg-neutral-700"
                 on:click={onCancel}
                 on:click={() => dialog.close()}>Cancel</button
             >
             <button
-                class="text-neutral-100 m-2 p-2 rounded-md bg-gray-800 w-full border border-neutral-600
-				transition duration-200 ease-in-out hover:bg-green-900"
-                on:click={closeModalSubmit}>Submit</button
+                class="text-red-600 m-2 p-2 rounded-md bg-neutral-800 w-full border border-red-600
+				transition duration-200 ease-in-out hover:bg-red-900"
+                on:click={closeModalSubmit}>Delete</button
             >
         </div>
     </div>
