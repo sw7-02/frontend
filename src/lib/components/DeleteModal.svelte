@@ -33,7 +33,7 @@
     on:keypress={handleKeyPress}
 >
     <div class="flex flex-col grid-cols-1 justify-items-center">
-        <p class="text-neutral-100">Are you sure you want to delete?</p>
+        <p class="text-neutral-100 p-2">Are you sure you want to delete?</p>
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div

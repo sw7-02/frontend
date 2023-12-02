@@ -155,7 +155,7 @@
                             {data.title}
                         </p>
                         <p
-                            class="text-md cursor-default text-cyan-900 font-bold"
+                            class="text-md cursor-default text-cyan-800 font-bold"
                         >
                             Points: {data.points}
                         </p>
@@ -190,7 +190,7 @@
                         <p
                             class="mt-4 text-neutral-100 cursor-default items-center text-md font-bold"
                         >
-                            Examples (Input <i
+                            Example(s) (Input <i
                                 class="fa-solid fa-arrow-right-long text-sm"
                             /> Output)
                         </p>
@@ -209,7 +209,7 @@
                             <p
                                 class="mt-4 text-neutral-100 cursor-default text-md font-bold"
                             >
-                                Hints
+                                Hint(s)
                             </p>
                         {/if}
                         {#each data.hints as hint, i}
@@ -234,7 +234,7 @@
                         <p
                             class="mt-2 text-neutral-100 cursor-default items-center font-bold"
                         >
-                            Examples (Input <i
+                            Example(s) (Input <i
                                 class="fa-solid fa-arrow-right-long text-sm"
                             /> Output)
                         </p>
@@ -253,7 +253,7 @@
                         <p
                             class="mt-2 text-neutral-100 cursor-default font-bold"
                         >
-                            Hints
+                            Hint(s)
                         </p>
                         {#each data.hints as hint, i}
                             <Hint deleteHint={() => deleteHint(i)} bind:hint />

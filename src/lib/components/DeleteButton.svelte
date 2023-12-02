@@ -7,7 +7,7 @@
 </script>
 
 <button
-    on:click|preventDefault={() => (showModal = true)}
+    on:click|preventDefault|stopPropagation={() => (showModal = true)}
     class="hover:bg-gray-700 hover:text-red-700 text-neutral-100 p-4 rounded-full relative"
 >
     <span class="absolute inset-0 flex items-center justify-center">

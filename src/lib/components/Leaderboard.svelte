@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { isTeacherStore, jwtStore } from "$lib/stores/authentication";
+    import { jwtStore, userRoleStore, role } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import { onMount } from "svelte";
@@ -107,21 +107,12 @@
     class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto rounded-md border border-neutral-600"
 >
     <table class="w-full">
-        <thead class="text-neutral-100 text-center text-md">
+        <thead
+            class="text-neutral-100 text-center text-md border-b border-neutral-600"
+        >
             <td class="p-2 font-bold">Rank</td>
             <td class="p-2 flex justify-center items-center font-bold"
                 >User
-                {#if $jwtStore !== "" && $isTeacherStore === false}
-                    <div
-                        class="ml-2 p-1 bg-neutral-800 border border-neutral-700"
-                    >
-                        <input
-                            on:click={toggleAnonymity}
-                            type="checkbox"
-                            bind:checked={is_anonymous}
-                        /> Appear anonymous
-                    </div>
-                {/if}
             </td><td class="p-2 font-bold" style="width: 500px;">Points</td>
         </thead>
         <tbody>
@@ -130,7 +121,7 @@
                     <tr
                         class="{(i + 1) % 2 === 0
                             ? 'bg-neutral-900'
-                            : 'bg-neutral-800'} text-neutral-100 text-md text-center border border-neutral-600"
+                            : 'bg-neutral-800'} text-neutral-100 text-md text-center border-b border-neutral-600"
                     >
                         <td class="p-2">{i + 1}</td>
                         <td class="p-2">{user.username}</td>
@@ -142,7 +133,7 @@
                                     class="w-full rounded overflow-hidden h-6 relative"
                                 >
                                     <div
-                                        class="bg-cyan-900 h-full"
+                                        class="bg-cyan-800 h-full"
                                         style="width: {(user.total_points /
                                             data[0].total_points) *
                                             100}%"
@@ -161,3 +152,23 @@
         </tbody>
     </table>
 </div>
+{#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+    <div
+        class="bg-neutral-900 mt-4 mb-4 mr-4 w-[200px] h-[200px] rounded-md border border-neutral-600 flex flex-col"
+    >
+        <p
+            class="w-full p-2 font-bold text-neutral-100 text-center text-md border-b border-neutral-600"
+        >
+            Leaderboard Options
+        </p>
+        <div class="flex items-center p-2">
+            <input
+                on:click={toggleAnonymity}
+                bind:checked={is_anonymous}
+                type="checkbox"
+                class="appearance-none w-5 h-5 border border-neutral-600 rounded-md checked:bg-cyan-800 transition duration-150 ease-in-out"
+            />
+            <p class="text-neutral-100 ml-1">Appear as anonymous</p>
+        </div>
+    </div>
+{/if}
