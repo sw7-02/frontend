@@ -135,7 +135,7 @@
 <button
     on:click={() => (showExercises = !showExercises)}
     class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-pointer
-			shadow-xl text-neutral-100 text-md w-[700px] h-16
+			shadow-lg text-neutral-100 text-md w-[700px] h-16
 			hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600 rounded-md"
 >
     <div class="flex justify-between">

@@ -42,7 +42,7 @@
 
 <button
     on:click={() => (showModal = true)}
-    class="bg-neutral-700 justify-center items-center flex shadow-xl rounded-md w-[700px] h-16 bg-opacity-50 font-mono
+    class="bg-neutral-700 justify-center items-center flex shadow-lg rounded-md w-[700px] h-16 bg-opacity-50 font-mono
     text-neutral-950 hover:bg-neutral-800 transition duration-200 ease-in-out hover:text-neutral-600 mt-1 border border-neutral-800"
 >
     <p><i class="fa-solid fa-plus pr-1" />{buttonText}</p>

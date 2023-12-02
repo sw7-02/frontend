@@ -13,7 +13,7 @@
         sessionIdStore.set(sessionId);
     }}
     {href}
-    class="bg-neutral-900 flex justify-between items-center shadow-xl text-neutral-100 text-sm rounded-md w-[700px] h-8
+    class="bg-neutral-900 flex justify-between items-center shadow-lg text-neutral-100 text-sm rounded-md w-[700px] h-8
     hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600"
 >
     <div class="ml-6 text-center">

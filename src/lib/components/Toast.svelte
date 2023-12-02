@@ -19,7 +19,7 @@
 
 {#if showToast}
     <div
-        class="bg-gray-800 text-neutral-100 fixed bottom-4 left-1/2 transform -translate-x-1/2 p-6 rounded-md shadow-xl flex items-center justify-between"
+        class="bg-gray-800 text-neutral-100 fixed bottom-4 left-1/2 transform -translate-x-1/2 p-6 rounded-md shadow-lg flex items-center justify-between"
     >
         <span>{message}</span>
         <button

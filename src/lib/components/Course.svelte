@@ -47,7 +47,7 @@
 <a
     on:click={() => courseIdStore.set(id)}
     on:click={() => userRoleStore.set(userRole)}
-    class="grid grid-cols-1 justify-items-center bg-neutral-900 mt-4 ml-2 mr-2 rounded-md text-neutral-100 w-[470px] h-[264px] shadow-xl
+    class="grid grid-cols-1 justify-items-center bg-neutral-900 mt-4 ml-2 mr-2 rounded-md text-neutral-100 w-[470px] h-[264px] shadow-lg
 		hover:bg-neutral-800 transition duration-200 ease-in-out border border-neutral-600"
     href={"course/" + title}
 >

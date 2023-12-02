@@ -42,7 +42,7 @@
 </script>
 
 <div
-    class="grid grid-cols-1 justify-items-center bg-neutral-900 rounded-md text-neutral-100 shadow-xl p-16 border border-neutral-600"
+    class="grid grid-cols-1 justify-items-center bg-neutral-900 rounded-md text-neutral-100 shadow-lg p-16 border border-neutral-600"
 >
     <h1 class="text-3xl font-light text-neutral-200 mb-6">IMPRoved</h1>
     {#if wrongInput}
