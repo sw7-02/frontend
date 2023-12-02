@@ -30,7 +30,7 @@
 </script>
 
 <nav
-    class="flex justify-between items-center bg-neutral-900 h-16 pl-2 pr-2 shadow-lg border-b border-neutral-600"
+    class="flex justify-between items-center bg-neutral-900 h-16 pl-4 pr-4 shadow-lg border-b border-neutral-600"
 >
     <div class="flex items-center">
         <NavigationButton text={"Courses"} href={"/"} />

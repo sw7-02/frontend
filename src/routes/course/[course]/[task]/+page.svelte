@@ -35,6 +35,7 @@
     let logs: string[] = [];
     let showToast: boolean = false;
     let revealedHintIndex: number = -1;
+    let testRunnerResult: boolean = true;
     let isCorrectSolution: boolean = false;
 
     async function load() {
@@ -100,14 +101,14 @@
     }
 
     function testExercise() {
-        let testRunnerResult = true;
-
         if (isCorrectSolution) {
+            // Modal asking if the user wants to publish their solution
             goto(`${$page.url}/Solutions`);
         }
 
         logs = [...logs, "Testing solution..."];
         // fetch to testrunner
+
         if (testRunnerResult) {
             logs = [...logs, "Insert succesful testrunner result"];
             isCorrectSolution = true;
@@ -203,18 +204,25 @@
                         <p class="mt-2 text-neutral-100 cursor-default">
                             {data.description}
                         </p>
-                        <p
-                            class="mt-4 text-neutral-100 cursor-default items-center text-md font-bold"
-                        >
-                            Example(s) (Input <i
-                                class="fa-solid fa-arrow-right-long text-sm"
-                            /> Output)
-                        </p>
+                        {#if data.examples.length > 0}
+                            <p
+                                class="mt-4 text-neutral-100 cursor-default items-center text-md font-bold"
+                            >
+                                Example(s) (Input <i
+                                    class="fa-solid fa-arrow-right-long text-sm"
+                                /> Output)
+                            </p>
+                        {/if}
                         {#each data.examples as example}
                             <div
                                 class="mt-2 text-neutral-100 cursor-default flex items-center"
                             >
-                                <p>{example.input}</p>
+                                <i
+                                    class="fa-solid fa-circle text-[5px] text-cyan-800 mr-2 border border-neutral-600 rounded-full"
+                                />
+                                <p>
+                                    {example.input}
+                                </p>
                                 <i
                                     class="fa-solid fa-arrow-right-long text-sm ml-2 mr-2"
                                 />
@@ -230,7 +238,14 @@
                         {/if}
                         {#each data.hints as hint, i}
                             {#if revealedHintIndex >= i}
-                                <p class="mt-2 text-neutral-100">{hint}</p>
+                                <div
+                                    class="mt-2 text-neutral-100 cursor-default flex items-center"
+                                >
+                                    <i
+                                        class="fa-solid fa-circle text-[5px] text-cyan-800 mr-2 border border-neutral-600 rounded-full"
+                                    />
+                                    <p>{hint}</p>
+                                </div>
                             {/if}
                         {/each}
                     {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
