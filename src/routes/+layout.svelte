@@ -6,17 +6,20 @@
     import Background from "$lib/components/Background.svelte";
 </script>
 
-<title>IMPRoved</title>
-<body class="overflow-hidden">
-    <Background />
-    {#if $jwtStore !== ""}
+{#if $jwtStore !== ""}
+    <title>IMPRoved</title>
+    <body class="overflow-hidden bg-zinc-800">
         <NavigationBar />
         <div class="overflow-auto" style="height: calc(100vh - 64px);">
             <slot />
         </div>
-    {:else}
+    </body>
+{:else}
+    <title>IMPRoved - Login</title>
+    <body class="overflow-hidden">
         <div class="flex items-center justify-center h-screen">
+            <Background />
             <Login />
         </div>
-    {/if}
-</body>
+    </body>
+{/if}

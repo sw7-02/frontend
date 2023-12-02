@@ -127,9 +127,7 @@
     }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div
+<button
     on:click={() => (showExercises = !showExercises)}
     class="bg-neutral-900 grid grid-cols-1 items-center mt-1 cursor-pointer
 			shadow-xl text-neutral-100 text-md w-[700px] h-16
@@ -138,37 +136,34 @@
     <div class="flex justify-between">
         <div class="flex items-center ml-6">
             {#if !showExercises}
-                <i class="fa-solid fa-chevron-right w-4 text-sm" />
+                <i class="fa-solid fa-chevron-right w-5 text-sm text-neutral-500" />
             {:else}
-                <i class="fa-solid fa-chevron-down w-4 text-sm" />
+                <i class="fa-solid fa-chevron-down w-5 text-sm text-neutral-500" />
             {/if}
             {title}
             {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
-                <div class="ml-1">
-                    <EditButton onClick={() => (showSessionModal = true)} />
-                </div>
+                <EditButton onClick={() => (showSessionModal = true)} />
             {/if}
         </div>
         {#if $jwtStore !== "" && $isTeacherStore === true}
             <div class="flex items-center">
-                <div
+                <button
                     on:click={() => (showExerciseModal = true)}
                     on:click|stopPropagation
-                    class="flex items-center rounded-md bg-neutral-800 transition duration-200 ease-in-out text-neutral-100
-                  hover:bg-neutral-700 text-sm pl-3 pr-3 pt-1 pb-1 mr-2 font-light border border-neutral-600"
+                    class="flex items-center rounded-md bg-gray-800 transition duration-200 ease-in-out text-neutral-100
+                  hover:bg-gray-700 text-sm pl-3 pr-3 pt-1 pb-1 mr-2 font-light border border-neutral-600"
                 >
                     <i class="fa-solid fa-plus pr-1" />Add exercise
-                </div>
+                </button>
                 <div class="mr-2"><DeleteButton onClick={deleteSession} /></div>
             </div>
         {/if}
     </div>
-</div>
+</button>
 {#if showExercises}
     <div in:fade={{ duration: 200 }} out:fade={{ duration: 200 }}>
         {#each exercises as exercise, i}
             <ExerciseRow
-                {i}
                 title={"Exercise " + (i + 1) + ": " + exercise.title}
                 href={$page.url +
                     "/" +
@@ -179,9 +174,13 @@
                 id={exercise.exercise_id}
                 {sessionId}
             >
-                <DeleteButton
-                    onClick={() => deleteExercise(exercise.exercise_id)}
-                />
+                {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                    <div class="mr-2">
+                        <DeleteButton
+                            onClick={() => deleteExercise(exercise.exercise_id)}
+                        />
+                    </div>
+                {/if}
             </ExerciseRow>
         {/each}
     </div>

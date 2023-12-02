@@ -35,7 +35,7 @@
     <div class="flex items-center">
         <NavigationButton text={"Courses"} href={"/"} />
         {#each navigation as nav}
-            <i class="fa-solid fa-chevron-right text-neutral-100 p-2" />
+            <i class="fa-solid fa-chevron-right text-neutral-500 p-2" />
             <NavigationButton
                 text={decodeURIComponent(nav.path)}
                 href={decodeURIComponent(nav.route)}
@@ -44,7 +44,7 @@
     </div>
     <div class="flex items-center rounded-sm text-md">
         <p
-            class="text-neutral-100 font-light pl-3 pr-3 pt-1 pb-1 cursor-default"
+            class="text-neutral-100 pl-3 pr-3 pt-1 pb-1 cursor-default"
         >
             <i class="fa-regular fa-circle-user mr-1" />{username}
         </p>

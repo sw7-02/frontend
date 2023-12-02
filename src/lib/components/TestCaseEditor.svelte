@@ -41,16 +41,16 @@
         {#each testCases as _, i}
             <button
                 on:click={() => changeTestCase(i)}
-                class="text-neutral-100 text-sm border-neutral-600 items-center justify-between
-                hover:bg-neutral-800 transition duration-200 ease-in-out flex rounded-t-md border-t border-l border-r {i ===
+                class="text-neutral-100 text-sm border-neutral-600 items-center justify-between bg-gray-800
+                hover:bg-gray-600 transition duration-200 ease-in-out flex rounded-t-md border-t border-l border-r {i ===
                 currentTestCase
-                    ? 'bg-gray-800'
+                    ? 'bg-gray-700'
                     : ''}"
             >
                 <p class="pl-2">Test Case {i + 1}</p>
                 <button
                     on:click|preventDefault={() => deleteTestCase(i)}
-                    class="hover:bg-neutral-700 hover:text-red-700 text-neutral-100 p-3 m-1 rounded-full relative"
+                    class="hover:bg-gray-700 hover:text-red-700 text-neutral-100 p-3 m-1 rounded-full relative"
                 >
                     <span
                         class="absolute inset-0 flex items-center justify-center"
@@ -62,7 +62,7 @@
         {/each}
         <button
             on:click={addTestCase}
-            class="text-neutral-100 p-3 m-1 hover:bg-neutral-700 transition duration-200 ease-in-out rounded-full relative"
+            class="text-neutral-100 p-3 m-1 hover:bg-gray-700 transition duration-200 ease-in-out rounded-full relative"
         >
             <span class="absolute inset-0 flex items-center justify-center">
                 <i class="fa-solid fa-plus text-sm" />

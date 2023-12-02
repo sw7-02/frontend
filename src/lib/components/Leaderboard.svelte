@@ -104,7 +104,7 @@
 </script>
 
 <div
-    class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto rounded-md border border-neutral-800"
+    class="bg-neutral-900 mt-4 mb-4 mr-4 w-[900px] overflow-auto rounded-md border border-neutral-600"
 >
     <table class="w-full">
         <thead class="text-neutral-100 text-center text-md">
@@ -130,7 +130,7 @@
                     <tr
                         class="{(i + 1) % 2 === 0
                             ? 'bg-neutral-900'
-                            : 'bg-neutral-800'} text-neutral-100 text-md text-center"
+                            : 'bg-neutral-800'} text-neutral-100 text-md text-center border border-neutral-600"
                     >
                         <td class="p-2">{i + 1}</td>
                         <td class="p-2">{user.username}</td>
@@ -142,7 +142,7 @@
                                     class="w-full rounded overflow-hidden h-6 relative"
                                 >
                                     <div
-                                        class="bg-gray-800 h-full"
+                                        class="bg-cyan-900 h-full"
                                         style="width: {(user.total_points /
                                             data[0].total_points) *
                                             100}%"

@@ -7,7 +7,7 @@
     } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import Modal from "./Modal.svelte";
-    import LeaderboardButton from "./LeaderboardButton.svelte";
+    import CourseButton from "./CourseButton.svelte";
     import DeleteButton from "./DeleteButton.svelte";
     import EditButton from "./EditButton.svelte";
 
@@ -57,7 +57,7 @@
         </div>
     {/if}
     <div class="flex items-center">
-        <p id="title" class="text-2xl mr-1 ml-5">
+        <p id="title" class="text-2xl ml-5">
             {title}
         </p>
         {#if $jwtStore !== "" && $isTeacherStore === true}
@@ -68,7 +68,16 @@
         <span class="mb-8" />
     {/if}
     <div class="flex items-center mb-4">
-        <LeaderboardButton course={title} />
+        <CourseButton
+            text={"Leaderboard"}
+            href={`course/${title}/Leaderboard`}
+        />
+        {#if $jwtStore !== "" && $isTeacherStore === true}
+            <CourseButton
+                text={"Statistics"}
+                href={`course/${title}/Statistics`}
+            />
+        {/if}
     </div>
 </a>
 

@@ -155,7 +155,7 @@
                             {data.title}
                         </p>
                         <p
-                            class="text-md cursor-default text-blue-500 font-bold"
+                            class="text-md cursor-default text-cyan-900 font-bold"
                         >
                             Points: {data.points}
                         </p>
@@ -172,7 +172,7 @@
                                 Points:
                             </p>
                             <select
-                                class="text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md font-bold"
+                                class="text-neutral-100 text-md bg-gray-800 border border-neutral-600 rounded-md font-bold"
                                 bind:value={data.points}
                             >
                                 {#each Array.from({ length: 11 }, (_, i) => i) as option}
@@ -246,8 +246,8 @@
                         {/each}
                         <button
                             on:click={addExample}
-                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
-                            border-neutral-600 rounded-md w-full mt-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
+                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-gray-700 border
+                            border-neutral-600 rounded-md w-full mt-2 bg-gray-800 pl-3 pr-3 pb-1 pt-1"
                             >Add Example</button
                         >
                         <p
@@ -260,8 +260,8 @@
                         {/each}
                         <button
                             on:click={addHint}
-                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-neutral-700 border
-                            border-neutral-600 rounded-md w-full mt-2 mb-2 bg-neutral-800 pl-3 pr-3 pb-1 pt-1"
+                            class="transition duration-200 ease-in-out text-neutral-100 text-md font-light hover:bg-gray-700 border
+                            border-neutral-600 rounded-md w-full mt-2 mb-2 bg-gray-800 pl-3 pr-3 pb-1 pt-1"
                             >Add Hint</button
                         >
                     {/if}
@@ -272,8 +272,8 @@
                     >
                         <button
                             on:click={revealHint}
-                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
-                    text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
+                            class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
+                    text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
                             >Hint</button
                         >
                     </div>
@@ -293,7 +293,7 @@
                             <div class="flex items-center">
                                 <p class="pr-2 font-bold">Language:</p>
                                 <select
-                                    class="bg-neutral-700 rounded-md border border-neutral-600"
+                                    class="bg-gray-800 rounded-md border border-neutral-600"
                                     bind:value={data.programming_language}
                                 >
                                     <option value="C">C</option>
@@ -304,25 +304,24 @@
                     <CodeEditor lang={cpp()} bind:value={data.code_template} />
                 </div>
                 {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
-                    <div>
-                        <p
-                            class="text-neutral-100 p-2 border-b border-t border-neutral-600 font-bold"
-                        >
-                            Output
-                        </p>
-                        <OutputConsole />
-                    </div>
+                    <p
+                        class="text-neutral-100 p-2 border-b border-t border-neutral-600 font-bold"
+                    >
+                        Output
+                    </p>
+                    <OutputConsole />
+
                     <div
                         class="flex justify-end p-2 border-t border-neutral-600"
                     >
                         <button
-                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
-                        text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1 mr-2"
+                            class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
+                        text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1 mr-2"
                             >Test</button
                         >
                         <button
-                            class="rounded-md transition duration-200 ease-in-out text-blue-500 bg-neutral-800
-                        text-md font-light hover:bg-neutral-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
+                            class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
+                        text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
                             >Submit</button
                         >
                     </div>

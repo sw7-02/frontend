@@ -22,36 +22,6 @@
         "log message 18",
         "log message 19",
         "log message 20",
-        "log message 21",
-        "log message 22",
-        "log message 23",
-        "log message 24",
-        "log message 25",
-        "log message 26",
-        "log message 27",
-        "log message 28",
-        "log message 29",
-        "log message 30",
-        "log message 31",
-        "log message 32",
-        "log message 33",
-        "log message 34",
-        "log message 35",
-        "log message 36",
-        "log message 37",
-        "log message 38",
-        "log message 39",
-        "log message 40",
-        "log message 41",
-        "log message 42",
-        "log message 43",
-        "log message 44",
-        "log message 45",
-        "log message 46",
-        "log message 47",
-        "log message 48",
-        "log message 49",
-        "log message 50",
     ];
 
     onMount(() => {
@@ -65,7 +35,7 @@
     // }
 </script>
 
-<div class="console bg-neutral-900 h-[295px] overflow-auto">
+<div class="console h-full overflow-auto">
     {#each logs as log}
         <p class="text-neutral-100 pl-2 pr-2">$ {log}</p>
     {/each}
