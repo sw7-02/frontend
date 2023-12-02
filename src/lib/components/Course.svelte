@@ -58,6 +58,8 @@
         <div class="flex h-min pt-2 pr-2 w-full justify-end">
             <DeleteButton onClick={deleteCourse} />
         </div>
+    {:else}
+        <span class="h-8" />
     {/if}
     <div class="flex items-center">
         <p id="title" class="text-2xl">
