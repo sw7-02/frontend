@@ -10,6 +10,7 @@
         taskIdStore,
     } from "$lib/stores/ids";
     import { get } from "svelte/store";
+    import { goto } from "$app/navigation";
     import Toast from "$lib/components/Toast.svelte";
     import CodeEditor from "$lib/components/CodeEditor.svelte";
     import OutputConsole from "$lib/components/OutputConsole.svelte";
@@ -31,10 +32,10 @@
     };
 
     let data: _Exercise;
-
-    let showToast = false;
-
-    let revealedHintIndex = -1;
+    let logs: string[] = [];
+    let showToast: boolean = false;
+    let revealedHintIndex: number = -1;
+    let isCorrectSolution: boolean = false;
 
     async function load() {
         return fetch(
@@ -96,6 +97,21 @@
                 return { error: "Failed to fetch data" };
             }
         });
+    }
+
+    function testExercise() {
+        let testRunnerResult = true;
+
+        if (isCorrectSolution) {
+            goto(`${$page.url}/Solutions`);
+        }
+
+        logs = [...logs, "Testing solution..."];
+        // fetch to testrunner
+        if (testRunnerResult) {
+            logs = [...logs, "Insert succesful testrunner result"];
+            isCorrectSolution = true;
+        } else logs = [...logs, "Insert failed testrunner result"];
     }
 
     function revealHint() {
@@ -309,20 +325,18 @@
                     >
                         Output
                     </p>
-                    <OutputConsole />
+                    <OutputConsole {logs} />
 
                     <div
                         class="flex justify-end p-2 border-t border-neutral-600"
                     >
                         <button
+                            on:click={testExercise}
                             class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
                         text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1 mr-2"
-                            >Test</button
-                        >
-                        <button
-                            class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
-                        text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1"
-                            >Submit</button
+                            >{isCorrectSolution
+                                ? "Submit Solution"
+                                : "Test Solution"}</button
                         >
                     </div>
                 {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import CodeMirror from "svelte-codemirror-editor";
     import { oneDark } from "@codemirror/theme-one-dark";
+    import CodeMirror from "svelte-codemirror-editor";
 
     export let lang: any;
     export let value: string = "";

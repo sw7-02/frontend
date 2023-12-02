@@ -1,42 +1,27 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+    import { onMount, afterUpdate } from "svelte";
 
-    let logs: string[] = [
-        "log message 1",
-        "log message 2",
-        "log message 3",
-        "log message 4",
-        "log message 5",
-        "log message 6",
-        "log message 7",
-        "log message 8",
-        "log message 9",
-        "log message 10",
-        "log message 11",
-        "log message 12",
-        "log message 13",
-        "log message 14",
-        "log message 15",
-        "log message 16",
-        "log message 17",
-        "log message 18",
-        "log message 19",
-        "log message 20",
-    ];
+    export let logs: string[];
+
+    let consoleElement: HTMLDivElement;
 
     onMount(() => {
-        const outputConsole = document.querySelector(".console")!;
-        outputConsole.scrollTop = outputConsole.scrollHeight;
-        // scrollToBottom(outputConsole);
+        scrollToBottom();
     });
 
-    // function scrollToBottom(outputConsole: HTMLElement) {
+    afterUpdate(() => {
+        scrollToBottom();
+    });
 
-    // }
+    function scrollToBottom() {
+        consoleElement.scrollTop = consoleElement.scrollHeight;
+    }
 </script>
 
-<div class="console h-full overflow-auto">
-    {#each logs as log}
-        <p class="text-neutral-100 pl-2 pr-2">$ {log}</p>
-    {/each}
+<div class="h-full overflow-auto" bind:this={consoleElement}>
+    {#if logs}
+        {#each logs as log}
+            <p class="text-neutral-100 pl-2 pr-2">$ {log}</p>
+        {/each}
+    {/if}
 </div>
