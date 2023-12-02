@@ -6,6 +6,7 @@
 
     export let type: string;
     export let buttonText: string;
+    export let rowAmount: number;
 
     let showModal: boolean = false;
     let newTitle: string;
@@ -53,4 +54,9 @@
     onCancel={() => {
         newTitle = "";
     }}
-/>
+>
+    <p class="pl-2 text-neutral-100">
+        {type.charAt(0).toUpperCase() + type.slice(1)}
+        {rowAmount + 1}:
+    </p></Modal
+>

@@ -53,6 +53,7 @@
             {#if data}
                 {#each data.sessions as session, i}
                     <SessionRow
+                        order={i + 1}
                         reloadSessions={reload}
                         title={"Session " + (i + 1) + ": " + session.title}
                         sessionId={session.session_id}
@@ -65,6 +66,7 @@
                     buttonText="Add session"
                     type={"session"}
                     reloadExercises={reload}
+                    rowAmount={data ? data.sessions.length : 0}
                 />
             {/if}
         </div>
@@ -76,10 +78,12 @@
                 />
             {/each} -->
             {#if $jwtStore !== "" && $isTeacherStore === true}
+            <!-- If assigments are implemented, change rowAmount to {data ? data.assignments.length : 0} -->
                 <AddSessionAssigmentButton
                     buttonText="Add assignment"
                     type={"assignment"}
                     reloadExercises={reload}
+                    rowAmount={data ? 0 : 0}
                 />
             {/if}
         </div>

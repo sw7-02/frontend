@@ -7,7 +7,7 @@
         userRoleStore,
     } from "$lib/stores/authentication";
     import { role } from "$lib/stores/authentication";
-    import { courseIdStore, taskIdStore } from "$lib/stores/ids";
+    import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import ExerciseRow from "./ExerciseRow.svelte";
     import Modal from "./Modal.svelte";
@@ -15,6 +15,7 @@
     import EditButton from "./EditButton.svelte";
 
     export let title: string;
+    export let order: number;
     export let sessionId: number;
     export let exercises: { title: string; exercise_id: number }[];
 
@@ -22,7 +23,11 @@
     let showSessionModal: boolean = false;
     let newExerciseTitle: string;
     let newSessionTitle: string = title.split(":")[1].trim();
-    let showExercises = false;
+    let showExercises: boolean = false;
+    let exerciseAmount: number;
+    $: {
+        exerciseAmount = exercises.length;
+    }
 
     export let reloadSessions: () => void;
 
@@ -136,9 +141,13 @@
     <div class="flex justify-between">
         <div class="flex items-center ml-6">
             {#if !showExercises}
-                <i class="fa-solid fa-chevron-right w-5 text-sm text-neutral-500" />
+                <i
+                    class="fa-solid fa-chevron-right w-5 text-sm text-neutral-500"
+                />
             {:else}
-                <i class="fa-solid fa-chevron-down w-5 text-sm text-neutral-500" />
+                <i
+                    class="fa-solid fa-chevron-down w-5 text-sm text-neutral-500"
+                />
             {/if}
             {title}
             {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
@@ -191,11 +200,13 @@
     bind:newTitle={newExerciseTitle}
     onSubmit={createExercise}
     onCancel={() => (newExerciseTitle = "")}
-/>
+    ><p class="pl-2 text-neutral-100">Exercise {exerciseAmount + 1}:</p></Modal
+>
 
 <Modal
     bind:showModal={showSessionModal}
     bind:newTitle={newSessionTitle}
     onSubmit={updateSessionTitle}
     onCancel={() => (newSessionTitle = title.split(":")[1].trim())}
-/>
+    ><p class="pl-2 text-neutral-100">Session {order}:</p></Modal
+>

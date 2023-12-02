@@ -48,12 +48,15 @@
         {#if isTitleEmpty}
             <p class="text-red-500 ml-4">Title cannot be empty</p>
         {/if}
-        <input
-            class="bg-neutral-700 m-2 p-4 w-[316px] h-[40px] text-neutral-100 border border-neutral-600 rounded-md"
-            type="text"
-            placeholder="Title"
-            bind:value={newTitle}
-        />
+        <div class="flex items-center">
+            <slot />
+            <input
+                class="bg-neutral-700 m-2 p-2 w-[316px] h-[40px] text-neutral-100 border border-neutral-600 rounded-md"
+                type="text"
+                placeholder="Title"
+                bind:value={newTitle}
+            />
+        </div>
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
@@ -62,13 +65,13 @@
     >
         <div class="flex justify-between">
             <button
-                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-[150px] border border-neutral-600
+                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-full border border-neutral-600
 				transition duration-200 ease-in-out hover:bg-red-900"
                 on:click={onCancel}
                 on:click={() => dialog.close()}>Cancel</button
             >
             <button
-                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-[150px] border border-neutral-600
+                class="text-neutral-100 m-2 p-2 rounded-md bg-neutral-800 w-full border border-neutral-600
 				transition duration-200 ease-in-out hover:bg-green-900"
                 on:click={closeModalSubmit}>Submit</button
             >
