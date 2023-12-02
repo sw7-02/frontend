@@ -50,9 +50,9 @@
             <button
                 on:click={() => changeTestCase(i)}
                 class="text-neutral-100 text-sm border-neutral-600 items-center justify-between bg-gray-800
-                hover:bg-gray-600 transition duration-200 ease-in-out flex rounded-t-md border-t border-l border-r {i ===
+                hover:bg-gray-700 transition duration-200 ease-in-out flex rounded-t-md border-t border-l border-r {i ===
                 currentTestCase
-                    ? 'bg-gray-700'
+                    ? 'bg-gray-600'
                     : ''}"
             >
                 <p class="pl-2">Test Case {i + 1}</p>
