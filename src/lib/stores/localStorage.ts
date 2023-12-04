@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export function persistentWritable(key: string, value: any) {
+export function persistentWritable<T>(key: string, value: T) {
     let storedValue;
     let initialValue;
     if (typeof localStorage !== "undefined") {
@@ -9,7 +9,7 @@ export function persistentWritable(key: string, value: any) {
     } else {
         initialValue = value;
     }
-    const store = writable(initialValue);
+    const store = writable<T>(initialValue);
 
     store.subscribe(($store) => {
         if (typeof localStorage !== "undefined") {
