@@ -102,7 +102,8 @@
     function testExercise() {
         if (isCorrectSolution) {
             // Modal asking if the user wants to publish their solution
-            goto(`${$page.url}/Solutions`);
+            // Should redirect to the solutions overview
+            goto(`/course/${$page.params.course}`);
         }
 
         logs = [...logs, "Testing solution..."];
