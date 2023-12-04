@@ -40,7 +40,7 @@
 
     async function load() {
         return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
             {

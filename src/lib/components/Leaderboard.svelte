@@ -4,6 +4,9 @@
     import { get } from "svelte/store";
     import { onMount } from "svelte";
 
+    let data: any;
+    let is_anonymous: boolean;
+
     async function load() {
         return fetch(
             `${import.meta.env.VITE_API_PREFIX}/course/${get(
@@ -68,14 +71,6 @@
         });
     }
 
-    let data: any;
-    let is_anonymous: boolean;
-
-    onMount(async () => {
-        data = await load();
-        is_anonymous = await getAnonymity();
-    });
-
     async function toggleAnonymity() {
         is_anonymous = !is_anonymous;
         return fetch(
@@ -103,6 +98,11 @@
             }
         });
     }
+
+    onMount(async () => {
+        data = await load();
+        is_anonymous = await getAnonymity();
+    });
 </script>
 
 <div
@@ -132,7 +132,7 @@
                                 class="flex items-center border border-neutral-500 rounded"
                             >
                                 <div
-                                    class="w-full rounded overflow-hidden h-6 relative"
+                                    class="w-full rounded overflow-hidden h-6 relative bg-neutral-700"
                                 >
                                     <div
                                         class="bg-cyan-800 h-full"
