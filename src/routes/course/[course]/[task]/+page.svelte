@@ -40,7 +40,7 @@
 
     async function load() {
         return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
             {
@@ -104,6 +104,39 @@
             // Modal asking if the user wants to publish their solution
             goto(`${$page.url}/Solutions`);
         }
+
+        fetch(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
+                courseIdStore
+            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}/test`,
+            {
+                method: "POST",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({solution: data.code_template})
+            }
+        ).then(async (response) => {
+            if (response.ok) {
+                response.headers.get("auth") &&
+                jwtStore.set(response.headers.get("auth")!);
+                return response
+                    .json()
+                    .then((data) => {
+                        logs = [...logs, data];
+                        console.log(data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return { error: "Failed to parse data" };
+                    });
+            } else {
+                console.log(await response.text());
+                return { error: "Failed to fetch data" };
+            }
+        }, (err) => console.log(err));
 
         logs = [...logs, "Testing solution..."];
         // fetch to testrunner

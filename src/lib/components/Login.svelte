@@ -17,6 +17,8 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                //"Access-Control-Allow-Origin": `http://172.28.0.4`,
+                "Access-Control-Allow-Origin": "*",
             },
             body: JSON.stringify({
                 username: inputUsername,
