@@ -4,7 +4,6 @@
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
-    import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
     import { generateGet } from "$lib/fetchers";

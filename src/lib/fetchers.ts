@@ -7,20 +7,14 @@ const headers = {
     "Access-Control-Allow-Origin": "*",
 };
 
-const prefix = () => {
-    let prefix = (<string>import.meta.env.VITE_API_PREFIX).trim();
-    while (prefix.startsWith("/")) prefix = prefix.substring(1);
-    while (prefix.endsWith("/"))
-        prefix = prefix.substring(0, prefix.length - 1);
-    return prefix;
-}
+const prefix = `/${import.meta.env.VITE_API_PREFIX}`;
 
 const fullEndpoint = (endpoint: string) => {
     endpoint = endpoint.trim();
     while (endpoint.startsWith("/")) endpoint = endpoint.substring(1);
     while (endpoint.endsWith("/"))
         endpoint = endpoint.substring(0, endpoint.length - 1);
-    return `${prefix()}/${endpoint}`;
+    return `${prefix}/${endpoint}`;
 };
 
 const saveAuth = (r: Response) => {

@@ -66,28 +66,23 @@
         data.programming_language = "C";
     });
 
-    function updateExercise() {
+    async function updateExercise() {
         showToast = true;
-        return generatePut(
+        let response = await generatePut(
             `/course/${get(courseIdStore)}/session/${get(
                 sessionIdStore
             )}/exercise/${get(taskIdStore)}`,
             data
-        ).then(async (response) => {
-            if (response.ok) {
-                return;
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
-            }
-        });
+        );
+        if (response.ok) {
+            return;
+        } else {
+            console.log(await response.text());
+            return { error: "Failed to fetch data" };
+        }
     }
 
     async function testExercise() {
-        if (isCorrectSolution) {
-            // Modal asking if the user wants to publish their solution
-            await goto(`${$page.url}/Solutions`);
-        }
         logs = [...logs, "Testing solution..."];
         //logs.push("Testing solution...");
         await generatePost(
@@ -128,6 +123,57 @@
             },
             (err) => {
                 logs = [...logs, `Failed running tests: ${err}`];
+            }
+        );
+    }
+
+    async function submitExercise() {
+        await generatePost(
+            `course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}`,
+            { solution: data.code_template }
+        ).then(
+            async (response) => {
+                if (response.ok) {
+                    logs = [...logs, "Solution has been submitted"];
+                    setTimeout(
+                        async () => await goto(`${$page.url}/Solutions`),
+                        1500
+                    ); //TODO: Artificial delay?
+                } else {
+                    isCorrectSolution = false;
+                    logs = [...logs, "Solution failed to be submitted"];
+                    await response.json().then(
+                        (json) => {
+                            const { count, failed_tests } = json;
+                            if (
+                                count === undefined ||
+                                failed_tests === undefined
+                            ) {
+                                logs = [...logs, `> ${json}`];
+                            } else {
+                                logs = [
+                                    ...logs,
+                                    `Solution failed ${count} tests:`,
+                                ];
+                                for (const test of failed_tests) {
+                                    console.error(test);
+                                    logs = [...logs, `=> ${test}`];
+                                }
+                            }
+                        },
+                        (e) => {
+                            isCorrectSolution = false;
+                            console.error(e);
+                        }
+                    );
+                    return { error: "Failed to fetch data" };
+                }
+            },
+            (err) => {
+                isCorrectSolution = false;
+                logs = [...logs, `Failed submitting: ${err}`];
             }
         );
     }
@@ -363,7 +409,9 @@
                         class="flex justify-end p-2 border-t border-neutral-600"
                     >
                         <button
-                            on:click={testExercise}
+                            on:click={isCorrectSolution
+                                ? submitExercise
+                                : testExercise}
                             class="rounded-md transition duration-200 ease-in-out text-neutral-100 bg-gray-800
                         text-md font-light hover:bg-gray-700 border border-neutral-600 pl-3 pr-3 pb-1 pt-1 mr-2"
                             >{isCorrectSolution
