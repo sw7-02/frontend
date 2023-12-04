@@ -1,7 +1,6 @@
 <script>
     import { page } from "$app/stores";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
-    import Leaderboard from "$lib/components/Leaderboard.svelte";
     import Statistics from "$lib/components/Statistics.svelte";
 </script>
 

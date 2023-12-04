@@ -4,8 +4,6 @@
     import { cpp } from "@codemirror/lang-cpp";
     import CodeMirror from "svelte-codemirror-editor";
 
-    export let lang: any;
-
     let data: { solution: string }[] = [
         { solution: "First solution" },
         { solution: "Second solution" },

@@ -4,9 +4,12 @@
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
-    import AssignmentRow from "$lib/components/AssignmentRow.svelte";
+    import type { _CourseFull } from "$lib/types";
+    // import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
+
+    let data: _CourseFull;
 
     async function load() {
         return fetch(
@@ -37,8 +40,6 @@
             }
         });
     }
-
-    let data: any;
 
     async function reload() {
         data = await load();

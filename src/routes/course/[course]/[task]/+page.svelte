@@ -2,7 +2,8 @@
     import { cpp } from "@codemirror/lang-cpp";
     import { page } from "$app/stores";
     import { onMount } from "svelte";
-    import { role } from "$lib/stores/authentication";
+    import { Role } from "$lib/types";
+    import type { _Exercise } from "$lib/types";
     import { jwtStore, userRoleStore } from "$lib/stores/authentication";
     import {
         courseIdStore,
@@ -18,18 +19,6 @@
     import SaveExerciseButton from "$lib/components/SaveExerciseButton.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
     import Hint from "$lib/components/Hint.svelte";
-
-    type _Exercise = {
-        exercise_id: number;
-        title: string;
-        description: string;
-        code_template: string;
-        programming_language: string;
-        points: number;
-        hints: string[];
-        test_cases: string[];
-        examples: { input: string; output: string }[];
-    };
 
     let data: _Exercise;
     let logs: string[] = [];
@@ -154,7 +143,7 @@
 <div class="grid grid-cols-1 justify-items-center overflow-hidden">
     <div
         class="flex overflow-hidden"
-        style={role.STUDENT === get(userRoleStore)
+        style={Role.STUDENT === get(userRoleStore)
             ? "height: calc(100vh - 64px);"
             : "height: calc(100vh - 114px);"}
     >
@@ -165,7 +154,7 @@
                 <div
                     class="flex justify-between items-center p-2 border-b border-neutral-600"
                 >
-                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                    {#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
                         <p
                             class="text-neutral-100 text-md cursor-default font-bold"
                         >
@@ -176,7 +165,7 @@
                         >
                             Points: {data.points}
                         </p>
-                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                    {:else if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                         <input
                             class="pl-1 w-full text-neutral-100 text-md bg-neutral-700 border border-neutral-600 rounded-md font-bold"
                             type="text"
@@ -200,7 +189,7 @@
                     {/if}
                 </div>
                 <div class="pl-2 pr-2 overflow-y-auto h-full">
-                    {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                    {#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
                         <p class="mt-2 text-neutral-100 cursor-default">
                             {data.description}
                         </p>
@@ -248,7 +237,7 @@
                                 </div>
                             {/if}
                         {/each}
-                    {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                    {:else if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                         <p
                             class="mt-2 text-neutral-100 cursor-default font-bold"
                         >
@@ -297,7 +286,7 @@
                         >
                     {/if}
                 </div>
-                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                {#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
                     <div
                         class="flex justify-end p-2 border-t border-neutral-600"
                     >
@@ -317,9 +306,9 @@
                     <p
                         class="text-neutral-100 p-2 border-b-[1px] border-neutral-700 justify-between flex"
                     >
-                        {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                        {#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
                             <p class="font-bold">Solution</p>
-                        {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                        {:else if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                             <p class="font-bold">Code Template</p>
                             <div class="flex items-center">
                                 <p class="pr-2 font-bold">Language:</p>
@@ -334,7 +323,7 @@
                     </p>
                     <CodeEditor lang={cpp()} bind:value={data.code_template} />
                 </div>
-                {#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+                {#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
                     <p
                         class="text-neutral-100 p-2 border-b border-t border-neutral-600 font-bold"
                     >
@@ -354,7 +343,7 @@
                                 : "Test Solution"}</button
                         >
                     </div>
-                {:else if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                {:else if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                     <TestCaseEditor
                         lang={cpp()}
                         bind:testCases={data.test_cases}
@@ -363,7 +352,7 @@
             </div>
         {/if}
     </div>
-    {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+    {#if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
         <div class="flex justify-end w-[1816px]">
             <SaveExerciseButton {updateExercise} />
         </div>

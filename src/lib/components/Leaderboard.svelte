@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { jwtStore, userRoleStore, role } from "$lib/stores/authentication";
+    import { jwtStore, userRoleStore } from "$lib/stores/authentication";
+    import { Role } from "$lib/types";
+    import type { _Leaderboard } from "$lib/types";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import { onMount } from "svelte";
 
-    let data: any;
+    let data: _Leaderboard;
     let is_anonymous: boolean;
 
     async function load() {
@@ -154,7 +156,7 @@
         </tbody>
     </table>
 </div>
-{#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+{#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
     <div
         class="bg-neutral-900 mt-4 mb-4 mr-4 w-[200px] h-[200px] rounded-md border border-neutral-600 flex flex-col"
     >
