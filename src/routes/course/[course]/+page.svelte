@@ -74,7 +74,7 @@
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
-            <!-- {#each assignments as assignment, i}
+            <!-- {#each data.assignments as assignment, i}
                 <AssignmentRow
                     title={"Assignment " + (i + 1) + ": " + assignment}
                     href={$page.params.course + "/" + assignment}

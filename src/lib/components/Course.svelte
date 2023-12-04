@@ -76,11 +76,13 @@
         <CourseButton
             text={"Leaderboard"}
             href={`course/${title}/Leaderboard`}
+            icon={"fa-solid fa-ranking-star"}
         />
         {#if $jwtStore !== "" && $isTeacherStore === true}
             <CourseButton
                 text={"Statistics"}
                 href={`course/${title}/Statistics`}
+                icon={"fa-solid fa-chart-column"}
             />
         {/if}
     </div>
