@@ -77,7 +77,6 @@
 
     function updateExercise() {
         showToast = true;
-        console.log(data);
         return fetch(
             `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
                 sessionIdStore

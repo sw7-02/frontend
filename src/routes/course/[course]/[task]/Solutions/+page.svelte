@@ -1,6 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { oneDark } from "@codemirror/theme-one-dark";
+    import { cpp } from "@codemirror/lang-cpp";
     import CodeMirror from "svelte-codemirror-editor";
 
     export let lang: any;
@@ -37,7 +38,7 @@
                         value={data.solution}
                         tabSize={4}
                         theme={oneDark}
-                        {lang}
+                        lang={cpp()}
                     />
                 </div>
             {/each}

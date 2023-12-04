@@ -66,6 +66,7 @@
             },
         }).then(async (response) => {
             if (response.ok) {
+                reload();
                 data = await load();
                 return;
             } else {
