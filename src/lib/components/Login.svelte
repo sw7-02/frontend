@@ -13,7 +13,7 @@
 
     async function loginHandler() {
         loading = true;
-        await fetch("http://localhost:8080/login", {
+        await fetch(`${import.meta.env.VITE_API_PREFIX}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

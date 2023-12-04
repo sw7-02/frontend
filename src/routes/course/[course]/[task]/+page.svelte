@@ -40,9 +40,9 @@
 
     async function load() {
         return fetch(
-            `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
-                sessionIdStore
-            )}/exercise/${get(taskIdStore)}`,
+            `${import.meta.env.VITE_API_PREFIX}/${get(
+                courseIdStore
+            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
             {
                 method: "GET",
                 headers: {
@@ -78,9 +78,9 @@
     function updateExercise() {
         showToast = true;
         return fetch(
-            `http://localhost:8080/course/${get(courseIdStore)}/session/${get(
-                sessionIdStore
-            )}/exercise/${get(taskIdStore)}`,
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
+                courseIdStore
+            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
             {
                 method: "PUT",
                 headers: {

@@ -26,7 +26,7 @@
         if (title === "") {
             return;
         }
-        return fetch(`http://localhost:8080/course/${id}`, {
+        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/${id}`, {
             method: "PUT",
             headers: {
                 auth: get(jwtStore),

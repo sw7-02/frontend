@@ -9,13 +9,16 @@
     import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
 
     async function load() {
-        return fetch(`http://localhost:8080/course/${get(courseIdStore)}`, {
-            method: "GET",
-            headers: {
-                auth: get(jwtStore),
-                "Content-Type": "application/json",
-            },
-        }).then(async (response) => {
+        return fetch(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(courseIdStore)}`,
+            {
+                method: "GET",
+                headers: {
+                    auth: get(jwtStore),
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then(async (response) => {
             if (response.ok) {
                 response.headers.get("auth") &&
                     jwtStore.set(response.headers.get("auth")!);
@@ -78,7 +81,7 @@
                 />
             {/each} -->
             {#if $jwtStore !== "" && $isTeacherStore === true}
-            <!-- If assigments are implemented, change rowAmount to {data ? data.assignments.length : 0} -->
+                <!-- If assigments are implemented, change rowAmount to {data ? data.assignments.length : 0} -->
                 <AddSessionAssigmentButton
                     buttonText="Add assignment"
                     type={"assignment"}

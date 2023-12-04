@@ -17,7 +17,9 @@
         showModal = false;
         if (type === "session") {
             return fetch(
-                `http://localhost:8080/course/${get(courseIdStore)}/session/`,
+                `${import.meta.env.VITE_API_PREFIX}/course/${get(
+                    courseIdStore
+                )}/session/`,
                 {
                     method: "POST",
                     headers: {

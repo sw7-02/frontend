@@ -34,7 +34,7 @@
     function createExercise() {
         showExercises = true;
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${sessionId}/exercise`,
             {
@@ -59,7 +59,7 @@
 
     function deleteExercise(exerciseId: number) {
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${sessionId}/exercise/${exerciseId}`,
             {
@@ -85,7 +85,7 @@
             return;
         }
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${sessionId}`,
             {
@@ -110,7 +110,7 @@
 
     function deleteSession() {
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/session/${sessionId}`,
             {

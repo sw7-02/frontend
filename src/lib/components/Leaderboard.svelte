@@ -6,7 +6,9 @@
 
     async function load() {
         return fetch(
-            `http://localhost:8080/course/${get(courseIdStore)}/leaderboard`,
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
+                courseIdStore
+            )}/leaderboard`,
             {
                 method: "GET",
                 headers: {
@@ -36,7 +38,7 @@
 
     async function getAnonymity() {
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/leaderboard/anonymity`,
             {
@@ -77,7 +79,7 @@
     async function toggleAnonymity() {
         is_anonymous = !is_anonymous;
         return fetch(
-            `http://localhost:8080/course/${get(
+            `${import.meta.env.VITE_API_PREFIX}/course/${get(
                 courseIdStore
             )}/leaderboard/anonymity`,
             {
