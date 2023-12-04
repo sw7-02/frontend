@@ -5,6 +5,7 @@
         isTeacherStore,
         usernameStore,
     } from "$lib/stores/authentication";
+    import { generatePost } from "$lib/fetchers";
 
     let inputUsername: string;
     let inputPassword: string;
@@ -13,17 +14,9 @@
 
     async function loginHandler() {
         loading = true;
-        await fetch(`${import.meta.env.VITE_API_PREFIX}/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                //"Access-Control-Allow-Origin": `http://172.28.0.4`,
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-                username: inputUsername,
-                password: inputPassword,
-            }),
+        await generatePost("//login///", {
+            username: inputUsername,
+            password: inputPassword,
         })
             .then((response) => {
                 if (response.status === 200) {

@@ -1,6 +1,6 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:alpine3.17
+FROM node:slim
 # Set the working directory to /app inside the container
 WORKDIR /app
 # Copy app files
@@ -17,5 +17,6 @@ RUN npm run build
 ENV NODE_ENV production
 # Expose the port on which the app will be running (3000 is the default that `serve` uses)
 
+# TODO: Would be nice if we could run with npx serve
 # Start the app
-CMD [ "npx", "vite", "dev", "--host" ] #TODO: Would be nice if we could run with npx serve
+CMD [ "npx", "vite", "dev", "--host" ]

@@ -18,6 +18,7 @@
     import SaveExerciseButton from "$lib/components/SaveExerciseButton.svelte";
     import InputOutputExample from "$lib/components/InputOutputExample.svelte";
     import Hint from "$lib/components/Hint.svelte";
+    import { generateGet, generatePost, generatePut } from "$lib/fetchers";
 
     type _Exercise = {
         exercise_id: number;
@@ -35,25 +36,15 @@
     let logs: string[] = [];
     let showToast: boolean = false;
     let revealedHintIndex: number = -1;
-    let testRunnerResult: boolean = true;
     let isCorrectSolution: boolean = false;
 
     async function load() {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
-            {
-                method: "GET",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-            }
+        return generateGet(
+            `/course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}`
         ).then(async (response) => {
             if (response.ok) {
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
                 return response
                     .json()
                     .then((data) => {
@@ -77,18 +68,11 @@
 
     function updateExercise() {
         showToast = true;
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}`,
-            {
-                method: "PUT",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            }
+        return generatePut(
+            `/course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}`,
+            data
         ).then(async (response) => {
             if (response.ok) {
                 return;
@@ -99,52 +83,53 @@
         });
     }
 
-    function testExercise() {
+    async function testExercise() {
         if (isCorrectSolution) {
             // Modal asking if the user wants to publish their solution
-            goto(`${$page.url}/Solutions`);
+            await goto(`${$page.url}/Solutions`);
         }
-
-        fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${get(sessionIdStore)}/exercise/${get(taskIdStore)}/test`,
-            {
-                method: "POST",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify({solution: data.code_template})
-            }
-        ).then(async (response) => {
-            if (response.ok) {
-                response.headers.get("auth") &&
-                jwtStore.set(response.headers.get("auth")!);
-                return response
-                    .json()
-                    .then((data) => {
-                        logs = [...logs, data];
-                        console.log(data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return { error: "Failed to parse data" };
-                    });
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
-            }
-        }, (err) => console.log(err));
-
         logs = [...logs, "Testing solution..."];
-        // fetch to testrunner
-
-        if (testRunnerResult) {
-            logs = [...logs, "Insert succesful testrunner result"];
-            isCorrectSolution = true;
-        } else logs = [...logs, "Insert failed testrunner result"];
+        //logs.push("Testing solution...");
+        await generatePost(
+            `course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}/test`,
+            { solution: data.code_template }
+        ).then(
+            async (response) => {
+                if (response.ok) {
+                    logs = [...logs, "Solution passed all tests"];
+                    isCorrectSolution = true;
+                } else {
+                    await response.json().then(
+                        (json) => {
+                            const { count, failed_tests } = json;
+                            if (
+                                count === undefined ||
+                                failed_tests === undefined
+                            ) {
+                                logs = [...logs, `Failure from test runner`];
+                                console.error(`wrong response data: ${json}`);
+                            } else {
+                                logs = [
+                                    ...logs,
+                                    `Solution failed ${count} tests:`,
+                                ];
+                                for (const test of failed_tests) {
+                                    console.error(test);
+                                    logs = [...logs, `=> ${test}`];
+                                }
+                            }
+                        },
+                        (e) => console.error(e)
+                    );
+                    return { error: "Failed to fetch data" };
+                }
+            },
+            (err) => {
+                logs = [...logs, `Failed running tests: ${err}`];
+            }
+        );
     }
 
     function revealHint() {

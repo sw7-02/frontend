@@ -10,13 +10,13 @@
         { solution: "First solution" },
         { solution: "Second solution" },
         { solution: "Third solution" },
-        { solution: "Fourth solution"},
-        { solution: "Fifth solution"},
+        { solution: "Fourth solution" },
+        { solution: "Fifth solution" },
         { solution: "First solution" },
         { solution: "Second solution" },
         { solution: "Third solution" },
-        { solution: "Fourth solution"},
-        { solution: "Fifth solution"},
+        { solution: "Fourth solution" },
+        { solution: "Fifth solution" },
     ];
 </script>
 

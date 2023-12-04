@@ -3,6 +3,7 @@
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import Modal from "$lib/components/Modal.svelte";
+    import { generatePost } from "$lib/fetchers";
 
     export let type: string;
     export let buttonText: string;
@@ -16,19 +17,9 @@
     function onSubmit() {
         showModal = false;
         if (type === "session") {
-            return fetch(
-                `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                    courseIdStore
-                )}/session/`,
-                {
-                    method: "POST",
-                    headers: {
-                        auth: get(jwtStore),
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ title: newTitle }),
-                }
-            ).then(async (response) => {
+            return generatePost(`course/${get(courseIdStore)}/session/`, {
+                title: newTitle,
+            }).then(async (response) => {
                 if (response.ok) {
                     reloadExercises();
                     newTitle = "";

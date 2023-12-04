@@ -3,55 +3,34 @@
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import { onMount } from "svelte";
+    import { generateGet, generatePost } from "$lib/fetchers";
 
     async function load() {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/leaderboard`,
-            {
-                method: "GET",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
+        return generateGet(`course/${get(courseIdStore)}/leaderboard`).then(
+            async (response) => {
+                if (response.ok) {
+                    return response
+                        .json()
+                        .then((data) => {
+                            return data;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            return { error: "Failed to parse data" };
+                        });
+                } else {
+                    console.log(await response.text());
+                    return { error: "Failed to fetch data" };
+                }
             }
-        ).then(async (response) => {
-            if (response.ok) {
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
-                return response
-                    .json()
-                    .then((data) => {
-                        return data;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return { error: "Failed to parse data" };
-                    });
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
-            }
-        });
+        );
     }
 
     async function getAnonymity() {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/leaderboard/anonymity`,
-            {
-                method: "GET",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-            }
+        return generateGet(
+            `course/${get(courseIdStore)}/leaderboard/anonymity`
         ).then(async (response) => {
             if (response.ok) {
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
                 return response
                     .json()
                     .then((data) => {
@@ -78,25 +57,14 @@
 
     async function toggleAnonymity() {
         is_anonymous = !is_anonymous;
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/leaderboard/anonymity`,
+        return generatePost(
+            `course/${get(courseIdStore)}/leaderboard/anonymity`,
             {
-                method: "POST",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    anonymity: is_anonymous,
-                }),
+                anonymity: is_anonymous,
             }
         ).then(async (response) => {
             if (response.ok) {
                 data = await load();
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
             } else {
                 console.log(await response.text());
                 return { error: "Failed to fetch data" };
