@@ -14,9 +14,6 @@
     import { onMount } from "svelte";
 
     //TODO: pinned?
-
-    export let lang: any;
-
     let data: _ExerciseSolution[] = [];
 
     async function load() {
