@@ -14,7 +14,7 @@
 
     async function loginHandler() {
         loading = true;
-        await generatePost("//login///", {
+        await generatePost("login", {
             username: inputUsername,
             password: inputPassword,
         })

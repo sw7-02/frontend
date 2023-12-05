@@ -1,10 +1,17 @@
 import { get } from "svelte/store";
 import { jwtStore } from "$lib/stores/authentication";
 
-const headers = {
-    auth: get(jwtStore),
+const default_headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
+};
+const headers = () => {
+    if (get(jwtStore) === "") return default_headers;
+    else
+        return {
+            auth: get(jwtStore),
+            ...default_headers,
+        };
 };
 
 const prefix = `/${import.meta.env.VITE_API_PREFIX}`;
@@ -25,13 +32,13 @@ const saveAuth = (r: Response) => {
 export const generateGet = async (endpoint: string): Promise<Response> =>
     fetch(fullEndpoint(endpoint), {
         method: "GET",
-        headers,
+        headers: headers(),
     }).then(saveAuth);
 
 export const generateDelete = async (endpoint: string): Promise<Response> =>
     fetch(fullEndpoint(endpoint), {
         method: "Delete",
-        headers,
+        headers: headers(),
     }).then(saveAuth);
 
 export const generatePost = async (
@@ -40,7 +47,7 @@ export const generatePost = async (
 ): Promise<Response> =>
     fetch(fullEndpoint(endpoint), {
         method: "POST",
-        headers,
+        headers: headers(),
         body: JSON.stringify(data),
     }).then(saveAuth);
 
@@ -50,6 +57,6 @@ export const generatePut = async (
 ): Promise<Response> =>
     fetch(fullEndpoint(endpoint), {
         method: "PUT",
-        headers,
+        headers: headers(),
         body: JSON.stringify(data),
     }).then(saveAuth);
