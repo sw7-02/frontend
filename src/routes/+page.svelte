@@ -6,22 +6,15 @@
     import Course from "$lib/components/Course.svelte";
     import AddCourseButton from "$lib/components/AddCourseButton.svelte";
     import Modal from "$lib/components/Modal.svelte";
+    import { generateDelete, generateGet, generatePost } from "$lib/fetchers";
 
     let showModal: boolean = false;
     let newTitle: string = "";
     let data: _CourseOverview;
 
     async function load() {
-        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/`, {
-            method: "GET",
-            headers: {
-                auth: get(jwtStore),
-                "Content-Type": "application/json",
-            },
-        }).then(async (response) => {
+        return generateGet("course").then(async (response) => {
             if (response.ok) {
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
                 return response
                     .json()
                     .then((data) => {
@@ -38,37 +31,22 @@
         });
     }
 
-    function createCourse() {
-        return fetch(`${import.meta.env.VITE_API_PREFIX}/course`, {
-            method: "POST",
-            headers: {
-                auth: get(jwtStore),
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ title: newTitle }),
-        }).then(async (response) => {
-            if (response.ok) {
-                data = await load();
-                newTitle = "";
-                return;
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
-            }
-        });
+    async function createCourse() {
+        let response = await generatePost("course", { title: newTitle });
+        if (response.ok) {
+            data = await load();
+            newTitle = "";
+            return;
+        } else {
+            console.log(await response.text());
+            return { error: "Failed to fetch data" };
+        }
     }
 
-    function deleteCourse(id: number) {
-        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/${id}`, {
-            method: "DELETE",
-            headers: {
-                auth: get(jwtStore),
-                "Content-Type": "application/json",
-            },
-        }).then(async (response) => {
+    async function deleteCourse(id: number) {
+        return generateDelete(`course/${id}`).then(async (response) => {
             if (response.ok) {
-                reload();
-                data = await load();
+                await reload();
                 return;
             } else {
                 console.log(await response.text());
@@ -81,9 +59,7 @@
         data = await load();
     }
 
-    onMount(async () => {
-        reload();
-    });
+    onMount(reload);
 </script>
 
 <title>IMPRoved</title>

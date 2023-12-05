@@ -1,6 +1,5 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { get } from "svelte/store";
     import {
         jwtStore,
         isTeacherStore,
@@ -11,6 +10,7 @@
     import CourseButton from "./CourseButton.svelte";
     import DeleteButton from "./DeleteButton.svelte";
     import EditButton from "./EditButton.svelte";
+    import { generatePut } from "$lib/fetchers";
 
     export let title: string;
     export let id: number;
@@ -26,22 +26,17 @@
         if (title === "") {
             return;
         }
-        return fetch(`${import.meta.env.VITE_API_PREFIX}/course/${id}`, {
-            method: "PUT",
-            headers: {
-                auth: get(jwtStore),
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ title: newCourseTitle }),
-        }).then(async (response) => {
-            if (response.ok) {
-                reloadCourses();
-                return;
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
+        return generatePut(`/course/${id}`, { title: newCourseTitle }).then(
+            async (response) => {
+                if (response.ok) {
+                    reloadCourses();
+                    return;
+                } else {
+                    console.log(await response.text());
+                    return { error: "Failed to fetch data" };
+                }
             }
-        });
+        );
     }
 </script>
 

@@ -5,49 +5,38 @@
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import type { _CourseFull } from "$lib/types";
-    // import AssignmentRow from "$lib/components/AssignmentRow.svelte";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
+    import { generateGet } from "$lib/fetchers";
 
     let data: _CourseFull;
 
     async function load() {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(courseIdStore)}`,
-            {
-                method: "GET",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
+        return generateGet(`course/${get(courseIdStore)}`).then(
+            async (response) => {
+                if (response.ok) {
+                    return response
+                        .json()
+                        .then((data) => {
+                            return data;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            return { error: "Failed to parse data" };
+                        });
+                } else {
+                    console.log(await response.text());
+                    return { error: "Failed to fetch data" };
+                }
             }
-        ).then(async (response) => {
-            if (response.ok) {
-                response.headers.get("auth") &&
-                    jwtStore.set(response.headers.get("auth")!);
-                return response
-                    .json()
-                    .then((data) => {
-                        return data;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return { error: "Failed to parse data" };
-                    });
-            } else {
-                console.log(await response.text());
-                return { error: "Failed to fetch data" };
-            }
-        });
+        );
     }
 
     async function reload() {
         data = await load();
     }
 
-    onMount(async () => {
-        reload();
-    });
+    onMount(reload);
 </script>
 
 <title>{$page.params.course}</title>

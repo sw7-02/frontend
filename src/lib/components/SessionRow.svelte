@@ -13,6 +13,7 @@
     import Modal from "./Modal.svelte";
     import DeleteButton from "./DeleteButton.svelte";
     import EditButton from "./EditButton.svelte";
+    import { generateDelete, generatePost, generatePut } from "$lib/fetchers";
 
     export let title: string;
     export let order: number;
@@ -33,18 +34,9 @@
 
     function createExercise() {
         showExercises = true;
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${sessionId}/exercise`,
-            {
-                method: "POST",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ title: newExerciseTitle }),
-            }
+        return generatePost(
+            `course/${get(courseIdStore)}/session/${sessionId}/exercise`,
+            { title: newExerciseTitle }
         ).then(async (response) => {
             if (response.ok) {
                 reloadSessions();
@@ -58,17 +50,10 @@
     }
 
     function deleteExercise(exerciseId: number) {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
+        return generateDelete(
+            `course/${get(
                 courseIdStore
-            )}/session/${sessionId}/exercise/${exerciseId}`,
-            {
-                method: "DELETE",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-            }
+            )}/session/${sessionId}/exercise/${exerciseId}`
         ).then(async (response) => {
             if (response.ok) {
                 reloadSessions();
@@ -84,18 +69,9 @@
         if (newSessionTitle === "") {
             return;
         }
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${sessionId}`,
-            {
-                method: "PUT",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ title: newSessionTitle }),
-            }
+        return generatePut(
+            `course/${get(courseIdStore)}/session/${sessionId}`,
+            { title: newSessionTitle }
         ).then(async (response) => {
             if (response.ok) {
                 reloadSessions();
@@ -109,17 +85,8 @@
     }
 
     function deleteSession() {
-        return fetch(
-            `${import.meta.env.VITE_API_PREFIX}/course/${get(
-                courseIdStore
-            )}/session/${sessionId}`,
-            {
-                method: "DELETE",
-                headers: {
-                    auth: get(jwtStore),
-                    "Content-Type": "application/json",
-                },
-            }
+        return generateDelete(
+            `course/${get(courseIdStore)}/session/${sessionId}`
         ).then(async (response) => {
             if (response.ok) {
                 reloadSessions();

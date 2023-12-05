@@ -3,19 +3,43 @@
     import { oneDark } from "@codemirror/theme-one-dark";
     import { cpp } from "@codemirror/lang-cpp";
     import CodeMirror from "svelte-codemirror-editor";
+    import { generateGet } from "$lib/fetchers";
+    import {
+        courseIdStore,
+        sessionIdStore,
+        taskIdStore,
+    } from "$lib/stores/ids";
+    import { get } from "svelte/store";
+    import { onMount } from "svelte";
 
-    let data: { solution: string }[] = [
-        { solution: "First solution" },
-        { solution: "Second solution" },
-        { solution: "Third solution" },
-        { solution: "Fourth solution"},
-        { solution: "Fifth solution"},
-        { solution: "First solution" },
-        { solution: "Second solution" },
-        { solution: "Third solution" },
-        { solution: "Fourth solution"},
-        { solution: "Fifth solution"},
-    ];
+    //TODO: pinned?
+    type _ExerciseSolution = {
+        solution: string;
+        is_pinned: boolean;
+        username: string;
+    };
+
+    export let lang: any;
+
+    let data: _ExerciseSolution[] = [];
+
+    async function load() {
+        return generateGet(
+            `/course/${get(courseIdStore)}/session/${get(
+                sessionIdStore
+            )}/exercise/${get(taskIdStore)}/solutions`
+        ).then(
+            async (response) => {
+                if (response.ok) return response.json();
+                else console.log(await response.text());
+            },
+            (err) => console.log(err)
+        );
+    }
+
+    onMount(async () => {
+        data = await load();
+    });
 </script>
 
 <title>Solution Overview - {$page.params.task}</title>
