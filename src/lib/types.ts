@@ -27,6 +27,12 @@ type _ExerciseIdentifier = {
     exercise_id: number;
 };
 
+export type _ExerciseSolution = {
+    solution: string;
+    is_pinned: boolean;
+    username: string;
+};
+
 export type _Leaderboard = {
     username: string;
     total_points: number;

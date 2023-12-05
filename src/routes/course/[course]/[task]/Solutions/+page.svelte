@@ -4,6 +4,7 @@
     import { cpp } from "@codemirror/lang-cpp";
     import CodeMirror from "svelte-codemirror-editor";
     import { generateGet } from "$lib/fetchers";
+    import type { _ExerciseSolution } from "$lib/types";
     import {
         courseIdStore,
         sessionIdStore,
@@ -13,11 +14,6 @@
     import { onMount } from "svelte";
 
     //TODO: pinned?
-    type _ExerciseSolution = {
-        solution: string;
-        is_pinned: boolean;
-        username: string;
-    };
 
     export let lang: any;
 
