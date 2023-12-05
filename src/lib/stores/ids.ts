@@ -1,5 +1,5 @@
 import { persistentWritable } from "./localStorage";
 
-export const courseIdStore = persistentWritable("courseId", null); // You can replace null with the default value you want
-export const sessionIdStore = persistentWritable("sessionId", null); // You can replace null with the default value you want
-export const taskIdStore = persistentWritable("taskId", null); // You can replace null with the default value you want
+export const courseIdStore = persistentWritable<number | null>("courseId", null);
+export const sessionIdStore = persistentWritable<number | null>("sessionId", null);
+export const taskIdStore = persistentWritable<number | null>("taskId", null);
