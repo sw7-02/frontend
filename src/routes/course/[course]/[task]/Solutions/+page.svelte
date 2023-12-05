@@ -31,10 +31,7 @@
         ).then(
             async (response) => {
                 if (response.ok) return response.json();
-                else {
-                    console.log("what");
-                    console.log(await response.text());
-                }
+                else console.log(await response.text());
             },
             (err) => console.log(err)
         );
