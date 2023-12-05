@@ -1,6 +1,5 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { get } from "svelte/store";
     import {
         jwtStore,
         isTeacherStore,

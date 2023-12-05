@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { jwtStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import Modal from "$lib/components/Modal.svelte";
