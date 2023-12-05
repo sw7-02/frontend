@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
+    import type { _CourseOverview } from "$lib/types";
     import Course from "$lib/components/Course.svelte";
     import AddCourseButton from "$lib/components/AddCourseButton.svelte";
     import Modal from "$lib/components/Modal.svelte";
@@ -9,7 +10,7 @@
 
     let showModal: boolean = false;
     let newTitle: string = "";
-    let data: any;
+    let data: _CourseOverview;
 
     async function load() {
         return generateGet("course").then(async (response) => {

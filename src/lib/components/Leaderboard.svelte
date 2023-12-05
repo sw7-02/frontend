@@ -1,9 +1,14 @@
 <script lang="ts">
-    import { jwtStore, userRoleStore, role } from "$lib/stores/authentication";
+    import { jwtStore, userRoleStore } from "$lib/stores/authentication";
+    import { Role } from "$lib/types";
+    import type { _Leaderboard } from "$lib/types";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import { onMount } from "svelte";
     import { generateGet, generatePost } from "$lib/fetchers";
+
+    let data: _Leaderboard;
+    let is_anonymous: boolean;
 
     async function load() {
         return generateGet(`course/${get(courseIdStore)}/leaderboard`).then(
@@ -47,14 +52,6 @@
         });
     }
 
-    let data: any;
-    let is_anonymous: boolean;
-
-    onMount(async () => {
-        data = await load();
-        is_anonymous = await getAnonymity();
-    });
-
     async function toggleAnonymity() {
         is_anonymous = !is_anonymous;
         return generatePost(
@@ -71,6 +68,11 @@
             }
         });
     }
+
+    onMount(async () => {
+        data = await load();
+        is_anonymous = await getAnonymity();
+    });
 </script>
 
 <div
@@ -100,7 +102,7 @@
                                 class="flex items-center border border-neutral-500 rounded"
                             >
                                 <div
-                                    class="w-full rounded overflow-hidden h-6 relative"
+                                    class="w-full rounded overflow-hidden h-6 relative bg-neutral-700"
                                 >
                                     <div
                                         class="bg-cyan-800 h-full"
@@ -122,7 +124,7 @@
         </tbody>
     </table>
 </div>
-{#if $jwtStore !== "" && $userRoleStore === role.STUDENT}
+{#if $jwtStore !== "" && $userRoleStore === Role.STUDENT}
     <div
         class="bg-neutral-900 mt-4 mb-4 mr-4 w-[200px] h-[200px] rounded-md border border-neutral-600 flex flex-col"
     >

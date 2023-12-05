@@ -1,12 +1,6 @@
 import { persistentWritable } from "./localStorage";
 
-export enum role {
-    STUDENT = 0,
-    TEACHER = 1,
-    TA = 2,
-}
-
-export const jwtStore = persistentWritable("jwt", "");
-export const usernameStore = persistentWritable("username", "");
-export const isTeacherStore = persistentWritable("isTeacher", false);
-export const userRoleStore = persistentWritable("userRole", 0);
+export const jwtStore = persistentWritable<string>("jwt", "");
+export const usernameStore = persistentWritable<string>("username", "");
+export const isTeacherStore = persistentWritable<boolean>("isTeacher", false);
+export const userRoleStore = persistentWritable<number>("userRole", 0);

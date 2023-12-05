@@ -1,7 +1,7 @@
 <script lang="ts">
     export let showModal: boolean;
 
-    let dialog: any;
+    let dialog: HTMLDialogElement;
 
     $: if (dialog && showModal) dialog.showModal();
 

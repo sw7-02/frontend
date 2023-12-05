@@ -4,9 +4,12 @@
     import { get } from "svelte/store";
     import { jwtStore, isTeacherStore } from "$lib/stores/authentication";
     import { courseIdStore } from "$lib/stores/ids";
+    import type { _CourseFull } from "$lib/types";
     import SessionRow from "$lib/components/SessionRow.svelte";
     import AddSessionAssigmentButton from "$lib/components/AddSessionAssigmentButton.svelte";
     import { generateGet } from "$lib/fetchers";
+
+    let data: _CourseFull;
 
     async function load() {
         return generateGet(`course/${get(courseIdStore)}`).then(
@@ -28,8 +31,6 @@
             }
         );
     }
-
-    let data: any;
 
     async function reload() {
         data = await load();
@@ -63,7 +64,7 @@
             {/if}
         </div>
         <div class="grid grid-cols-1 justify-items-center ml-2">
-            <!-- {#each assignments as assignment, i}
+            <!-- {#each data.assignments as assignment, i}
                 <AssignmentRow
                     title={"Assignment " + (i + 1) + ": " + assignment}
                     href={$page.params.course + "/" + assignment}

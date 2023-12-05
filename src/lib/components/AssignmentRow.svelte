@@ -1,6 +1,6 @@
 <script lang="ts">
     import { jwtStore, userRoleStore } from "$lib/stores/authentication";
-    import { role } from "$lib/stores/authentication";
+    import { Role } from "$lib/types";
     import Modal from "./Modal.svelte";
     import EditButton from "./EditButton.svelte";
     import DeleteButton from "./DeleteButton.svelte";
@@ -23,7 +23,7 @@
     <div class="flex justify-between">
         <div class="flex items-center ml-6">
             {title}
-            {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+            {#if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                 <div class="ml-1">
                     <EditButton onClick={() => (showModal = true)} />
                 </div>

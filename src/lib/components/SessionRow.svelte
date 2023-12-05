@@ -6,7 +6,7 @@
         isTeacherStore,
         userRoleStore,
     } from "$lib/stores/authentication";
-    import { role } from "$lib/stores/authentication";
+    import { Role } from "$lib/types";
     import { courseIdStore } from "$lib/stores/ids";
     import { get } from "svelte/store";
     import ExerciseRow from "./ExerciseRow.svelte";
@@ -117,7 +117,7 @@
                 />
             {/if}
             {title}
-            {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+            {#if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                 <EditButton onClick={() => (showSessionModal = true)} />
             {/if}
         </div>
@@ -150,7 +150,7 @@
                 id={exercise.exercise_id}
                 {sessionId}
             >
-                {#if $jwtStore !== "" && ($userRoleStore === role.TEACHER || $userRoleStore === role.TA)}
+                {#if $jwtStore !== "" && ($userRoleStore === Role.TEACHER || $userRoleStore === Role.TA)}
                     <div class="mr-2">
                         <DeleteButton
                             onClick={() => deleteExercise(exercise.exercise_id)}

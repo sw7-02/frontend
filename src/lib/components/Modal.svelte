@@ -2,7 +2,7 @@
     export let showModal: boolean;
     export let newTitle: string = "";
 
-    let dialog: any;
+    let dialog: HTMLDialogElement;
     let isTitleEmpty = false;
 
     $: if (dialog && showModal) dialog.showModal();
