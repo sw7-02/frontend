@@ -20,11 +20,11 @@
         })
             .then((response) => {
                 if (response.status === 200) {
-                    response.json().then(async (data) => {
+                    response.json().then((data) => {
                         usernameStore.set(inputUsername);
                         jwtStore.set(data.jwt_token);
                         isTeacherStore.set(data.is_teacher);
-                        await goto("/");
+                        goto("/");
                     });
                 } else {
                     wrongInput = true;
