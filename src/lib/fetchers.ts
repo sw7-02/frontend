@@ -14,7 +14,7 @@ const headers = () => {
         };
 };
 
-const prefix = `${import.meta.env.VITE_API_PREFIX}`;
+const prefix = `/${import.meta.env.VITE_API_PREFIX}`;
 
 const fullEndpoint = (endpoint: string) => {
     endpoint = endpoint.trim();
