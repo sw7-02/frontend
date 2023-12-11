@@ -82,7 +82,7 @@
         <thead
             class="text-neutral-100 text-center text-md border-b border-neutral-600"
         >
-            <td class="p-2 font-bold">Rank</td>
+            <td class="p-2 font-bold" style="width: 100px">Rank</td>
             <td class="p-2 flex justify-center items-center font-bold"
                 >User
             </td><td class="p-2 font-bold" style="width: 500px;">Points</td>
