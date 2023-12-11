@@ -18,7 +18,7 @@
     }
 </script>
 
-<div class="h-full overflow-auto" bind:this={consoleElement}>
+<div class="h-[300px] overflow-auto" bind:this={consoleElement}>
     {#if logs}
         {#each logs as log}
             <p class="text-neutral-100 pl-2 pr-2">$ {log}</p>
